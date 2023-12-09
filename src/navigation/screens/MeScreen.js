@@ -65,7 +65,7 @@ export default function MeScreen({ navigation }) {
             </View>
             <View style={styles.logoutContainer}>
                 {showContent && (<Pressable style={styles.logoutBtn}>
-                    <Text style={{ color: 'white', fontSize: 16 }}>Đăng xuất</Text>
+                    <Text style={{ color: 'white', fontSize: 16 }} onPress={() => setShowContent(!showContent)}>Đăng xuất</Text>
                 </Pressable>)}
             </View>
         </SafeAreaView>
