@@ -5,11 +5,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
 //Screen
-import HomeScreen from './screens/HomeScreen';
+import HomeScreen from './screens/Home/HomeScreen';
 import LikesScreen from './screens/LikesScreen';
 import MeScreen from './screens/MeScreen';
 import MyOrdersScreen from './screens/MyOrdersScreen';
 import NotificationsScreen from './screens/NotificationsScreen';
+
+// test
+import SearchScreen from './screens/Search/SearchScreen'
 
 const homeName = 'Home';
 const likesName = "Đã thích";
@@ -47,7 +50,7 @@ export default function MainContainer() {
                 })}
             >
 
-                <Tab.Screen name={homeName} component={HomeScreen} options={{ headerShown: false }} />
+                <Tab.Screen name={homeName} component={SearchScreen} options={{ headerShown: false }} />
                 <Tab.Screen name={myOrdersName} component={MyOrdersScreen} options={{ headerShown: false }} />
                 <Tab.Screen name={likesName} component={LikesScreen} options={{ headerShown: false }} />
                 <Tab.Screen name={notificationsName} component={NotificationsScreen} options={{ headerShown: false }} />
