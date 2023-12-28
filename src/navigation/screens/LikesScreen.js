@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, View, useWindowDimensions } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { useState } from 'react';
 import { Text } from 'react-native';
@@ -45,10 +45,11 @@ export default function LikesScreen({ navigation }) {
             }
         };
 
-        console.log(hasData);
+        // console.log(hasData);
+        console.log(isOpen);
 
         return (
-            <View style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, zIndex: 2 }}>
+            <View style={{ position: 'absolute', top: 0, bottom: isOpen ? 0 : 600, left: 0, right: 0, zIndex: 1 }}>
                 <TabBar
                     {...props}
                     renderLabel={({ focused, route }) => {
@@ -71,7 +72,6 @@ export default function LikesScreen({ navigation }) {
                         setOpen={() => setIsOpen(!isOpen)}
                         defaultValue={currentValue}
                         value={currentValue}
-                        // setValue={(val) => setCurrentValue(val)}
                         onSelectItem={(item) => handleItemChange(item)}
                         maxHeight={300}
                         selectedItemLabelStyle={{ color: 'orangered', fontWeight: 500 }}
@@ -92,11 +92,32 @@ export default function LikesScreen({ navigation }) {
 
     const LatestRoute = () => {
         if (hasData) {
-            return (<View style={{ position: 'absolute', top: 100, bottom: 0, left: 0, right: 0, zIndex: 1 }}>
-                <View style={{ flex: 1, flexDirection: 'column' }}>
-                    <FavoriteItem></FavoriteItem>
+            return (<ScrollView style={{ position: 'absolute', top: 98, bottom: 0, left: 0, right: 0, zIndex: 1 }}>
+                <FavoriteItem
+                    foodName={'Steak Bin & Pizza - Dĩ An'}
+                    imageURL={require('../../../assets/product/az.jpg')}
+                    hashtags={['MãGiảmGiá15%', 'FlashSale']}
+                />
+                <FavoriteItem
+                    foodName={'AZ - Trà sữa & Chè Khúc Bạch - KTX Khu B'}
+                    imageURL={require('../../../assets/product/az.jpg')}
+                    hashtags={['MãGiảmGiá15%', 'FlashSale']}
+                />
+                <FavoriteItem
+                    foodName={'AZ - Trà sữa & Chè Khúc Bạch - KTX Khu B'}
+                    imageURL={require('../../../assets/product/az.jpg')}
+                    hashtags={['MãGiảmGiá15%', 'FlashSale']}
+                />
+                <FavoriteItem
+                    foodName={'AZ - Trà sữa & Chè Khúc Bạch - KTX Khu B'}
+                    imageURL={require('../../../assets/product/az.jpg')}
+                    hashtags={['MãGiảmGiá15%', 'FlashSale']}
+                />
+               
+                <View style={{ paddingVertical: 25, alignItems: 'center', backgroundColor: '#FAFAFA' }}>
+                    <Text style={{ color: '#737373' }}>Đã hiển thị tất cả kết quả</Text>
                 </View>
-            </View>
+            </ScrollView>
             );
         } else {
             return (
