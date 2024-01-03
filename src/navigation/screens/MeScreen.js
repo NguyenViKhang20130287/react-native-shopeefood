@@ -41,9 +41,9 @@ export default function MeScreen({ navigation }) {
                         {showContent && (<Text style={{ color: 'white', marginLeft: 10, fontSize: 20, fontWeight: 'bold' }}>nndangkhoa</Text>)}
                     </View>
                     <View style={styles.loginRegister}>
-                        <Pressable style={styles.button} onPress={() => setShowContent(!showContent)}>
+                        {!showContent && (<Pressable style={styles.button} onPress={() => setShowContent(!showContent)}>
                             <Text style={styles.text}>Đăng nhập / Đăng ký</Text>
-                        </Pressable>
+                        </Pressable>)}
                     </View>
                 </View>
             </View>
