@@ -2,7 +2,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import * as React from 'react';
 import { useState } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
-export default function FavoriteItem({ foodName, imageURL, rating, distance, deliveryTime, hashtags }) {
+export default function FavoriteItem({ storeName, imageURL, rating, distance, deliveryTime, hashtags }) {
     const [isClose, setIsClose] = useState(false);
     return (
         <View style={styles.container}>
@@ -10,7 +10,8 @@ export default function FavoriteItem({ foodName, imageURL, rating, distance, del
                 <View style={styles.imageContainer}>
                     {/* Hình vuông chứa hình ảnh */}
                     <Image
-                        source={imageURL}
+                        // source={imageURL}
+                        source={{uri: imageURL}}
                         style={styles.image}
                     />
                 </View>
@@ -22,7 +23,7 @@ export default function FavoriteItem({ foodName, imageURL, rating, distance, del
                         </Text>
                     </View>)}
                     {/* Tên món ăn */}
-                    <Text style={styles.foodName}>{foodName}</Text>
+                    <Text style={styles.foodName}>{storeName}</Text>
                     <View style={styles.infoContainer}>
                         {/* Dòng thông tin: số sao đánh giá, khoảng cách, thời gian giao hàng ước lượng */}
                         <Text style={[styles.infoText, { paddingRight: 6 }]}>⭐{rating} 4.7</Text>
@@ -31,8 +32,8 @@ export default function FavoriteItem({ foodName, imageURL, rating, distance, del
                     </View>
                     {/* Dòng hashtags */}
                     <View style={styles.hashtagsContainer}>
-                        {hashtags.map((tag, index) => (
-                            <Text key={index} style={styles.hashtag}>#{tag}</Text>
+                        {hashtags && hashtags.map((tag, index) => (
+                            <Text key={index} style={styles.hashtag}>#{tag.name}</Text>
                         ))}
                     </View>
                 </View>
@@ -48,15 +49,17 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
         paddingHorizontal: 15,
-        paddingTop: 15,
+        backgroundColor: 'white'
     },
     topContainer: {
         flexDirection: 'row',
-
+        borderTopWidth: 0.6,
+        paddingTop: 15,
+        borderTopColor: '#E8E8E8'
     },
     image: {
-        width: 100,
-        height: 100,
+        width: 90,
+        height: 90,
         aspectRatio: 1, // Hình vuông
     },
     detailsContainer: {
@@ -93,8 +96,6 @@ const styles = StyleSheet.create({
     heartContainer: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        borderBottomWidth: 0.5,
         paddingBottom: 15,
-        borderBottomColor: '#E8E8E8'
     }
 });
