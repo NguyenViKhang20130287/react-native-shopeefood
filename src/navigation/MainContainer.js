@@ -8,7 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from './screens/Home/HomeScreen';
 import LikesScreen from './screens/LikesScreen';
 import MeScreen from './screens/MeScreen';
-import MyOrdersScreen from './screens/MyOrdersScreen';
+import MyOrdersScreen from './OrderScreen/MyOrdersScreen';
 import NotificationsScreen from './screens/NotificationsScreen';
 
 // test
@@ -50,7 +50,7 @@ export default function MainContainer() {
                 })}
             >
 
-                <Tab.Screen name={homeName} component={SearchScreen} options={{ headerShown: false }} />
+                <Tab.Screen name={homeName} component={HomeScreen} options={{ headerShown: false }} />
                 <Tab.Screen name={myOrdersName} component={MyOrdersScreen} options={{ headerShown: false }} />
                 <Tab.Screen name={likesName} component={LikesScreen} options={{ headerShown: false }} />
                 <Tab.Screen name={notificationsName} component={NotificationsScreen} options={{ headerShown: false }} />
