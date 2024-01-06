@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 //Screen
 import HomeScreen from "./screens/Home/HomeScreen";
+import ProductsScreen from './screens/Product/ProductsScreen';
 import LikesScreen from "./screens/LikesScreen";
 import MeScreen from "./screens/MeScreen";
 import MyOrdersScreen from "./screens/OrderScreen/MyOrdersScreen";
@@ -13,8 +14,10 @@ import NotificationsScreen from "./screens/NotificationsScreen";
 
 // test
 import SearchScreen from "./screens/Search/SearchScreen";
+// import ProductsScreen from './screens/Product/ProductDetail';
 
 const homeName = "Home";
+const produtcName = 'Sản phẩm';
 const likesName = "Đã thích";
 const meName = "Tôi";
 const myOrdersName = "Đơn hàng";
@@ -34,6 +37,8 @@ export default function MainContainer() {
 
             if (rn === homeName) {
               iconName = focused ? "restaurant" : "restaurant-outline";
+            } else if (rn === produtcName) {
+              iconName = focused ? 'heart' : 'heart-outline'
             } else if (rn === myOrdersName) {
               iconName = focused ? "clipboard" : "clipboard-outline";
             } else if (rn === likesName) {
@@ -52,6 +57,11 @@ export default function MainContainer() {
         <Tab.Screen
           name={homeName}
           component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+          <Tab.Screen
+          name={produtcName}
+          component={ProductsScreen}
           options={{ headerShown: false }}
         />
         <Tab.Screen
