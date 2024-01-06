@@ -1,13 +1,11 @@
 import * as React from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Text } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Image } from 'react-native';
 import FavoriteItem from '../../components/FavoriteItem';
-import axios from 'axios';
-
 
 export default function LikesScreen({ navigation }) {
     const layout = useWindowDimensions();
@@ -18,70 +16,37 @@ export default function LikesScreen({ navigation }) {
     ]);
 
     const [hasData, setHasData] = useState(false);
-    const [favoriteStore, setFavoriteStore] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [mainCate, setMainCate] = useState([]);
 
     const renderTabBar = props => {
         const [isOpen, setIsOpen] = useState(false);
-        const [currentValue, setCurrentValue] = useState('8');
+        const [currentValue, setCurrentValue] = useState('dichvu');
 
-        useEffect(() => {
-            const fetchData = async () => {
-                try {
-                    const response = await axios.get(`http://localhost:8080/api/categories`);
-                    const data = response.data;
-                    const items = data.map(item => ({
-                        label: item.name,
-                        value: item.id.toString()
-                    }));
-                    setMainCate(items);
-                } catch (error) {
-                    console.error('Error fetching data:', error);
-                }
-            };
-
-            fetchData();
-        }, []);
-
-        useEffect(() => {
-            const fetchData = async () => {
-                try {
-                    let response;
-                    if (currentValue === '8') {
-                        response = await axios.get(`http://localhost:8080/api/user/1/favorite-stores`);
-                    } else {
-                        response = await axios.get(`http://localhost:8080/api/user/1/favorite-stores/${currentValue}`);
-                    }
-                    const data = response.data;
-                    setFavoriteStore(data);
-                    setIsLoading(false);
-                } catch (error) {
-                    console.error('Error fetching data:', error);
-                }
-            };
-
-            fetchData();
-        }, [currentValue]);
-
+        const items = [
+            { label: 'Dịch vụ', value: 'dichvu' },
+            { label: 'Đồ ăn', value: 'doan' },
+            { label: 'Thực phẩm', value: 'thucpham' },
+            { label: 'Bia', value: 'bia' },
+            { label: 'Hoa', value: 'hoa' },
+            { label: 'Siêu thị', value: 'sieuthi' },
+            { label: 'Thuốc', value: 'thuoc' },
+            { label: 'Thú cưng', value: 'thucung' },
+        ];
 
         const handleItemChange = (item) => {
-            setCurrentValue(item.value);
-        };
-
-        useEffect(() => {
-            // Kiểm tra điều kiện khi currentValue thay đổi
-            if (currentValue) {
-                if (favoriteStore.length > 0) {
+            if (item && item.value) {
+                setCurrentValue(item.value);
+                // Không cần set currentValue, chỉ kiểm tra giá trị của item
+                if (item.value === 'doan') {
+                    // Thực hiện hành động khi chọn 'Đồ ăn'
                     setHasData(true);
                 } else {
                     setHasData(false);
                 }
             }
-        }, [currentValue, favoriteStore]);
+        };
 
-        console.log(currentValue);
-        console.log(hasData);
+        // console.log(hasData);
+        console.log(isOpen);
 
         return (
             <View style={{ position: 'absolute', top: 0, bottom: isOpen ? 0 : 600, left: 0, right: 0, zIndex: 1 }}>
@@ -102,7 +67,7 @@ export default function LikesScreen({ navigation }) {
                     <DropDownPicker
                         dropDownContainerStyle={{ borderWidth: 0, borderRadius: 0, }}
                         style={{ backgroundColor: '#F0F0F0', borderWidth: 0, borderRadius: 0, }}
-                        items={mainCate}
+                        items={items}
                         open={isOpen}
                         setOpen={() => setIsOpen(!isOpen)}
                         defaultValue={currentValue}
@@ -126,21 +91,29 @@ export default function LikesScreen({ navigation }) {
     };
 
     const LatestRoute = () => {
-        console.log(favoriteStore);
         if (hasData) {
-            return (<ScrollView style={{ position: 'absolute', top: 97, bottom: 0, left: 0, right: 0, zIndex: 1, backgroundColor: '#FAFAFA' }}>
-                {!isLoading ? (
-                    favoriteStore && favoriteStore.map((fa, index) => (
-                        <FavoriteItem
-                            key={index}
-                            storeName={fa.name}
-                            imageURL={fa.image}
-                        />
-                    ))
-                ) : (
-                    <Text>No favorites available.</Text>
-                )}
-
+            return (<ScrollView style={{ position: 'absolute', top: 98, bottom: 0, left: 0, right: 0, zIndex: 1 }}>
+                <FavoriteItem
+                    foodName={'Steak Bin & Pizza - Dĩ An'}
+                    imageURL={require('../../../assets/product/az.jpg')}
+                    hashtags={['MãGiảmGiá15%', 'FlashSale']}
+                />
+                <FavoriteItem
+                    foodName={'AZ - Trà sữa & Chè Khúc Bạch - KTX Khu B'}
+                    imageURL={require('../../../assets/product/az.jpg')}
+                    hashtags={['MãGiảmGiá15%', 'FlashSale']}
+                />
+                <FavoriteItem
+                    foodName={'AZ - Trà sữa & Chè Khúc Bạch - KTX Khu B'}
+                    imageURL={require('../../../assets/product/az.jpg')}
+                    hashtags={['MãGiảmGiá15%', 'FlashSale']}
+                />
+                <FavoriteItem
+                    foodName={'AZ - Trà sữa & Chè Khúc Bạch - KTX Khu B'}
+                    imageURL={require('../../../assets/product/az.jpg')}
+                    hashtags={['MãGiảmGiá15%', 'FlashSale']}
+                />
+               
                 <View style={{ paddingVertical: 25, alignItems: 'center', backgroundColor: '#FAFAFA' }}>
                     <Text style={{ color: '#737373' }}>Đã hiển thị tất cả kết quả</Text>
                 </View>
@@ -207,4 +180,3 @@ const styles = StyleSheet.create({
         backgroundColor: 'orangered',
     },
 });
-

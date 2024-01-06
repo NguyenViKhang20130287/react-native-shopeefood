@@ -10,7 +10,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 export default function HomeScreen({ navigation }) {
     return (
         <ScrollView style={styles.container}>
-            <StatusBar backgroundColor='white'></StatusBar>
             {/* Top */}
             <View style={styles.topzone}>
                 <View style={styles.addressContainer}>
