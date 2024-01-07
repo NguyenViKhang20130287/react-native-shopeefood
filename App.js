@@ -11,6 +11,8 @@ import RegisterScreen from './src/navigation/screens/user/RegisterScreen';
 import ConfirmForgotScreen from './src/navigation/screens/user/ConfirmForgotScreen';
 import ForgotPassword from './src/navigation/screens/user/ForgotPasswordScreen';
 import ConfirmRegisterScreen from './src/navigation/screens/user/ConfirmRegisterScreen';
+import Setting from './src/navigation/screens/Setting/Setting';
+import DeleteAccount from './src/navigation/screens/Setting/DeleteAccount';
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -38,6 +40,24 @@ export default function App() {
         <Stack.Screen name="UpdateAddress" component={UpdateAddress}
           options={{
             headerTitle: 'Sửa địa chỉ',
+            headerBackTitleVisible: false,
+            headerTintColor: 'orangered',
+            headerTitleStyle: {
+              color: 'black',
+            },
+          }} />
+        <Stack.Screen name="Setting" component={Setting}
+          options={{
+            headerTitle: 'Cài đặt',
+            headerBackTitleVisible: false,
+            headerTintColor: 'orangered',
+            headerTitleStyle: {
+              color: 'black',
+            },
+          }} />
+        <Stack.Screen name="DeleteAccount" component={DeleteAccount}
+          options={{
+            headerTitle: 'Xoá tài khoản',
             headerBackTitleVisible: false,
             headerTintColor: 'orangered',
             headerTitleStyle: {
