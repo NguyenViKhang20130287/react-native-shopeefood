@@ -1,10 +1,11 @@
 import * as React from 'react';
 import MainContainer from './src/navigation/MainContainer';
 import { NavigationContainer } from '@react-navigation/native';
-import Address from './src/navigation/screens/Address';
 import { createStackNavigator } from '@react-navigation/stack';
-import AddNewAddress from './src/navigation/screens/AddNewAddress';
-import UpdateAddress from './src/navigation/screens/UpdateAddress';
+import UpdateAddress from './src/navigation/screens/Address/UpdateAddress';
+import Address from './src/navigation/screens/Address/Address';
+import AddNewAddress from './src/navigation/screens/Address/AddNewAddress';
+import OrderConfirmation from './src/navigation/screens/OrderConfirmation';
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -38,6 +39,18 @@ export default function App() {
           <Stack.Screen name="UpdateAddress" component={UpdateAddress}
           options={{
             headerTitle: 'Sửa địa chỉ',
+            headerBackTitleVisible: false,
+            headerTintColor: 'orangered',
+            headerTitleStyle: {
+              color: 'black',
+            },
+            headerStyle: {
+              backgroundColor: 'white',
+            },
+          }} />
+          <Stack.Screen name="OrderConfirmation" component={OrderConfirmation}
+          options={{
+            headerTitle: 'Xác nhận thanh toán',
             headerBackTitleVisible: false,
             headerTintColor: 'orangered',
             headerTitleStyle: {
