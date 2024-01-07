@@ -31,7 +31,7 @@ export default function MeScreen({ navigation }) {
     const [showContent, setShowContent] = useState(false);
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar backgroundColor='orangered'></StatusBar>
+            <StatusBar backgroundColor='#F55C32' />
             <View>
                 <View style={styles.headerContainer}>
                     <View style={styles.userInfo}>
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     headerContainer: {
-        backgroundColor: 'orangered',
+        backgroundColor: '#F55C32',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-end',

@@ -1,22 +1,23 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
 
 //Screen
-import HomeScreen from './screens/Home/HomeScreen';
-import LikesScreen from './screens/LikesScreen';
-import MeScreen from './screens/MeScreen';
-import NotificationsScreen from './screens/NotificationsScreen';
+import HomeScreen from "./screens/Home/HomeScreen";
+import LikesScreen from "./screens/LikesScreen";
+import MeScreen from "./screens/MeScreen";
+import MyOrdersScreen from "./screens/OrderScreen/MyOrdersScreen";
+import NotificationsScreen from "./screens/NotificationsScreen";
 
 // test
-import SearchScreen from './screens/Search/SearchScreen'
-import MyOrdersScreen from './OrderScreen/MyOrdersScreen';
+import SearchScreen from "./screens/Search/SearchScreen";
 
-const homeName = 'Home';
+const homeName = "Home";
 const likesName = "Đã thích";
-const meName = 'Tôi';
-const myOrdersName = 'Đơn hàng';
+const meName = "Tôi";
+const myOrdersName = "Đơn hàng";
 const notificationsName = "Thông báo";
 
 const Tab = createBottomTabNavigator();
@@ -31,29 +32,47 @@ export default function MainContainer() {
                     let rn = route.name;
 
                     if (rn === homeName) {
-                        iconName = focused ? 'restaurant' : 'restaurant-outline'
+                        iconName = focused ? "restaurant" : "restaurant-outline";
                     } else if (rn === myOrdersName) {
-                        iconName = focused ? 'clipboard' : 'clipboard-outline'
+                        iconName = focused ? "clipboard" : "clipboard-outline";
                     } else if (rn === likesName) {
-                        iconName = focused ? 'heart' : 'heart-outline'
+                        iconName = focused ? "heart" : "heart-outline";
                     } else if (rn === notificationsName) {
-                        iconName = focused ? 'notifications' : 'notifications-outline'
+                        iconName = focused ? "notifications" : "notifications-outline";
                     } else if (rn === meName) {
-                        iconName = focused ? 'person' : 'person-outline'
+                        iconName = focused ? "person" : "person-outline";
                     }
-                    return <Ionicons name={iconName} size={size} color={color} />
+                    return <Ionicons name={iconName} size={size} color={color} />;
                 },
-                tabBarActiveTintColor: 'orangered',
-                tabBarInactiveTintColor: 'gray'
+                tabBarActiveTintColor: "orangered",
+                tabBarInactiveTintColor: "gray",
             })}
         >
-
-            <Tab.Screen name={homeName} component={HomeScreen} options={{ headerShown: false }} />
-            <Tab.Screen name={myOrdersName} component={MyOrdersScreen} options={{ headerShown: false }} />
-            <Tab.Screen name={likesName} component={LikesScreen} options={{ headerShown: false }} />
-            <Tab.Screen name={notificationsName} component={NotificationsScreen} options={{ headerShown: false }} />
-            <Tab.Screen name={meName} component={MeScreen} options={{ headerShown: false }} />
-
+            <Tab.Screen
+                name={homeName}
+                component={HomeScreen}
+                options={{ headerShown: false }}
+            />
+            <Tab.Screen
+                name={myOrdersName}
+                component={MyOrdersScreen}
+                options={{ headerShown: false }}
+            />
+            <Tab.Screen
+                name={likesName}
+                component={LikesScreen}
+                options={{ headerShown: false }}
+            />
+            <Tab.Screen
+                name={notificationsName}
+                component={NotificationsScreen}
+                options={{ headerShown: false }}
+            />
+            <Tab.Screen
+                name={meName}
+                component={MeScreen}
+                options={{ headerShown: false }}
+            />
         </Tab.Navigator>
     );
 }

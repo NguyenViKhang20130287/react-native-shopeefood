@@ -281,6 +281,70 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 14,
   },
+
+  //checkout
+  address: {
+    display: "flex",
+    flexDirection: "row",
+    marginTop: 10,
+    marginLeft: 10,
+  },
+  detail_address: {
+    marginLeft: 10,
+  },
+  user: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  shipping: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  ship_title: {
+    fontSize: 18,
+    marginLeft: 10,
+    color: "#29a89b",
+  },
+  ship_price: {
+    fontSize: 18,
+    marginRight: 10,
+    color: "#29a89b",
+  },
+  bill: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  bill_title: {
+    marginLeft: 10,
+    fontSize: 18,
+  },
+  bill_price: {
+    marginRight: 10,
+    fontSize: 18,
+  },
+  sum: {
+    display: "flex",
+    flexDirection: "row",
+    marginTop: 10,
+  },
+  total: {
+    display: "flex",
+    marginLeft: "40%",
+    marginRight: 20,
+  },
+  total_title: {
+    fontSize: 18,
+  },
+  total_price: {
+    fontSize: 18,
+    fontWeight: "500",
+    marginLeft: 50,
+  },
+  button_book: {
+    marginTop: 5,
+  },
 });
 
 export default styles;

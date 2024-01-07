@@ -38,7 +38,7 @@ const Incoming = () => {
           <View style={styles.content_image}>
             <Image
               style={styles.foods_image}
-              source={require("../../../assets/product/prod_1.jpeg")}
+              source={require("../../../../assets/product/prod_1.jpeg")}
             />
           </View>
           <View style={styles.content_info}>
@@ -99,7 +99,7 @@ const Incoming = () => {
           <View style={styles.image}>
             <Image
               style={styles.foods_image}
-              source={require("../../../assets/product/prod_1.jpeg")}
+              source={require("../../../../assets/product/prod_1.jpeg")}
             />
           </View>
           <View style={styles.details}>
@@ -137,7 +137,7 @@ const Incoming = () => {
           <View style={styles.image}>
             <Image
               style={styles.foods_image}
-              source={require("../../../assets/product/prod_1.jpeg")}
+              source={require("../../../../assets/product/prod_1.jpeg")}
             />
           </View>
           <View style={styles.details}>
@@ -175,7 +175,7 @@ const Incoming = () => {
           <View style={styles.image}>
             <Image
               style={styles.foods_image}
-              source={require("../../../assets/product/prod_1.jpeg")}
+              source={require("../../../../assets/product/prod_1.jpeg")}
             />
           </View>
           <View style={styles.details}>
