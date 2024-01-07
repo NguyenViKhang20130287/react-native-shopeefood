@@ -9,7 +9,7 @@ import HomeScreen from "./screens/Home/HomeScreen";
 import LikesScreen from "./screens/LikesScreen";
 import MeScreen from "./screens/MeScreen";
 import MyOrdersScreen from "./screens/OrderScreen/MyOrdersScreen";
-import NotificationsScreen from "./screens/NotificationsScreen";
+import NotificationsScreen from "./screens/Notifications/NotificationsScreen";
 
 // test
 import SearchScreen from "./screens/Search/SearchScreen";

@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
 
   status_time: {
     marginTop: 10,
-    marginLeft: "35%",
+    marginLeft: "30%",
     display: "flex",
     flexDirection: "row",
   },
@@ -295,6 +295,9 @@ const styles = StyleSheet.create({
   user: {
     display: "flex",
     flexDirection: "row",
+  },
+  street: {
+    marginRight: 40,
   },
   shipping: {
     display: "flex",

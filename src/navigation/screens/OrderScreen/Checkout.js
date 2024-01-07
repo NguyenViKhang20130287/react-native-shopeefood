@@ -35,7 +35,7 @@ const Checkout = () => {
                 <Text>(+84) 364352223</Text>
               </View>
             </View>
-            <View>
+            <View style={styles.street}>
               <View>
                 <Text>2/7C đường 106</Text>
               </View>
