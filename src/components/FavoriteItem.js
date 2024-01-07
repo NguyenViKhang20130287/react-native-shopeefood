@@ -1,4 +1,4 @@
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
 import { useState } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';

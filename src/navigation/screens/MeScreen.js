@@ -19,7 +19,7 @@ const Action = ({ icon, title, color, screen }) => {
                 <View style={styles.iconContainer}>
                     <FontAwesome name={icon} size={22} color={color} />
                 </View>
-                <Text style={styles.actionTitle}>{title}</Text>
+                <Text>{title}</Text>
             </View>
             <Ionicons size={20} name={'chevron-forward'} color={'gray'} />
         </View>
@@ -31,7 +31,7 @@ export default function MeScreen({ navigation }) {
     const [showContent, setShowContent] = useState(false);
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar backgroundColor='orangered'></StatusBar>
+            <StatusBar backgroundColor='#F55C32' />
             <View>
                 <View style={styles.headerContainer}>
                     <View style={styles.userInfo}>
@@ -44,6 +44,7 @@ export default function MeScreen({ navigation }) {
                         {!showContent && (<Pressable style={styles.button} onPress={() => setShowContent(!showContent)}>
                             <Text style={styles.text}>Đăng nhập / Đăng ký</Text>
                         </Pressable>)}
+                        {/* <Pressable style={styles.button} onPress={() => navigation.navigate('LoginScreen')}></Pressable> */}
                     </View>
                 </View>
             </View>
@@ -51,7 +52,7 @@ export default function MeScreen({ navigation }) {
                 <View style={{ borderBottomWidth: 10, borderBottomColor: '#F5F6F8' }}>
                     <Action icon={'gift'} title={'Ví Voucher'} color={'orange'}></Action>
                     <Action icon={'credit-card'} title={'Thanh toán'} color={'orange'}></Action>
-                    <Action icon={'map-marker'} title={'Địa chỉ'} color={'green'}></Action>
+                    <Pressable onPress={() => navigation.navigate('Address')}><Action icon={'map-marker'} title={'Địa chỉ'} color={'green'}></Action></Pressable>
                 </View>
                 <View style={{ borderBottomWidth: 10, borderBottomColor: '#F5F6F8' }}>
                     <Action icon={'envelope-o'} title={'Mời bạn bè'} color={'blue'}></Action>
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     headerContainer: {
-        backgroundColor: 'orangered',
+        backgroundColor: '#F55C32',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-end',
