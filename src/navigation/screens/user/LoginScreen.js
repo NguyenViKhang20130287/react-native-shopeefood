@@ -37,7 +37,7 @@ export default function LoginScreen({ navigation }) {
                     <Text style={userStyle.forgotPassword} onPress={() => navigation.navigate('Quên mật khẩu')}>Quên?</Text>
                 </View>
                 <TouchableOpacity style={userStyle.button}>
-                        <Text style={userStyle.buttonText}>Đăng ký</Text>
+                        <Text style={userStyle.buttonText}>Đăng nhập</Text>
                 </TouchableOpacity>
                 <Text style={userStyle.other}>Đăng nhập bằng SMS</Text>
             </View>

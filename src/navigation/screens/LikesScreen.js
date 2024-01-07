@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, View, useWindowDimensions } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { useState } from 'react';
 import { Text } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Image } from 'react-native';
+import FavoriteItem from '../../components/FavoriteItem';
 
 export default function LikesScreen({ navigation }) {
     const layout = useWindowDimensions();
@@ -13,6 +14,8 @@ export default function LikesScreen({ navigation }) {
         { key: 'latest', title: 'Mới nhất' },
         { key: 'near', title: 'Gần tôi' },
     ]);
+
+    const [hasData, setHasData] = useState(false);
 
     const renderTabBar = props => {
         const [isOpen, setIsOpen] = useState(false);
@@ -29,8 +32,24 @@ export default function LikesScreen({ navigation }) {
             { label: 'Thú cưng', value: 'thucung' },
         ];
 
+        const handleItemChange = (item) => {
+            if (item && item.value) {
+                setCurrentValue(item.value);
+                // Không cần set currentValue, chỉ kiểm tra giá trị của item
+                if (item.value === 'doan') {
+                    // Thực hiện hành động khi chọn 'Đồ ăn'
+                    setHasData(true);
+                } else {
+                    setHasData(false);
+                }
+            }
+        };
+
+        // console.log(hasData);
+        console.log(isOpen);
+
         return (
-            <View style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, zIndex: 2 }}>
+            <View style={{ position: 'absolute', top: 0, bottom: isOpen ? 0 : 600, left: 0, right: 0, zIndex: 1 }}>
                 <TabBar
                     {...props}
                     renderLabel={({ focused, route }) => {
@@ -53,7 +72,7 @@ export default function LikesScreen({ navigation }) {
                         setOpen={() => setIsOpen(!isOpen)}
                         defaultValue={currentValue}
                         value={currentValue}
-                        setValue={(val) => setCurrentValue(val)}
+                        onSelectItem={(item) => handleItemChange(item)}
                         maxHeight={300}
                         selectedItemLabelStyle={{ color: 'orangered', fontWeight: 500 }}
                         tickIconStyle={{ tintColor: 'orangered' }}
@@ -72,19 +91,50 @@ export default function LikesScreen({ navigation }) {
     };
 
     const LatestRoute = () => {
-        return (
-            <View style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, zIndex: 1 }}>
-                <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: 100 }}>
-                    <Image
-                        source={require('../../../assets/food_stall.png')}
-                        style={{ width: 120, height: 120, tintColor: 'orange' }}
-                    />
-                    <Text style={{ marginTop: 10, fontSize: 17, color: '#595959', fontWeight: 500 }}>Yêu Quán từ món đầu tiên</Text>
-                    <Text style={{ marginTop: 10, margin: 40, textAlign: 'center', color: '#757575' }}>Món ngon hấp dẫn chiếm trọn trái tim! Thả tim ngay để lưu quán bạn yêu nhé.</Text>
+        if (hasData) {
+            return (<ScrollView style={{ position: 'absolute', top: 98, bottom: 0, left: 0, right: 0, zIndex: 1 }}>
+                <FavoriteItem
+                    foodName={'Steak Bin & Pizza - Dĩ An'}
+                    imageURL={require('../../../assets/product/az.jpg')}
+                    hashtags={['MãGiảmGiá15%', 'FlashSale']}
+                />
+                <FavoriteItem
+                    foodName={'AZ - Trà sữa & Chè Khúc Bạch - KTX Khu B'}
+                    imageURL={require('../../../assets/product/az.jpg')}
+                    hashtags={['MãGiảmGiá15%', 'FlashSale']}
+                />
+                <FavoriteItem
+                    foodName={'AZ - Trà sữa & Chè Khúc Bạch - KTX Khu B'}
+                    imageURL={require('../../../assets/product/az.jpg')}
+                    hashtags={['MãGiảmGiá15%', 'FlashSale']}
+                />
+                <FavoriteItem
+                    foodName={'AZ - Trà sữa & Chè Khúc Bạch - KTX Khu B'}
+                    imageURL={require('../../../assets/product/az.jpg')}
+                    hashtags={['MãGiảmGiá15%', 'FlashSale']}
+                />
+               
+                <View style={{ paddingVertical: 25, alignItems: 'center', backgroundColor: '#FAFAFA' }}>
+                    <Text style={{ color: '#737373' }}>Đã hiển thị tất cả kết quả</Text>
                 </View>
-            </View>
-        );
+            </ScrollView>
+            );
+        } else {
+            return (
+                <View style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, zIndex: 1 }}>
+                    <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: 100 }}>
+                        <Image
+                            source={require('../../../assets/food_stall.png')}
+                            style={{ width: 120, height: 120, tintColor: 'orange' }}
+                        />
+                        <Text style={{ marginTop: 10, fontSize: 17, color: '#595959', fontWeight: 500 }}>Yêu Quán từ món đầu tiên</Text>
+                        <Text style={{ marginTop: 10, margin: 40, textAlign: 'center', color: '#757575' }}>Món ngon hấp dẫn chiếm trọn trái tim! Thả tim ngay để lưu quán bạn yêu nhé.</Text>
+                    </View>
+                </View>
+            );
+        }
     }
+
 
     const NearMeRoute = () => {
         return (
@@ -130,4 +180,3 @@ const styles = StyleSheet.create({
         backgroundColor: 'orangered',
     },
 });
-
