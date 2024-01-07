@@ -32,24 +32,6 @@ export default function Address({ navigation }) {
                         </View>
                     </View>
                 </View>
-                <View style={{ paddingHorizontal: 10, backgroundColor: 'white', paddingTop: 10 }}>
-                    <View style={styles.action}>
-                        <View style={styles.iconContainer}>
-                            <FontAwesome name='home' size={18} color='black' />
-                        </View>
-                        <View style={{ flexDirection: 'column', width: 315 }}>
-                            <Text style={{ fontWeight: 'bold' }}>Nhà</Text>
-                            <Text style={{ color: '#999999', marginVertical: 15, paddingRight: 20, textAlign: 'justify' }}>[Rào đối diện cà phê Giangnam, KTX Đại Học Quốc Gia TPHCM - Khu B] Tô Vĩnh Diện, P.Đông Hòa, Dĩ An, Bình Dương</Text>
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ color: '#595959', marginRight: 10 }}>Đăng Khoa</Text>
-                                <Text style={{ color: '#595959' }}>08397179739</Text>
-                            </View>
-                        </View>
-                        <View style={{ width: 100 }}>
-                            <Pressable><Text style={{ color: '#1084EB' }}>Sửa</Text></Pressable>
-                        </View>
-                    </View>
-                </View>
             </View>
             <View style={{
                 backgroundColor: 'white', padding: 10, position: 'absolute',

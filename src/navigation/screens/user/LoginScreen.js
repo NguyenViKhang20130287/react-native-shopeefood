@@ -34,7 +34,7 @@ export default function LoginScreen({ navigation }) {
                         name={secureTextEntry ? 'eye-off-outline': 'eye-outline'} 
                         style={userStyle.icon}
                         onPress={changeHidePassword}/>
-                    <Text style={userStyle.forgotPassword} onPress={() => navigation.navigate('Quên mật khẩu')}>Quên?</Text>
+                    <Text style={userStyle.forgotPassword} onPress={() => navigation.navigate('ForgotPassword')}>Quên?</Text>
                 </View>
                 <TouchableOpacity style={userStyle.button}>
                         <Text style={userStyle.buttonText}>Đăng nhập</Text>
@@ -43,7 +43,7 @@ export default function LoginScreen({ navigation }) {
             </View>
             <View style={userStyle.footer}>
                 <Text style={{fontSize: 16}}>Bạn chưa có tài khoản?
-                    <Text style={{color: 'blue'}} onPress={() => navigation.navigate('Đăng ký')}> Đăng ký ngay</Text>
+                    <Text style={{color: 'blue'}} onPress={() => navigation.navigate('Register')}> Đăng ký ngay</Text>
                 </Text>
             </View>
         </View>

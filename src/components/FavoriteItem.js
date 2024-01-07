@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     image: {
         width: 100,
         height: 100,
-        aspectRatio: 1, // Hình vuông
+        aspectRatio: 1,
     },
     detailsContainer: {
         flex: 2,

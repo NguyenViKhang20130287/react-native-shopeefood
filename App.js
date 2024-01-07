@@ -6,6 +6,11 @@ import UpdateAddress from './src/navigation/screens/Address/UpdateAddress';
 import Address from './src/navigation/screens/Address/Address';
 import AddNewAddress from './src/navigation/screens/Address/AddNewAddress';
 import OrderConfirmation from './src/navigation/screens/OrderConfirmation';
+import LoginScreen from './src/navigation/screens/user/LoginScreen';
+import RegisterScreen from './src/navigation/screens/user/RegisterScreen';
+import ConfirmForgotScreen from './src/navigation/screens/user/ConfirmForgotScreen';
+import ForgotPassword from './src/navigation/screens/user/ForgotPasswordScreen';
+import ConfirmRegisterScreen from './src/navigation/screens/user/ConfirmRegisterScreen';
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -20,9 +25,6 @@ export default function App() {
           headerTitleStyle: {
             color: 'black',
           },
-          headerStyle: {
-            backgroundColor: 'white',
-          },
         }} />
         <Stack.Screen name="AddAddress" component={AddNewAddress}
           options={{
@@ -32,11 +34,8 @@ export default function App() {
             headerTitleStyle: {
               color: 'black',
             },
-            headerStyle: {
-              backgroundColor: 'white',
-            },
           }} />
-          <Stack.Screen name="UpdateAddress" component={UpdateAddress}
+        <Stack.Screen name="UpdateAddress" component={UpdateAddress}
           options={{
             headerTitle: 'Sửa địa chỉ',
             headerBackTitleVisible: false,
@@ -44,11 +43,8 @@ export default function App() {
             headerTitleStyle: {
               color: 'black',
             },
-            headerStyle: {
-              backgroundColor: 'white',
-            },
           }} />
-          <Stack.Screen name="OrderConfirmation" component={OrderConfirmation}
+        <Stack.Screen name="OrderConfirmation" component={OrderConfirmation}
           options={{
             headerTitle: 'Xác nhận thanh toán',
             headerBackTitleVisible: false,
@@ -56,8 +52,45 @@ export default function App() {
             headerTitleStyle: {
               color: 'black',
             },
-            headerStyle: {
-              backgroundColor: 'white',
+          }} />
+        <Stack.Screen name="Login" component={LoginScreen}
+          options={{
+            headerTitle: 'Đăng nhập',
+            headerTintColor: 'orangered',
+            headerTitleStyle: {
+              color: 'black',
+            },
+          }} />
+        <Stack.Screen name="Register" component={RegisterScreen}
+          options={{
+            headerTitle: 'Đăng ký',
+            headerTintColor: 'orangered',
+            headerTitleStyle: {
+              color: 'black',
+            },
+          }} />
+        <Stack.Screen name="ConfirmForgot" component={ConfirmForgotScreen}
+          options={{
+            headerTitle: 'Xác nhận quên mật khẩu',
+            headerTintColor: 'orangered',
+            headerTitleStyle: {
+              color: 'black',
+            },
+          }} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword}
+          options={{
+            headerTitle: 'Quên mật khẩu',
+            headerTintColor: 'orangered',
+            headerTitleStyle: {
+              color: 'black',
+            },
+          }} />
+        <Stack.Screen name="ConfirmRegister" component={ConfirmRegisterScreen}
+          options={{
+            headerTitle: 'Xác nhận đăng ký',
+            headerTintColor: 'orangered',
+            headerTitleStyle: {
+              color: 'black',
             },
           }} />
       </Stack.Navigator>
