@@ -4,9 +4,9 @@ import { Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import { StatusBar } from 'react-native';
 import { View, Text } from 'react-native';
-import { StyleSheet } from 'react-native';
 import { useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
+import styles from './MeScreen.style';
 
 const Action = ({ icon, title, color, screen }) => {
     return (
@@ -41,7 +41,7 @@ export default function MeScreen({ navigation }) {
                         {showContent && (<Text style={{ color: 'white', marginLeft: 10, fontSize: 20, fontWeight: 'bold' }}>nndangkhoa</Text>)}
                     </View>
                     <View style={styles.loginRegister}>
-                        <Pressable style={styles.button} onPress={() => navigation.navigate('Đăng nhập')}>
+                        <Pressable style={styles.button} onPress={() => navigation.navigate('Login')}>
                             <Text style={styles.text}>Đăng nhập / Đăng ký</Text>
                         </Pressable>
                         {/* <Pressable style={styles.button} onPress={() => navigation.navigate('LoginScreen')}></Pressable> */}
@@ -72,71 +72,3 @@ export default function MeScreen({ navigation }) {
         </SafeAreaView>
     );
 }
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    headerContainer: {
-        backgroundColor: '#F55C32',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-end',
-        height: 120,
-        padding: 15,
-    },
-    userInfo: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    loginRegister: {
-        height: '50%',
-    },
-    userIcon: {
-        width: 60,
-        height: 60,
-        backgroundColor: 'white',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 100,
-    },
-    button: {
-        padding: 5,
-        backgroundColor: 'white',
-        borderRadius: 2,
-    },
-    text: {
-        color: 'orangered',
-        fontSize: 15,
-    },
-    icon: {
-        fontSize: 40,
-        color: 'orangered',
-    },
-    logoutContainer: {
-        marginHorizontal: 15,
-        marginVertical: 10
-    },
-    logoutBtn: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'orangered',
-        padding: 12,
-        borderRadius: 2.
-    },
-    action: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderBottomWidth: 1,
-        backgroundColor: 'white',
-        borderBottomColor: 'whitesmoke',
-        paddingRight: 8,
-    },
-    iconContainer: {
-        width: 50,
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-});

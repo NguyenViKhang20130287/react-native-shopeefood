@@ -37,13 +37,13 @@ export default RegisterScreen = ({navigation}) => {
                     <Ionicons name='lock-closed-outline' style={userStyle.icon}/>
                     <TextInput style={userStyle.input} placeholder='Nhập lại mật khẩu' secureTextEntry={secureTextEntry}/>
                 </View>
-                <TouchableOpacity style={userStyle.button} onPress={() => navigation.navigate('Nhập Mã Xác Minh')}>
+                <TouchableOpacity style={userStyle.button} onPress={() => navigation.navigate('ConfirmRegister')}>
                         <Text style={userStyle.buttonText}>Đăng ký</Text>
                 </TouchableOpacity>
             </View>
             <View style={userStyle.footer}>
                 <Text style={{fontSize: 16}}>Bạn đã có tài khoản?
-                    <Text style={{color: 'blue'}} onPress={() => navigation.navigate('Đăng nhập')}> Đăng nhập ngay</Text>
+                    <Text style={{color: 'blue'}} onPress={() => navigation.navigate('Login')}> Đăng nhập ngay</Text>
                 </Text>
             </View>
         </View>

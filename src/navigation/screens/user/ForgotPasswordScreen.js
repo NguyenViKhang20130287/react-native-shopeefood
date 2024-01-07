@@ -13,7 +13,7 @@ export default function ForgotPassword({ navigation }) {
                     <Ionicons name='person-outline' style={userStyle.icon}/>
                     <TextInput style={userStyle.input} placeholder='Email/Số điện thoại'/>
                 </View>
-                <TouchableOpacity style={userStyle.button} onPress={() => navigation.navigate('Nhập mã xác minh')}>
+                <TouchableOpacity style={userStyle.button} onPress={() => navigation.navigate('ConfirmForgot')}>
                         <Text style={userStyle.buttonText}>Tiếp</Text>
                 </TouchableOpacity>
             </View>
