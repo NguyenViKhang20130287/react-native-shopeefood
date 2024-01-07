@@ -348,6 +348,11 @@ const styles = StyleSheet.create({
   button_book: {
     marginTop: 5,
   },
+  address_shop: {
+    marginTop: 5,
+    fontSize: 13,
+    fontWeight: "300",
+  },
 });
 
 export default styles;
