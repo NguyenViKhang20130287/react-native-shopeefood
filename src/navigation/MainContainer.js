@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from "@expo/vector-icons";
 
 //Screen
@@ -11,6 +12,11 @@ import LikesScreen from "./screens/LikesScreen";
 import MeScreen from "./screens/MeScreen";
 import MyOrdersScreen from "./screens/OrderScreen/MyOrdersScreen";
 import NotificationsScreen from "./screens/NotificationsScreen";
+import LoginScreen from './screens/user/LoginScreen';
+import RegisterScreen from './screens/user/RegisterScreen';
+import ConfirmForgot from './screens/user/ConfirmForgotScreen';
+import ForgotPassword from './screens/user/ForgotPasswordScreen';
+import ConfirmRegister from './screens/user/ConfirmRegisterScreen';
 
 // test
 import SearchScreen from "./screens/Search/SearchScreen";
@@ -22,8 +28,14 @@ const likesName = "Đã thích";
 const meName = "Tôi";
 const myOrdersName = "Đơn hàng";
 const notificationsName = "Thông báo";
+const login = "Đăng nhập";
+const register = "Đăng ký";
+const forgotPassword = "Quên mật khẩu";
+const confirmRegister = "Nhập Mã Xác Minh";
+const confirmForgot = "Nhập mã xác minh";
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 export default function MainContainer() {
     return (
@@ -80,9 +92,56 @@ export default function MainContainer() {
             />
             <Tab.Screen
                 name={meName}
-                component={MeScreen}
+                component={MeStack}
                 options={{ headerShown: false }}
             />
         </Tab.Navigator>
     );
+}
+const MeStack= () => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name={meName} component={MeScreen} options={{ headerShown: false }} />
+            <Stack.Screen name={login} component={LoginScreen} 
+                options={{ headerShown: true, 
+                    headerTitleAlign: 'center', 
+                    headerTintColor: 'orangered',
+                    headerTitleStyle: {
+                        color: 'black',
+                    },
+                    }} />
+            <Stack.Screen name={register} component={RegisterScreen} 
+                options={{ headerShown: true, 
+                    headerTitleAlign: 'center', 
+                    headerTintColor: 'orangered',
+                    headerTitleStyle: {
+                        color: 'black',
+                    },
+                    }} />
+            <Stack.Screen name={confirmForgot} component={ConfirmForgot} 
+                options={{ headerShown: true, 
+                    headerTitleAlign: 'center', 
+                    headerTintColor: 'orangered',
+                    headerTitleStyle: {
+                        color: 'black',
+                    },
+                    }} />
+            <Stack.Screen name={forgotPassword} component={ForgotPassword} 
+                options={{ headerShown: true, 
+                    headerTitleAlign: 'center', 
+                    headerTintColor: 'orangered',
+                    headerTitleStyle: {
+                        color: 'black',
+                    },
+                    }}/>
+            <Stack.Screen name={confirmRegister} component={ConfirmRegister} 
+                options={{ headerShown: true, 
+                    headerTitleAlign: 'center', 
+                    headerTintColor: 'orangered',
+                    headerTitleStyle: {
+                        color: 'black',
+                    },
+                    }} />
+        </Stack.Navigator>
+    )
 }
