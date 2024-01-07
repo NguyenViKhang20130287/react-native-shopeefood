@@ -60,7 +60,7 @@ export default function MeScreen({ navigation }) {
                 </View>
                 <View style={{ borderBottomWidth: 10, borderBottomColor: '#F5F6F8' }}>
                     <Action icon={'file-text-o'} title={'Chính sách quy định'} color={'green'}></Action>
-                    <Action icon={'gear'} title={'Cài đặt'} color={'blue'}></Action>
+                    <Pressable onPress={() => navigation.navigate("Setting")}><Action icon={'gear'} title={'Cài đặt'} color={'blue'}></Action></Pressable>
                     <Action icon={'info'} title={'Về ShopeeFood'} color={'orange'}></Action>
                 </View>
             </View>
