@@ -2,7 +2,7 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
 import { useState } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
-export default function FavoriteItem({ foodName, imageURL, rating, distance, deliveryTime, hashtags }) {
+export default function FavoriteItem({ storeName, imageURL, rating, distance, deliveryTime, hashtags }) {
     const [isClose, setIsClose] = useState(false);
     return (
         <View style={styles.container}>
@@ -10,7 +10,7 @@ export default function FavoriteItem({ foodName, imageURL, rating, distance, del
                 <View style={styles.imageContainer}>
                     {/* Hình vuông chứa hình ảnh */}
                     <Image
-                        source={imageURL}
+                        source={{ uri: imageURL }}
                         style={styles.image}
                     />
                 </View>
@@ -22,7 +22,7 @@ export default function FavoriteItem({ foodName, imageURL, rating, distance, del
                         </Text>
                     </View>)}
                     {/* Tên món ăn */}
-                    <Text style={styles.foodName}>{foodName}</Text>
+                    <Text style={styles.foodName}>{storeName}</Text>
                     <View style={styles.infoContainer}>
                         {/* Dòng thông tin: số sao đánh giá, khoảng cách, thời gian giao hàng ước lượng */}
                         <Text style={[styles.infoText, { paddingRight: 6 }]}>⭐{rating} 4.7</Text>
@@ -31,7 +31,7 @@ export default function FavoriteItem({ foodName, imageURL, rating, distance, del
                     </View>
                     {/* Dòng hashtags */}
                     <View style={styles.hashtagsContainer}>
-                        {hashtags.map((tag, index) => (
+                        {hashtags && hashtags.map((tag, index) => (
                             <Text key={index} style={styles.hashtag}>#{tag}</Text>
                         ))}
                     </View>

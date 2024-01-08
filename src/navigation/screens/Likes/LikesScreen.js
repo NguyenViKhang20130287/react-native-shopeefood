@@ -8,6 +8,8 @@ import { Image } from 'react-native';
 import FavoriteItem from '../../../components/FavoriteItem';
 import NoFavoriteItem from '../../../components/NoFavoriteItem';
 import styles from './LikesScreen.style';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 export default function LikesScreen({ navigation }) {
     const layout = useWindowDimensions();
@@ -18,37 +20,68 @@ export default function LikesScreen({ navigation }) {
     ]);
 
     const [hasData, setHasData] = useState(false);
+    const [favoriteStore, setFavoriteStore] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [mainCate, setMainCate] = useState([]);
+
 
     const renderTabBar = props => {
         const [isOpen, setIsOpen] = useState(false);
-        const [currentValue, setCurrentValue] = useState('dichvu');
+        const [currentValue, setCurrentValue] = useState('8');
 
-        const items = [
-            { label: 'Dịch vụ', value: 'dichvu' },
-            { label: 'Đồ ăn', value: 'doan' },
-            { label: 'Thực phẩm', value: 'thucpham' },
-            { label: 'Bia', value: 'bia' },
-            { label: 'Hoa', value: 'hoa' },
-            { label: 'Siêu thị', value: 'sieuthi' },
-            { label: 'Thuốc', value: 'thuoc' },
-            { label: 'Thú cưng', value: 'thucung' },
-        ];
+        useEffect(() => {
+            const fetchData = async () => {
+                try {
+                    const response = await axios.get(`http://localhost:8080/api/categories`);
+                    const data = response.data;
+                    const items = data.map(item => ({
+                        label: item.name,
+                        value: item.id.toString()
+                    }));
+                    setMainCate(items);
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            };
+
+            fetchData();
+        }, []);
+
+        useEffect(() => {
+            const fetchData = async () => {
+                try {
+                    let response;
+                    if (currentValue === '8') {
+                        response = await axios.get(`http://localhost:8080/api/user/1/favorite-stores`);
+                    } else {
+                        response = await axios.get(`http://localhost:8080/api/user/1/favorite-stores/${currentValue}`);
+                    }
+                    const data = response.data;
+                    setFavoriteStore(data);
+                    setIsLoading(false);
+                    console.log(data);
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            };
+
+            fetchData();
+        }, [currentValue]);
 
         const handleItemChange = (item) => {
-            if (item && item.value) {
-                setCurrentValue(item.value);
-                // Không cần set currentValue, chỉ kiểm tra giá trị của item
-                if (item.value === 'doan') {
-                    // Thực hiện hành động khi chọn 'Đồ ăn'
+            setCurrentValue(item.value);
+        };
+
+        useEffect(() => {
+            // Kiểm tra điều kiện khi currentValue thay đổi
+            if (currentValue) {
+                if (favoriteStore.length > 0) {
                     setHasData(true);
                 } else {
                     setHasData(false);
                 }
             }
-        };
-
-        // console.log(hasData);
-        console.log(isOpen);
+        }, [currentValue, favoriteStore]);
 
         return (
             <View style={{ position: 'absolute', top: 0, bottom: isOpen ? 0 : 600, left: 0, right: 0, zIndex: 1 }}>
@@ -69,7 +102,7 @@ export default function LikesScreen({ navigation }) {
                     <DropDownPicker
                         dropDownContainerStyle={{ borderWidth: 0, borderRadius: 0, }}
                         style={{ backgroundColor: '#F0F0F0', borderWidth: 0, borderRadius: 0, }}
-                        items={items}
+                        items={mainCate}
                         open={isOpen}
                         setOpen={() => setIsOpen(!isOpen)}
                         defaultValue={currentValue}
@@ -95,17 +128,17 @@ export default function LikesScreen({ navigation }) {
     const LatestRoute = () => {
         if (hasData) {
             return (<ScrollView style={styles.hasDataContainer}>
-                <FavoriteItem
-                    foodName={'Steak Bin & Pizza - Dĩ An'}
-                    imageURL={require('../../../../assets/product/az.jpg')}
-                    hashtags={['MãGiảmGiá15%', 'FlashSale']}
-                />
-                <FavoriteItem
-                    foodName={'AZ - Trà sữa & Chè Khúc Bạch - KTX Khu B'}
-                    imageURL={require('../../../../assets/product/az.jpg')}
-                    hashtags={['MãGiảmGiá15%', 'FlashSale']}
-                />
-               
+                {!isLoading ? (
+                    favoriteStore && favoriteStore.map((fa, index) => (
+                        <FavoriteItem
+                            key={index}
+                            storeName={fa.name}
+                            imageURL={fa.image}
+                        />
+                    ))
+                ) : (
+                    <Text>No favorites available.</Text>
+                )}
                 <View style={{ paddingVertical: 25, alignItems: 'center', backgroundColor: '#FAFAFA' }}>
                     <Text style={{ color: '#737373' }}>Đã hiển thị tất cả kết quả</Text>
                 </View>
@@ -113,7 +146,7 @@ export default function LikesScreen({ navigation }) {
             );
         } else {
             return (
-                <NoFavoriteItem/>
+                <NoFavoriteItem />
             );
         }
     }
@@ -122,12 +155,12 @@ export default function LikesScreen({ navigation }) {
     const NearMeRoute = () => {
         if (hasData) {
             return (<ScrollView style={styles.hasDataContainer}>
-                <FavoriteItem
+                {/* <FavoriteItem
                     foodName={'Steak Bin & Pizza - Dĩ An'}
                     imageURL={require('../../../../assets/product/az.jpg')}
                     hashtags={['MãGiảmGiá15%', 'FlashSale']}
-                />
-               
+                /> */}
+
                 <View style={{ paddingVertical: 25, alignItems: 'center', backgroundColor: '#FAFAFA' }}>
                     <Text style={{ color: '#737373' }}>Đã hiển thị tất cả kết quả</Text>
                 </View>
@@ -135,7 +168,7 @@ export default function LikesScreen({ navigation }) {
             );
         } else {
             return (
-                <NoFavoriteItem/>
+                <NoFavoriteItem />
             );
         }
     }
