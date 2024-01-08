@@ -13,6 +13,7 @@ import ForgotPassword from './src/navigation/screens/user/ForgotPasswordScreen';
 import ConfirmRegisterScreen from './src/navigation/screens/user/ConfirmRegisterScreen';
 import Setting from './src/navigation/screens/Setting/Setting';
 import DeleteAccount from './src/navigation/screens/Setting/DeleteAccount';
+import PickAddress from './src/navigation/screens/Address/PickAddress';
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -108,6 +109,14 @@ export default function App() {
         <Stack.Screen name="ConfirmRegister" component={ConfirmRegisterScreen}
           options={{
             headerTitle: 'Xác nhận đăng ký',
+            headerTintColor: 'orangered',
+            headerTitleStyle: {
+              color: 'black',
+            },
+          }} />
+          <Stack.Screen name="PickAddress" component={PickAddress}
+          options={{
+            headerTitle: 'Địa chỉ giao hàng',
             headerTintColor: 'orangered',
             headerTitleStyle: {
               color: 'black',
