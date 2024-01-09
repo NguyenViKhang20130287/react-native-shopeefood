@@ -115,6 +115,24 @@ const userStyle = StyleSheet.create({
     borderBottomColor: '#007AFF',
     borderBottomWidth: 2,
   },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 10,
+    backgroundColor: 'rgba(0,0,0,0.9)',
+    borderRadius: 20,
+    padding: 20,
+    alignItems: 'center',
+  },
+  modalText: {
+    color: 'white',
+    textAlign: 'center',
+    marginTop: 10,
+  },
 
 })
 export default userStyle;
