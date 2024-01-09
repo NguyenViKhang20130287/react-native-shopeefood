@@ -31,7 +31,6 @@ export default function MeScreen({ navigation }) {
     const [showContent, setShowContent] = useState(false);
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar backgroundColor='#F55C32' />
             <View>
                 <View style={styles.headerContainer}>
                     <View style={styles.userInfo}>

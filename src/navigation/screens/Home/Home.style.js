@@ -72,23 +72,26 @@ const styles = StyleSheet.create({
 
     // category
     categoryContainer: {
-        paddingHorizontal: 20,
-        paddingVertical: 20,
+        paddingVertical: 15,
         backgroundColor: '#fff',
     },
     cateIcon: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 20
     },
     cateImg: {
-        height: 40,
-        width: 40,
+        height: 35,
+        width: 35,
         marginBottom: 10
     },
     iconText: {
-        fontSize: 13
+        fontSize: 12
+    },
+    iconContainer: {
+        marginBottom: 20,
+        flex: 1,
+        alignItems: 'center',
     },
 
     //

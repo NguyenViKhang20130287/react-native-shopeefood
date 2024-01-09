@@ -24,12 +24,11 @@ const TopTabMenu = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-          let rn = route.name;
-        },
         tabBarActiveTintColor: "orangered",
         tabBarInactiveTintColor: "gray",
+        tabBarIndicatorStyle: {
+          backgroundColor: 'orangered'
+        }
       })}
     >
       <Tab.Screen

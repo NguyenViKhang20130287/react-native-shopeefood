@@ -14,16 +14,8 @@ import styles from "./Notifications.style";
 export default function NotificationsScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <View style={styles.title}>
-        <View style={styles.notification}>
-          <Text style={styles.noti}>Thông báo</Text>
-        </View>
-        <View>
-          <Ionicons
-            name="settings-outline"
-            style={styles.icon_title}
-          ></Ionicons>
-        </View>
+      <View style={styles.notification}>
+        <Text style={styles.noti}>Thông báo</Text>
       </View>
       <View style={styles.tab}>
         <View>
@@ -35,7 +27,7 @@ export default function NotificationsScreen({ navigation }) {
         </View>
         <View>
           <Ionicons
-            name="arrow-forward-outline"
+            name="chevron-forward-outline"
             style={styles.icon_right}
           ></Ionicons>
         </View>
@@ -43,7 +35,7 @@ export default function NotificationsScreen({ navigation }) {
       <View style={styles.tab}>
         <View>
           <Ionicons
-            name="volume-off-outline"
+            name="megaphone-outline"
             style={styles.icon_tab}
           ></Ionicons>
         </View>
@@ -53,9 +45,23 @@ export default function NotificationsScreen({ navigation }) {
         </View>
         <View>
           <Ionicons
-            name="arrow-forward-outline"
+            name="chevron-forward-outline"
             style={styles.icon_right}
           ></Ionicons>
+        </View>
+      </View>
+      <View>
+        <Text style={styles.updateNoti}>Cập nhật quan trọng</Text>
+        <View style={styles.blank}>
+          <View style={styles.blank_image}>
+            <Image style={styles.noOrderImage} source={require('../../../../assets/order.png')}></Image>
+          </View>
+          <View>
+            <Text style={styles.blank_heading}>Trải nghiệm ngay!</Text>
+          </View>
+          <View>
+            <Text style={styles.blank_info}>Thông tin đơn hàng sẽ được cập nhật tại đây.</Text>
+          </View>
         </View>
       </View>
     </View>

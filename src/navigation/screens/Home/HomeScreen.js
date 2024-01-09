@@ -1,15 +1,17 @@
 import * as React from 'react';
-import { View, Text, TextInput, Image, ScrollView, Pressable } from 'react-native';
+import { View, Text, TextInput, Image, ScrollView, Pressable, StatusBar } from 'react-native';
 import styles from './Home.style'
 
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import EvilIcon from 'react-native-vector-icons/EvilIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import BannerSlider from '../../../components/BannerSlider';
 
 export default function HomeScreen({ navigation }) {
     return (
         <ScrollView style={styles.container} stickyHeaderIndices={[0]}>
+            <StatusBar barStyle="dark-content" backgroundColor="#F55C32" />
             {/* Top */}
             <View style={styles.topzone}>
                 <View style={styles.addressContainer}>
@@ -32,45 +34,42 @@ export default function HomeScreen({ navigation }) {
 
             {/* Center */}
             <View style={styles.centerzone}>
-                {/* Slider */}
-                <View style={styles.sliderContainer}>
-                    <Image style={styles.SlideImage} source={require('../../../../assets/Slider/slide_1.png')} />
-                </View>
+                <BannerSlider />
 
                 {/* category */}
                 <View style={styles.categoryContainer}>
                     <View style={styles.cateIcon}>
-                        <View style={{ alignItems: 'center' }}>
+                        <View style={styles.iconContainer}>
                             <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-rice-50.png')} />
                             <Text style={styles.iconText}>Đồ ăn</Text>
                         </View>
-                        <View style={{ alignItems: 'center' }}>
+                        <View style={styles.iconContainer}>
                             <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-guacamole-50.png')} />
                             <Text style={styles.iconText}>Thực phẩm</Text>
                         </View>
-                        <View style={{ alignItems: 'center' }}>
+                        <View style={styles.iconContainer}>
                             <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-beer-50.png')} />
                             <Text style={styles.iconText}>Bia</Text>
                         </View>
-                        <View style={{ alignItems: 'center' }}>
+                        <View style={styles.iconContainer}>
                             <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-flower-64.png')} />
                             <Text style={styles.iconText}>Hoa</Text>
                         </View>
                     </View>
                     <View style={styles.cateIcon}>
-                        <View style={{ alignItems: 'center' }}>
+                        <View style={styles.iconContainer}>
                             <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-boba-96.png')} />
                             <Text style={styles.iconText}>Trà sữa</Text>
                         </View>
-                        <View style={{ alignItems: 'center' }}>
+                        <View style={styles.iconContainer}>
                             <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-cart-64.png')} />
                             <Text style={styles.iconText}>Siêu thị</Text>
                         </View>
-                        <View style={{ alignItems: 'center' }}>
+                        <View style={styles.iconContainer}>
                             <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-medicine-50.png')} />
                             <Text style={styles.iconText}>Thuốc</Text>
                         </View>
-                        <View style={{ alignItems: 'center' }}>
+                        <View style={styles.iconContainer}>
                             <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-pet-50.png')} />
                             <Text style={styles.iconText}>Thú cưng</Text>
                         </View>
