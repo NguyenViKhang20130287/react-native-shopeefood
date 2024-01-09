@@ -25,44 +25,60 @@ const styles = StyleSheet.create({
     color: "#F95030",
   },
   blank: {
+    flexDirection: "column",
+    alignItems: "center",
+    paddingVertical: 50,
+
+  },
+  blank_heading: {
     marginTop: 10,
-    marginBottom: 200,
-    marginLeft: 10,
+    fontSize: 17,
+    color: '#595959',
+    fontWeight: "500"
+  },
+  blank_info: {
+    marginTop: 10,
+    marginHorizontal: 40,
+    textAlign: 'center',
+    color: '#757575'
+  },
+  noOrderImage: {
+    height: 100,
+    width: 100,
+    tintColor: 'orange'
   },
 
   suggestion: {
-    marginTop: 10,
+    paddingHorizontal: 10,
     fontWeight: "500",
-    // flexDirection: "column"
+    backgroundColor: 'white'
   },
 
   title_top: {
-    marginLeft: 10,
+    paddingTop: 10,
     fontSize: 45,
     fontWeight: "500",
   },
 
   food: {
+    marginTop: 15,
     display: "flex",
     flexDirection: "row",
-    marginTop: 5,
-    borderBottomWidth: 0.2,
-    borderBottomColor: "gray",
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#E8E8E8'
   },
 
   image: {
-    marginLeft: 10,
     marginBottom: 15,
   },
 
   foods_image: {
     width: 100,
     height: 100,
-    borderRadius: 5,
   },
 
   details: {
-    marginLeft: 10,
+    // marginLeft: 10,
   },
 
   food_name: {
@@ -76,7 +92,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     padding: 5,
-    marginLeft: 30,
+    marginLeft: 5,
   },
 
   distance: {
@@ -96,9 +112,8 @@ const styles = StyleSheet.create({
 
   title_suggestion: {
     fontSize: 16,
-    color: "gray",
+    color: "#595959",
     fontWeight: "bold",
-    marginBottom: 10,
   },
 
   food_tilte: {
@@ -107,14 +122,14 @@ const styles = StyleSheet.create({
   },
 
   rating_text: {
-    padding: 3,
+    paddingVertical: 3,
     fontWeight: "400",
     color: "gray",
     marginRight: 8,
   },
 
   distance_text: {
-    padding: 3,
+    paddingVertical: 3,
     marginLeft: 8,
     marginRight: 8,
     fontWeight: "400",
@@ -122,7 +137,7 @@ const styles = StyleSheet.create({
   },
 
   times_text: {
-    padding: 3,
+    paddingVertical: 3,
     marginLeft: 8,
     fontWeight: "400",
     color: "gray",
@@ -133,22 +148,30 @@ const styles = StyleSheet.create({
     display: "flex",
     marginBottom: 10,
     marginTop: 10,
+    backgroundColor: "white"
   },
 
   content_title: {
     display: "flex",
     flexDirection: "row",
-    marginBottom: 5,
-    marginLeft: 10,
+    justifyContent: "space-between",
+    marginHorizontal: 10,
+    paddingVertical: 10
   },
 
   title_order: {
     flexBasis: "70%",
+    flexDirection: "row",
+    alignItems: "center",
   },
 
-  id_title: {
-    fontSize: 18,
+  cate_title: {
+    fontSize: 16,
     fontWeight: "bold",
+  },
+  id_title:{
+    fontSize: 16,
+    color: "#707070"
   },
 
   time_title: {
@@ -160,6 +183,9 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     marginLeft: 10,
+    borderBottomWidth: 1,
+    borderColor: "#E8E8E8",
+    paddingBottom: 15
   },
 
   content_info: {
@@ -173,44 +199,41 @@ const styles = StyleSheet.create({
   },
 
   content_price: {
-    marginTop: 10,
+    marginTop: 15,
     display: "flex",
     flexDirection: "row",
+    alignItems: "center"
   },
 
   price_text: {
-    padding: 5,
     fontWeight: "bold",
     fontSize: 15,
   },
 
   quantity_text: {
-    padding: 5,
     fontWeight: "400",
     fontSize: 15,
     color: "gray",
   },
 
   payment_text: {
-    padding: 5,
     fontWeight: "400",
     fontSize: 15,
     color: "gray",
   },
 
   status: {
-    marginTop: 15,
-    marginBottom: 30,
+    marginTop: 10,
+    marginBottom: 25,
     display: "flex",
-    borderTopWidth: 1,
-    borderTopColor: "gray",
   },
 
   status_now: {
-    marginLeft: 10,
     display: "flex",
     flexDirection: "row",
     marginTop: 10,
+    justifyContent: "space-between",
+    marginHorizontal: 10,
   },
 
   now1: {
@@ -219,18 +242,20 @@ const styles = StyleSheet.create({
 
   status_type: {
     fontWeight: "500",
-    color: "gray",
+    color: "#707070",
   },
 
   status_time: {
     marginTop: 10,
-    marginLeft: "30%",
+    marginRight: 10,
     display: "flex",
     flexDirection: "row",
+    justifyContent: "flex-end"
   },
 
   time_text: {
-    fontWeight: "bold",
+    fontWeight: "500",
+    fontSize: 13
   },
 
   // history
