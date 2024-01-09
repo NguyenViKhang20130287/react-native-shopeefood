@@ -15,9 +15,17 @@ export default function LoginScreen({ navigation }) {
     };
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const showModal = () => {
+        setModalVisible(true)
+        setTimeout(() => {
+            setModalVisible(false)
+        }, 1500)
+    }
     const loginAPI = () => {
-        const apiUrl = "http://localhost:8080/api/user/login";
+        if (email === '' || password === '') {
+            showModal()
+        }
+        const apiUrl = "http://localhost:8080/api/user/login";  
         const requestData = {
             email: email,
             password: password
@@ -30,20 +38,19 @@ export default function LoginScreen({ navigation }) {
         })
         .then(async response => {
             if (response.data.statusCodeValue === 200) {
-                await AsyncStorage.setItem("user_id", JSON.stringify(response.data.body.body.id))
-                navigation.navigate('Tôi')
+                if (response.data.body.body.id) {
+                    await AsyncStorage.setItem("user_id", JSON.stringify(response.data.body.body.id))
+                    navigation.navigate('Tôi')
+                } else {
+                    showModal()
+                }
+                
             } else {
-                setModalVisible(true)
-                setTimeout(() => {
-                    setModalVisible(false)
-                }, 1500)
+                showModal()
             }
         })
         .catch(error => {
-            setModalVisible(true)
-                setTimeout(() => {
-                    setModalVisible(false)
-                }, 1500)
+            console.log(error)
         });
     }
     return (
