@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import styles from './MeScreen.style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 
 const Action = ({ icon, title, color, screen }) => {
     return (
@@ -30,6 +31,7 @@ const Action = ({ icon, title, color, screen }) => {
 }
 
 export default function MeScreen({ navigation }) {
+    const isFocused = useIsFocused();
     const [showContent, setShowContent] = useState(false);
     const [userId, setUserId] = useState(null);
     const LogOut = async () => {
@@ -46,7 +48,7 @@ export default function MeScreen({ navigation }) {
     }
     useEffect(() => {
         getUserId();
-    }, [userId]);
+    }, [isFocused]);
     return (
         <SafeAreaView style={styles.container}>
             <View>
