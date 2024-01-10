@@ -1,3 +1,4 @@
+import axios from 'axios';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -5,11 +6,13 @@ import { Alert, TextInput } from 'react-native';
 import { Pressable, StyleSheet } from 'react-native';
 import { Text, View } from 'react-native';
 
-export default function UpdateAddress({ navigation }) {
-    const [input1, setInput1] = useState('abc');
-    const [input2, setInput2] = useState('def');
-    const [input3, setInput3] = useState('dfd');
-    const [input4, setInput4] = useState('ffgg');
+export default function UpdateAddress({ route, navigation }) {
+    const { addressInfo } = route.params;
+    const [input1, setInput1] = useState(addressInfo.building_flnum);
+    const [input2, setInput2] = useState(addressInfo.hnum_sname);
+    const [input3, setInput3] = useState(addressInfo.ward_commune);
+    const [input4, setInput4] = useState(addressInfo.county_district);
+    const [input5, setInput5] = useState(addressInfo.province_city);
     const [saveButtonEnabled, setSaveButtonEnabled] = useState(false);
 
     const handleDeletePress = () => {
@@ -37,14 +40,15 @@ export default function UpdateAddress({ navigation }) {
     };
 
     const checkSaveButton = () => {
-        setSaveButtonEnabled(input1 !== '' && input2 !== '' && input3 !== '' && input4 !== '');
+        setSaveButtonEnabled(input2 !== '' && input3 !== '' && input4 !== '' && input5 !== '');
     };
 
-    // Sử dụng useEffect để theo dõi sự thay đổi của input1, input2, input3, input4
+    // Sử dụng useEffect để theo dõi sự thay đổi của input2, input3, input4, input5
     useEffect(() => {
         checkSaveButton();
-    }, [input1, input2, input3, input4]);
+    }, [input2, input3, input4, input5]);
 
+    console.log(input1);
     const handleSave = () => {
         console.log('Dữ liệu đã được lưu!');
     };
@@ -58,16 +62,16 @@ export default function UpdateAddress({ navigation }) {
             }}>
                 <View style={{ backgroundColor: 'white', marginTop: 3 }}>
                     <View style={styles.action}>
-                        <Text>Đăng Khoa</Text>
+                        <Text>{addressInfo.user.full_name}</Text>
                     </View>
                     <View style={styles.action}>
-                        <Text>08397179739</Text>
+                        <Text>{addressInfo.user.phone_number}</Text>
                     </View>
                 </View>
                 <View style={{ backgroundColor: 'white', marginTop: 10 }}>
                     <View style={styles.action}>
                         <TextInput
-                            placeholder='Số nhà, Tên đường'
+                            placeholder='Tòa nhà, Số tầng (Không bắt buộc)'
                             placeholderTextColor='#BCBCBC'
                             value={input1}
                             onChangeText={(text) => {
@@ -77,7 +81,7 @@ export default function UpdateAddress({ navigation }) {
                     </View>
                     <View style={styles.action}>
                         <TextInput
-                            placeholder='Xã, Phường'
+                            placeholder='Số nhà, Tên đường'
                             placeholderTextColor='#BCBCBC'
                             value={input2}
                             onChangeText={(text) => {
@@ -87,7 +91,7 @@ export default function UpdateAddress({ navigation }) {
                     </View>
                     <View style={styles.action}>
                         <TextInput
-                            placeholder='Quận, Huyện'
+                            placeholder='Xã, Phường'
                             placeholderTextColor='#BCBCBC'
                             value={input3}
                             onChangeText={(text) => {
@@ -97,11 +101,21 @@ export default function UpdateAddress({ navigation }) {
                     </View>
                     <View style={styles.action}>
                         <TextInput
-                            placeholder='Tỉnh, Thành phố'
+                            placeholder='Quận, Huyện'
                             placeholderTextColor='#BCBCBC'
                             value={input4}
                             onChangeText={(text) => {
                                 setInput4(text);
+                                checkSaveButton();
+                            }} />
+                    </View>
+                    <View style={styles.action}>
+                        <TextInput
+                            placeholder='Tỉnh, Thành phố'
+                            placeholderTextColor='#BCBCBC'
+                            value={input5}
+                            onChangeText={(text) => {
+                                setInput5(text);
                                 checkSaveButton();
                             }} />
                     </View>
@@ -150,7 +164,7 @@ const styles = StyleSheet.create({
         paddingRight: 15
     },
     alertTitle: {
-        color: 'orange', // Màu cam cho tiêu đề
+        color: 'orange',
         fontWeight: 'bold',
     }
 });
