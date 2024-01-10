@@ -28,6 +28,7 @@ export default ConfirmRegister = ({navigation}) => {
   const [email, setEmail] = useState([])
   const [modalVisible, setModalVisible] = useState(false);
   const [textModal, setTextModal] = useState('');
+  const [iconModal, setIconModal] = useState('')
 
   useEffect(() => {
     const getRegistrationInformation = async () => {
@@ -35,14 +36,15 @@ export default ConfirmRegister = ({navigation}) => {
     }
     getRegistrationInformation();
   }, [email.email])
-  const showModal = (text) => {
+  const showModal = (text, icon) => {
     setTextModal(text)
+    setIconModal(icon)
     setModalVisible(true)
     setTimeout(() => {
         setModalVisible(false)
         setTextModal('')
     }, 1500)
-  }
+}
   useEffect(()=> {
     if (value.length === 6) {
       const apiUrl = 'http://localhost:8080/api/user/register/verify-otp';
@@ -59,10 +61,10 @@ export default ConfirmRegister = ({navigation}) => {
       .then(async response => {
         if (response.data.body.statusCodeValue === 200) {
           await AsyncStorage.removeItem('register')
-          showModal('Đăng ký thành công')
+          showModal('Đăng ký thành công', 'checkmark-circle-outline')
           navigation.navigate('Login')
         } else {
-          showModal('Sai mã xác minh')
+          showModal('Sai mã xác minh', 'warning-outline')
         }
       })
       .catch(error => {
@@ -109,7 +111,7 @@ export default ConfirmRegister = ({navigation}) => {
       >
         <View style={userStyle.centeredView}>
           <View style={userStyle.modalView}>
-            <Ionicons name='warning-outline' size={50} color={'white'} />
+            <Ionicons name={iconModal} size={50} color={'white'} />
             <Text style={userStyle.modalText}>{textModal}</Text>
           </View>
         </View>
