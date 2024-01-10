@@ -10,6 +10,7 @@ import NoFavoriteItem from '../../../components/NoFavoriteItem';
 import styles from './LikesScreen.style';
 import { useEffect } from 'react';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LikesScreen({ navigation }) {
     const layout = useWindowDimensions();
@@ -23,7 +24,6 @@ export default function LikesScreen({ navigation }) {
     const [favoriteStore, setFavoriteStore] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [mainCate, setMainCate] = useState([]);
-
 
     const renderTabBar = props => {
         const [isOpen, setIsOpen] = useState(false);
@@ -50,16 +50,20 @@ export default function LikesScreen({ navigation }) {
         useEffect(() => {
             const fetchData = async () => {
                 try {
-                    let response;
-                    if (currentValue === '8') {
-                        response = await axios.get(`http://localhost:8080/api/user/1/favorite-stores`);
-                    } else {
-                        response = await axios.get(`http://localhost:8080/api/user/1/favorite-stores/${currentValue}`);
+                    const user_id = await AsyncStorage.getItem('user_id');
+                    if (user_id) {
+                        console.log('User id: ', user_id);
+                        let response;
+                        if (currentValue === '8') {
+                            response = await axios.get(`http://localhost:8080/api/user/${user_id}/favorite-stores`);
+                        } else {
+                            response = await axios.get(`http://localhost:8080/api/user/${user_id}/favorite-stores/${currentValue}`);
+                        }
+                        const data = response.data;
+                        setFavoriteStore(data);
+                        setIsLoading(false);
+                        console.log(data);
                     }
-                    const data = response.data;
-                    setFavoriteStore(data);
-                    setIsLoading(false);
-                    console.log(data);
                 } catch (error) {
                     console.error('Error fetching data:', error);
                 }
@@ -153,24 +157,24 @@ export default function LikesScreen({ navigation }) {
 
 
     const NearMeRoute = () => {
-        if (hasData) {
-            return (<ScrollView style={styles.hasDataContainer}>
-                {/* <FavoriteItem
-                    foodName={'Steak Bin & Pizza - Dĩ An'}
-                    imageURL={require('../../../../assets/product/az.jpg')}
-                    hashtags={['MãGiảmGiá15%', 'FlashSale']}
-                /> */}
+        // if (hasData) {
+        //     return (<ScrollView style={styles.hasDataContainer}>
+        //         <FavoriteItem
+        //             foodName={'Steak Bin & Pizza - Dĩ An'}
+        //             imageURL={require('../../../../assets/product/az.jpg')}
+        //             hashtags={['MãGiảmGiá15%', 'FlashSale']}
+        //         />
 
-                <View style={{ paddingVertical: 25, alignItems: 'center', backgroundColor: '#FAFAFA' }}>
-                    <Text style={{ color: '#737373' }}>Đã hiển thị tất cả kết quả</Text>
-                </View>
-            </ScrollView>
-            );
-        } else {
-            return (
-                <NoFavoriteItem />
-            );
-        }
+        //         <View style={{ paddingVertical: 25, alignItems: 'center', backgroundColor: '#FAFAFA' }}>
+        //             <Text style={{ color: '#737373' }}>Đã hiển thị tất cả kết quả</Text>
+        //         </View>
+        //     </ScrollView>
+        //     );
+        // } else {
+        return (
+            <NoFavoriteItem />
+        );
+        // }
     }
 
     const renderScene = SceneMap({

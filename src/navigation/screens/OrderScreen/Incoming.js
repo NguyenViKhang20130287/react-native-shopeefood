@@ -14,7 +14,7 @@ import styles from "./OrderScreen.style";
 import { useState } from "react";
 
 const Incoming = () => {
-  const [hasData, setHasData] = useState(true);
+  const [hasData, setHasData] = useState(false);
   return (
     <ScrollView style={styles.container}>
       {hasData ?
