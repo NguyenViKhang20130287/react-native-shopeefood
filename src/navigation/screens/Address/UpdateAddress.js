@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import * as React from 'react';
 import { useEffect } from 'react';
@@ -8,6 +9,7 @@ import { Text, View } from 'react-native';
 
 export default function UpdateAddress({ route, navigation }) {
     const { addressInfo } = route.params;
+    console.log(addressInfo.id);
     const [input1, setInput1] = useState(addressInfo.building_flnum);
     const [input2, setInput2] = useState(addressInfo.hnum_sname);
     const [input3, setInput3] = useState(addressInfo.ward_commune);
@@ -27,7 +29,8 @@ export default function UpdateAddress({ route, navigation }) {
                 {
                     text: 'Xóa',
                     onPress: () => {
-                        // Thực hiện xóa địa chỉ ở đây
+                        handleDeleteAddress(addressInfo.id);
+                        navigation.navigate('Address', { refresh: true });
                         console.log('Địa chỉ đã được xóa!');
                     },
                     style: 'destructive',
@@ -48,10 +51,49 @@ export default function UpdateAddress({ route, navigation }) {
         checkSaveButton();
     }, [input2, input3, input4, input5]);
 
-    console.log(input1);
-    const handleSave = () => {
-        console.log('Dữ liệu đã được lưu!');
-    };
+
+
+    const handleUpdateAddress = async () => {
+        try {
+            const user_id = await AsyncStorage.getItem('user_id');
+            if (user_id) {
+                console.log(user_id);
+                const requestData = {
+                    id: addressInfo.id,
+                    user: {
+                        id: user_id
+                    },
+                    building_flnum: input1,
+                    hnum_sname: input2,
+                    ward_commune: input3,
+                    county_district: input4,
+                    province_city: input5
+                };
+                const response = await axios.put(`http://localhost:8080/api/addresses/update`,
+                    requestData,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                );
+                console.log('Địa chỉ đã được cập nhật:', response.data);
+                navigation.navigate('Address', { refresh: true });
+            }
+        } catch (error) {
+            console.error('Lỗi khi cập nhật địa chỉ:', error);
+        }
+    }
+    const handleDeleteAddress = async (address_id) => {
+        try {
+            const response = await axios.delete(`http://localhost:8080/api/addresses/remove?address_id=${address_id}`);
+            console.log('Địa chỉ đã được xóa:', response.data);
+            navigation.navigate('Address', { refresh: true });
+
+        } catch (error) {
+            console.error('Lỗi khi xóa địa chỉ:', error);
+        }
+    }
     return (
         <View style={{ flex: 1, position: 'relative' }}>
             <View style={{
@@ -138,7 +180,7 @@ export default function UpdateAddress({ route, navigation }) {
                 right: 0
             }}>
                 <Pressable backgroundColor={saveButtonEnabled ? '#ED4D2D' : '#E8E8E8'}
-                    onPress={handleSave} disabled={!saveButtonEnabled}
+                    onPress={handleUpdateAddress} disabled={!saveButtonEnabled}
                     style={{ padding: 13, alignItems: 'center', borderRadius: 3, }}>
                     <Text style={{ fontSize: 16, color: saveButtonEnabled ? 'white' : '#ACACAC' }}>Lưu</Text>
                 </Pressable>
