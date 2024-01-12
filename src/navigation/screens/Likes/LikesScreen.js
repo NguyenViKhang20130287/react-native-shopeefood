@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ScrollView, TouchableOpacity, View, useWindowDimensions } from 'react-native';
+import { RefreshControl, ScrollView, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { useState } from 'react';
 import { Text } from 'react-native';
@@ -13,6 +13,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LikesScreen({ navigation }) {
+
     const layout = useWindowDimensions();
     const [index, setIndex] = useState(0);
     const [routes] = useState([
@@ -24,6 +25,14 @@ export default function LikesScreen({ navigation }) {
     const [favoriteStore, setFavoriteStore] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [mainCate, setMainCate] = useState([]);
+
+    const [refresh, setRefresh] = useState(false);
+    const pullToRefresh = () => {
+        setRefresh(true);
+        setTimeout(() => {
+            setRefresh(false);
+        }, 1000)
+    }
 
     const renderTabBar = props => {
         const [isOpen, setIsOpen] = useState(false);
@@ -70,7 +79,7 @@ export default function LikesScreen({ navigation }) {
             };
 
             fetchData();
-        }, [currentValue]);
+        }, [currentValue, refresh]);
 
         const handleItemChange = (item) => {
             setCurrentValue(item.value);
@@ -131,11 +140,12 @@ export default function LikesScreen({ navigation }) {
 
     const LatestRoute = () => {
         if (hasData) {
-            return (<ScrollView style={styles.hasDataContainer}>
+            return (<ScrollView refreshControl={<RefreshControl refreshing={refresh} onRefresh={() => pullToRefresh()} />} style={styles.hasDataContainer}>
                 {!isLoading ? (
                     favoriteStore && favoriteStore.map((fa, index) => (
                         <FavoriteItem
                             key={index}
+                            id={fa.id}
                             storeName={fa.name}
                             imageURL={fa.image}
                         />
