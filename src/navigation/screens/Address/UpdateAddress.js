@@ -8,8 +8,10 @@ import { Pressable, StyleSheet } from 'react-native';
 import { Text, View } from 'react-native';
 
 export default function UpdateAddress({ route, navigation }) {
-    const { addressInfo } = route.params;
-    console.log(addressInfo.id);
+    const addressInfo = route.params.addressInfo;
+    const source = route.params.source;
+    console.log(addressInfo);
+    console.log(source);
     const [input1, setInput1] = useState(addressInfo.building_flnum);
     const [input2, setInput2] = useState(addressInfo.hnum_sname);
     const [input3, setInput3] = useState(addressInfo.ward_commune);
@@ -30,8 +32,7 @@ export default function UpdateAddress({ route, navigation }) {
                     text: 'Xóa',
                     onPress: () => {
                         handleDeleteAddress(addressInfo.id);
-                        navigation.navigate('Address', { refresh: true });
-                        console.log('Địa chỉ đã được xóa!');
+                        navigation.navigate(source, { refresh: new Date().getTime() });
                     },
                     style: 'destructive',
                 },
@@ -78,7 +79,7 @@ export default function UpdateAddress({ route, navigation }) {
                     }
                 );
                 console.log('Địa chỉ đã được cập nhật:', response.data);
-                navigation.navigate('Address', { refresh: true });
+                navigation.navigate(source, { refresh: new Date().getTime() });
             }
         } catch (error) {
             console.error('Lỗi khi cập nhật địa chỉ:', error);
@@ -88,7 +89,6 @@ export default function UpdateAddress({ route, navigation }) {
         try {
             const response = await axios.delete(`http://localhost:8080/api/addresses/remove?address_id=${address_id}`);
             console.log('Địa chỉ đã được xóa:', response.data);
-            navigation.navigate('Address', { refresh: true });
 
         } catch (error) {
             console.error('Lỗi khi xóa địa chỉ:', error);

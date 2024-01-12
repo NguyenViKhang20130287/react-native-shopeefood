@@ -7,7 +7,9 @@ import { TextInput } from 'react-native';
 import { Pressable, StyleSheet } from 'react-native';
 import { Text, View } from 'react-native';
 
-export default function AddNewAddress({ navigation }) {
+export default function AddNewAddress({ route, navigation }) {
+    const source = route.params.source;
+    console.log(source);
     const [input1, setInput1] = useState('');
     const [input2, setInput2] = useState('');
     const [input3, setInput3] = useState('');
@@ -48,7 +50,7 @@ export default function AddNewAddress({ navigation }) {
                     }
                 );
                 console.log('Địa chỉ mới đã được thêm:', response.data);
-                navigation.navigate('Address', { refresh: true });
+                navigation.navigate(source, { refresh: new Date().getTime() });
             }
         } catch (error) {
             console.error('Lỗi khi thêm địa chỉ mới:', error);
