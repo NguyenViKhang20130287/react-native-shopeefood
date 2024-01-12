@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
         // backgroundColor: '#fff'
     },
     searchInputContainer: {
-        paddingTop: 30,
+        // paddingTop: 30,
         backgroundColor: '#fff',
         flexDirection: 'row',
         paddingVertical: 10,

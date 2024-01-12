@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     topzone: {
         paddingHorizontal: 5,
         paddingVertical: 10,
-        paddingTop: 20,
+        paddingTop: 15,
         backgroundColor: '#fff',
     },
 

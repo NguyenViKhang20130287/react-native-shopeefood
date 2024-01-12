@@ -14,6 +14,7 @@ import ConfirmRegisterScreen from './src/navigation/screens/user/ConfirmRegister
 import Setting from './src/navigation/screens/Setting/Setting';
 import DeleteAccount from './src/navigation/screens/Setting/DeleteAccount';
 import PickAddress from './src/navigation/screens/Address/PickAddress';
+import SearchScreen from './src/navigation/screens/Search/SearchScreen';
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -117,6 +118,14 @@ export default function App() {
           <Stack.Screen name="PickAddress" component={PickAddress}
           options={{
             headerTitle: 'Địa chỉ giao hàng',
+            headerTintColor: 'orangered',
+            headerTitleStyle: {
+              color: 'black',
+            },
+          }} />
+          <Stack.Screen name="Search" component={SearchScreen}
+          options={{
+            headerTitle: 'Tìm kiếm',
             headerTintColor: 'orangered',
             headerTitleStyle: {
               color: 'black',

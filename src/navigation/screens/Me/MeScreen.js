@@ -24,7 +24,7 @@ const Action = ({ icon, title, color, screen }) => {
                 <Text>{title}</Text>
             </View>
             <Ionicons size={20} name={'chevron-forward'} color={'gray'} />
-            
+
         </View>
 
     );
@@ -36,7 +36,7 @@ export default function MeScreen({ navigation }) {
     const [userId, setUserId] = useState(null);
     const LogOut = async () => {
         await AsyncStorage.removeItem('user_id');
-        setUserId(null) 
+        setUserId(null)
         setShowContent(false)
     }
     const getUserId = async () => {
@@ -57,16 +57,15 @@ export default function MeScreen({ navigation }) {
                         <View style={styles.userIcon}>
                             <Ionicons name='person' style={styles.icon} />
                         </View>
-                        {showContent && (<Text style={{ color: 'white', marginLeft: 10, fontSize: 15, fontWeight: 'bold' }}>nndangkhoa</Text>)}
+                        {showContent && (<Text style={{ color: 'white', marginLeft: 10, fontSize: 20, fontWeight: 'bold' }}>nndangkhoa</Text>)}
                     </View>
-                    {!userId ? 
-                    (<View style={styles.loginRegister}>
-                        <Pressable style={styles.button} onPress={() => navigation.navigate('Login')}>
-                            <Text style={styles.text}>Đăng nhập / Đăng ký</Text>
-                        </Pressable>
-                        {/* <Pressable style={styles.button} onPress={() => navigation.navigate('LoginScreen')}></Pressable> */}
-                    </View>) : null}
-                    
+                    {!userId ?
+                        (<View style={styles.loginRegister}>
+                            <Pressable style={styles.button} onPress={() => navigation.navigate('Login')}>
+                                <Text style={styles.text}>Đăng nhập / Đăng ký</Text>
+                            </Pressable>
+                        </View>) : null}
+
                 </View>
             </View>
             <View>
