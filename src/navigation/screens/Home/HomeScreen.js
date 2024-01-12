@@ -13,6 +13,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 export default function HomeScreen({ route, navigation }) {
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            StatusBar.setBarStyle('dark-content');
+            StatusBar.setBackgroundColor('white');
+        });
+
+        return unsubscribe;
+    }, [navigation]);
     const [defaultAddress, setDefaultAddress] = useState({});
     const [refresh, setRefresh] = useState(false);
     const pullToRefresh = () => {
@@ -39,11 +47,10 @@ export default function HomeScreen({ route, navigation }) {
     }, [route.params?.refresh, refresh]);
     return (
         <ScrollView refreshControl={<RefreshControl refreshing={refresh} onRefresh={() => pullToRefresh()} />} style={styles.container} stickyHeaderIndices={[0]}>
-            <StatusBar barStyle="dark-content" backgroundColor="#F55C32" />
             {/* Top */}
             <View style={styles.topzone}>
                 <View style={styles.addressContainer}>
-                    <Text style={{ fontSize: 16, marginBottom: 8, color: '#595959' }}>Giao đến:</Text>
+                    <Text style={{ fontSize: 15, marginBottom: 8, color: '#595959', paddingHorizontal: 5 }}>Giao đến:</Text>
                     <View style={styles.address}>
                         <IconEntypo name='location-pin' size={25} color={'#F95030'} />
                         <Text onPress={() => navigation.navigate('PickAddress')} numberOfLines={1} ellipsizeMode="tail" style={styles.addressText}>
@@ -59,12 +66,14 @@ export default function HomeScreen({ route, navigation }) {
                         <MaterialIcons name='navigate-next' size={25} />
                     </View>
                 </View>
-                <View style={styles.searchContainer}>
-                    <View style={styles.search}>
-                        <EvilIcon name='search' size={25} color={'#757587'} />
-                        <TextInput style={styles.searchInput} placeholder='Ăn vặt thoả thích, Freeship 0Đ' />
+                <Pressable onPress={() => navigation.navigate('Search')}>
+                    <View style={styles.searchContainer}>
+                        <View style={styles.search}>
+                            <EvilIcon name='search' size={25} color={'#757587'} />
+                            <TextInput editable={false} style={styles.searchInput} placeholder='Ăn vặt thoả thích, Freeship 0Đ' />
+                        </View>
                     </View>
-                </View>
+                </Pressable>
             </View>
 
             {/* Center */}
