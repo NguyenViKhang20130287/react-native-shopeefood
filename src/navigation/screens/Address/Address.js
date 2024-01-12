@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, RefreshControl, StyleSheet, Text, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
 import { useEffect } from 'react';
@@ -9,6 +9,13 @@ import { ScrollView } from 'react-native';
 
 export default function Address({ route, navigation }) {
     const [addressList, setAddressList] = useState([]);
+    const [refresh, setRefresh] = useState(false);
+    const pullToRefresh = () => {
+        setRefresh(true);
+        setTimeout(() => {
+            setRefresh(false);
+        }, 500)
+    }
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -26,10 +33,10 @@ export default function Address({ route, navigation }) {
         };
 
         fetchData();
-    }, [route.params?.refresh]);
+    }, [route.params?.refresh, refresh]);
     return (
         <View style={{ flex: 1, position: 'relative' }}>
-            <ScrollView style={{
+            <ScrollView refreshControl={<RefreshControl refreshing={refresh} onRefresh={() => pullToRefresh()} />} style={{
                 position: 'absolute',
                 top: 0,
                 left: 0,
@@ -53,7 +60,7 @@ export default function Address({ route, navigation }) {
                             </View>
                         </View>
                         <View style={{ width: 100 }}>
-                            <Pressable onPress={() => navigation.navigate('UpdateAddress', { addressInfo: item })}><Text style={{ color: '#1084EB' }}>Sửa</Text></Pressable>
+                            <Pressable onPress={() => navigation.navigate('UpdateAddress', { source: 'Address', addressInfo: item })}><Text style={{ color: '#1084EB' }}>Sửa</Text></Pressable>
                         </View>
                     </View>
                 </View>))}
@@ -64,7 +71,7 @@ export default function Address({ route, navigation }) {
                 left: 0,
                 right: 0
             }}>
-                <Pressable onPress={() => navigation.navigate('AddAddress')} style={{ backgroundColor: '#ED4D2D', padding: 13, alignItems: 'center', borderRadius: 3 }}><Text style={{ color: 'white', fontSize: 15 }}>Thêm địa chỉ mới</Text></Pressable>
+                <Pressable onPress={() => navigation.navigate('AddAddress', { source: 'Address' })} style={{ backgroundColor: '#ED4D2D', padding: 13, alignItems: 'center', borderRadius: 3 }}><Text style={{ color: 'white', fontSize: 15 }}>Thêm địa chỉ mới</Text></Pressable>
             </View>
         </View>
 

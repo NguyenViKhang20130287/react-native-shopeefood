@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, TextInput, Image, ScrollView, Pressable, StatusBar } from 'react-native';
+import { View, Text, TextInput, Image, ScrollView, Pressable, StatusBar, RefreshControl } from 'react-native';
 import styles from './Home.style'
 
 import IconEntypo from 'react-native-vector-icons/Entypo';
@@ -7,10 +7,38 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import EvilIcon from 'react-native-vector-icons/EvilIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import BannerSlider from '../../../components/BannerSlider';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ route, navigation }) {
+    const [defaultAddress, setDefaultAddress] = useState({});
+    const [refresh, setRefresh] = useState(false);
+    const pullToRefresh = () => {
+        setRefresh(true);
+        setTimeout(() => {
+            setRefresh(false);
+        }, 1000)
+    }
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const user_id = await AsyncStorage.getItem('user_id');
+                if (user_id) {
+                    const response = await axios.get(`http://localhost:8080/api/addresses/default/user/${user_id}`);
+                    const data = response.data;
+                    setDefaultAddress(data);
+                    console.log(data);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+        fetchData();
+    }, [route.params?.refresh, refresh]);
     return (
-        <ScrollView style={styles.container} stickyHeaderIndices={[0]}>
+        <ScrollView refreshControl={<RefreshControl refreshing={refresh} onRefresh={() => pullToRefresh()} />} style={styles.container} stickyHeaderIndices={[0]}>
             <StatusBar barStyle="dark-content" backgroundColor="#F55C32" />
             {/* Top */}
             <View style={styles.topzone}>
@@ -19,7 +47,14 @@ export default function HomeScreen({ navigation }) {
                     <View style={styles.address}>
                         <IconEntypo name='location-pin' size={25} color={'#F95030'} />
                         <Text onPress={() => navigation.navigate('PickAddress')} numberOfLines={1} ellipsizeMode="tail" style={styles.addressText}>
-                            2/7c, Đường Số 106 Phường Tăng Nhơn Phú A, Thành Phố Thủ Đức, TP. Hồ Chí Minh
+                            {defaultAddress ? (
+                                <>
+                                    {defaultAddress.building_flnum ? `[${defaultAddress.building_flnum}] ` : ""}
+                                    {defaultAddress.hnum_sname}, {defaultAddress.ward_commune}, {defaultAddress.county_district}, {defaultAddress.province_city}
+                                </>
+                            ) : (
+                                'Vui lòng chọn địa chỉ'
+                            )}
                         </Text>
                         <MaterialIcons name='navigate-next' size={25} />
                     </View>
