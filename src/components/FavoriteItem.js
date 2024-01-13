@@ -1,9 +1,53 @@
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 import * as React from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-export default function FavoriteItem({ storeName, imageURL, rating, distance, deliveryTime }) {
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
+export default function FavoriteItem({ id, storeName, imageURL, rating, distance, deliveryTime }) {
     const [isClose, setIsClose] = useState(false);
+    const [isLike, setIsLike] = useState(true);
+    const handleToggleFavorite = async (item_id) => {
+        const user_id = await AsyncStorage.getItem('user_id');
+        if (!isLike) {
+            try {
+                if (user_id) {
+                    const requestData = {
+                        store: {
+                            id: item_id
+                        },
+                        user: {
+                            id: user_id
+                        },
+                    };
+                    const response = await axios.post(`http://localhost:8080/api/user/favorite-stores/add`,
+                        requestData,
+                        {
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        }
+                    );
+                    console.log('Cửa hàng đã được thêm vào yêu thích:', response.data);
+                    setIsLike(true);
+                }
+            } catch (error) {
+                console.error('Lỗi khi thêm của hàng yêu thích:', error);
+            }
+        } else {
+            try {
+                if (user_id) {
+                    const response = await axios.delete(`http://localhost:8080/api/user/favorite-stores/remove?store_id=${item_id}&user_id=${user_id}`);
+                    console.log('Cửa hàng đã được xóa khỏi yêu thích:', response.data);
+                    setIsLike(false);
+                }
+
+            } catch (error) {
+                console.error('Lỗi khi xóa cửa hàng yêu thích:', error);
+            }
+        }
+    }
     return (
         <View style={styles.container}>
             <View style={styles.topContainer}>
@@ -27,7 +71,7 @@ export default function FavoriteItem({ storeName, imageURL, rating, distance, de
                     ></Ionicons>{" "}{storeName}</Text>
                     <View style={styles.infoContainer}>
                         <Text style={[styles.infoText, { paddingRight: 6 }]}><Ionicons
-                            style={{fontSize: 14}}
+                            style={{ fontSize: 14 }}
                             name="star"
                             color={"orange"}
                         ></Ionicons>{rating} 4.7</Text>
@@ -38,7 +82,7 @@ export default function FavoriteItem({ storeName, imageURL, rating, distance, de
                 </View>
             </View>
             <View style={styles.heartContainer}>
-                <FontAwesome name={'heart'} size={18} color={'#EF4C2D'} />
+                <Pressable onPress={() => handleToggleFavorite(id)}><FontAwesome name={isLike ? "heart" : "heart-o"} size={18} color={'#EF4C2D'} /></Pressable>
             </View>
         </View>
     );

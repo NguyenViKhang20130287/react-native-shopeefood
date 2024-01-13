@@ -13,14 +13,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 export default function HomeScreen({ route, navigation }) {
-    useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            StatusBar.setBarStyle('dark-content');
-            StatusBar.setBackgroundColor('white');
-        });
-
-        return unsubscribe;
-    }, [navigation]);
     const [defaultAddress, setDefaultAddress] = useState({});
     const [refresh, setRefresh] = useState(false);
     const pullToRefresh = () => {
@@ -49,6 +41,7 @@ export default function HomeScreen({ route, navigation }) {
         <ScrollView refreshControl={<RefreshControl refreshing={refresh} onRefresh={() => pullToRefresh()} />} style={styles.container} stickyHeaderIndices={[0]}>
             {/* Top */}
             <View style={styles.topzone}>
+                <StatusBar backgroundColor={"white"} barStyle={"dark-content"}/>
                 <View style={styles.addressContainer}>
                     <Text style={{ fontSize: 15, marginBottom: 8, color: '#595959', paddingHorizontal: 5 }}>Giao đến:</Text>
                     <View style={styles.address}>

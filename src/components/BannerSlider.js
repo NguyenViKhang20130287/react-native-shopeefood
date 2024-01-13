@@ -6,7 +6,7 @@ const BannerSlider = () => {
     const images = [
         'https://i.pinimg.com/originals/49/1e/e9/491ee929be5ce1c3eb05ff30ec6ed247.jpg',
         'https://i.pinimg.com/originals/6c/62/54/6c6254f6a76076df97a104b8027bdadb.jpg',
-        'https://i.pinimg.com/736x/49/1e/e9/491ee929be5ce1c3eb05ff30ec6ed247.jpg',
+        "https://i.pinimg.com/originals/aa/57/29/aa57295924dab76c441b0c376bcf75fc.jpg",
         'https://img.gotit.vn/compress/brand/images/1672389085_WUTYF.png'
     ];
 
