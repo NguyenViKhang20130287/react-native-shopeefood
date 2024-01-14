@@ -13,6 +13,7 @@ import ForgotPassword from './src/navigation/screens/user/ForgotPasswordScreen';
 import ConfirmRegisterScreen from './src/navigation/screens/user/ConfirmRegisterScreen';
 import Setting from './src/navigation/screens/Setting/Setting';
 import DeleteAccount from './src/navigation/screens/Setting/DeleteAccount';
+import UserDetail from './src/navigation/screens/user/UserDetail';
 import PickAddress from './src/navigation/screens/Address/PickAddress';
 import SearchScreen from './src/navigation/screens/Search/SearchScreen';
 
@@ -110,6 +111,14 @@ export default function App() {
         <Stack.Screen name="ConfirmRegister" component={ConfirmRegisterScreen}
           options={{
             headerTitle: 'Xác nhận đăng ký',
+            headerTintColor: 'orangered',
+            headerTitleStyle: {
+              color: 'black',
+            },
+          }} />
+          <Stack.Screen name="UserDetail" component={UserDetail}
+          options={{
+            headerTitle: 'Sửa hồ sơ',
             headerTintColor: 'orangered',
             headerTitleStyle: {
               color: 'black',
