@@ -38,6 +38,7 @@ export default function LoginScreen({ navigation }) {
         })
         .then(async response => {
             if (response.data.statusCodeValue === 200) {
+                console.log(response.data);
                 if (response.data.body.body.id) {
                     await AsyncStorage.setItem("user_id", JSON.stringify(response.data.body.body.id))
                     navigation.navigate('Tôi')

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, TabView, TouchableOpacity, View, useWindowDimensions, Image } from 'react-native';
-import { NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { useState } from 'react';
 import { Text } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -8,25 +8,10 @@ import styles from './OrderScreen.style';
 
 
 export default function ContentOrder({ navigation }) {
- 
+
 
     return (
         <View style={styles.container}>
-
-            {/* <View style={styles.menubar}>
-                <View style={styles.element}>
-                    <Text style={{ padding: 10 }}></Text>
-                </View>
-                <View style={styles.element}>
-                    <Text style={{ padding: 10 }}></Text>
-                </View>
-                <View style={styles.element}>
-                    <Text style={{ padding: 10 }}></Text>
-                </View>
-                <View style={styles.element}>
-                    <Text style={{ padding: 10 }}></Text>
-                </View>
-            </View> */}
             <View style={styles.blank}>
                 <View style={styles.blank_image}>
                     <Image></Image>
@@ -44,8 +29,8 @@ export default function ContentOrder({ navigation }) {
                 </View>
                 <View style={styles.food}>
                     <View style={styles.image}>
-                    <Image style={styles.foods_image}
-                                    source={require('../../../assets/product/prod_1.jpeg')} />
+                        <Image style={styles.foods_image}
+                            source={require('../../../assets/product/prod_1.jpeg')} />
                     </View>
                     <View style={styles.details}>
                         <View style={styles.food_name}>
@@ -65,7 +50,7 @@ export default function ContentOrder({ navigation }) {
                     </View>
                 </View>
             </View>
-            
+
         </View>
     );
 }

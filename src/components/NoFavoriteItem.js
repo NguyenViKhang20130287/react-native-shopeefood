@@ -10,7 +10,7 @@ export default function NoFavoriteItem() {
                     style={{ width: 120, height: 120, tintColor: 'orange' }}
                 />
                 <Text style={{ marginTop: 10, fontSize: 17, color: '#595959', fontWeight: 500 }}>Yêu Quán từ món đầu tiên</Text>
-                <Text style={{ marginTop: 10, margin: 40, textAlign: 'center', color: '#757575' }}>Món ngon hấp dẫn chiếm trọn trái tim! Thả tim ngay để lưu quán bạn yêu nhé.</Text>
+                <Text style={{ marginTop: 10, marginHorizontal: 40, textAlign: 'center', color: '#757575' }}>Món ngon hấp dẫn chiếm trọn trái tim! Thả tim ngay để lưu quán bạn yêu nhé.</Text>
             </View>
         </View>
     );

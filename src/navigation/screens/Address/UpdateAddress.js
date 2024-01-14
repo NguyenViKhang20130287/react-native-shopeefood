@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -5,11 +7,16 @@ import { Alert, TextInput } from 'react-native';
 import { Pressable, StyleSheet } from 'react-native';
 import { Text, View } from 'react-native';
 
-export default function UpdateAddress({ navigation }) {
-    const [input1, setInput1] = useState('abc');
-    const [input2, setInput2] = useState('def');
-    const [input3, setInput3] = useState('dfd');
-    const [input4, setInput4] = useState('ffgg');
+export default function UpdateAddress({ route, navigation }) {
+    const addressInfo = route.params.addressInfo;
+    const source = route.params.source;
+    console.log(addressInfo);
+    console.log(source);
+    const [input1, setInput1] = useState(addressInfo.building_flnum);
+    const [input2, setInput2] = useState(addressInfo.hnum_sname);
+    const [input3, setInput3] = useState(addressInfo.ward_commune);
+    const [input4, setInput4] = useState(addressInfo.county_district);
+    const [input5, setInput5] = useState(addressInfo.province_city);
     const [saveButtonEnabled, setSaveButtonEnabled] = useState(false);
 
     const handleDeletePress = () => {
@@ -24,8 +31,8 @@ export default function UpdateAddress({ navigation }) {
                 {
                     text: 'Xóa',
                     onPress: () => {
-                        // Thực hiện xóa địa chỉ ở đây
-                        console.log('Địa chỉ đã được xóa!');
+                        handleDeleteAddress(addressInfo.id);
+                        navigation.navigate(source, { refresh: new Date().getTime() });
                     },
                     style: 'destructive',
                 },
@@ -37,17 +44,56 @@ export default function UpdateAddress({ navigation }) {
     };
 
     const checkSaveButton = () => {
-        setSaveButtonEnabled(input1 !== '' && input2 !== '' && input3 !== '' && input4 !== '');
+        setSaveButtonEnabled(input2 !== '' && input3 !== '' && input4 !== '' && input5 !== '');
     };
 
-    // Sử dụng useEffect để theo dõi sự thay đổi của input1, input2, input3, input4
+    // Sử dụng useEffect để theo dõi sự thay đổi của input2, input3, input4, input5
     useEffect(() => {
         checkSaveButton();
-    }, [input1, input2, input3, input4]);
+    }, [input2, input3, input4, input5]);
 
-    const handleSave = () => {
-        console.log('Dữ liệu đã được lưu!');
-    };
+
+
+    const handleUpdateAddress = async () => {
+        try {
+            const user_id = await AsyncStorage.getItem('user_id');
+            if (user_id) {
+                console.log(user_id);
+                const requestData = {
+                    id: addressInfo.id,
+                    user: {
+                        id: user_id
+                    },
+                    building_flnum: input1,
+                    hnum_sname: input2,
+                    ward_commune: input3,
+                    county_district: input4,
+                    province_city: input5
+                };
+                const response = await axios.put(`http://localhost:8080/api/addresses/update`,
+                    requestData,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                );
+                console.log('Địa chỉ đã được cập nhật:', response.data);
+                navigation.navigate(source, { refresh: new Date().getTime() });
+            }
+        } catch (error) {
+            console.error('Lỗi khi cập nhật địa chỉ:', error);
+        }
+    }
+    const handleDeleteAddress = async (address_id) => {
+        try {
+            const response = await axios.delete(`http://localhost:8080/api/addresses/remove?address_id=${address_id}`);
+            console.log('Địa chỉ đã được xóa:', response.data);
+
+        } catch (error) {
+            console.error('Lỗi khi xóa địa chỉ:', error);
+        }
+    }
     return (
         <View style={{ flex: 1, position: 'relative' }}>
             <View style={{
@@ -58,16 +104,16 @@ export default function UpdateAddress({ navigation }) {
             }}>
                 <View style={{ backgroundColor: 'white', marginTop: 3 }}>
                     <View style={styles.action}>
-                        <Text>Đăng Khoa</Text>
+                        <Text>{addressInfo.user.full_name}</Text>
                     </View>
                     <View style={styles.action}>
-                        <Text>08397179739</Text>
+                        <Text>{addressInfo.user.phone_number}</Text>
                     </View>
                 </View>
                 <View style={{ backgroundColor: 'white', marginTop: 10 }}>
                     <View style={styles.action}>
                         <TextInput
-                            placeholder='Số nhà, Tên đường'
+                            placeholder='Tòa nhà, Số tầng (Không bắt buộc)'
                             placeholderTextColor='#BCBCBC'
                             value={input1}
                             onChangeText={(text) => {
@@ -77,7 +123,7 @@ export default function UpdateAddress({ navigation }) {
                     </View>
                     <View style={styles.action}>
                         <TextInput
-                            placeholder='Xã, Phường'
+                            placeholder='Số nhà, Tên đường'
                             placeholderTextColor='#BCBCBC'
                             value={input2}
                             onChangeText={(text) => {
@@ -87,7 +133,7 @@ export default function UpdateAddress({ navigation }) {
                     </View>
                     <View style={styles.action}>
                         <TextInput
-                            placeholder='Quận, Huyện'
+                            placeholder='Xã, Phường'
                             placeholderTextColor='#BCBCBC'
                             value={input3}
                             onChangeText={(text) => {
@@ -97,11 +143,21 @@ export default function UpdateAddress({ navigation }) {
                     </View>
                     <View style={styles.action}>
                         <TextInput
-                            placeholder='Tỉnh, Thành phố'
+                            placeholder='Quận, Huyện'
                             placeholderTextColor='#BCBCBC'
                             value={input4}
                             onChangeText={(text) => {
                                 setInput4(text);
+                                checkSaveButton();
+                            }} />
+                    </View>
+                    <View style={styles.action}>
+                        <TextInput
+                            placeholder='Tỉnh, Thành phố'
+                            placeholderTextColor='#BCBCBC'
+                            value={input5}
+                            onChangeText={(text) => {
+                                setInput5(text);
                                 checkSaveButton();
                             }} />
                     </View>
@@ -124,7 +180,7 @@ export default function UpdateAddress({ navigation }) {
                 right: 0
             }}>
                 <Pressable backgroundColor={saveButtonEnabled ? '#ED4D2D' : '#E8E8E8'}
-                    onPress={handleSave} disabled={!saveButtonEnabled}
+                    onPress={handleUpdateAddress} disabled={!saveButtonEnabled}
                     style={{ padding: 13, alignItems: 'center', borderRadius: 3, }}>
                     <Text style={{ fontSize: 16, color: saveButtonEnabled ? 'white' : '#ACACAC' }}>Lưu</Text>
                 </Pressable>
@@ -150,7 +206,7 @@ const styles = StyleSheet.create({
         paddingRight: 15
     },
     alertTitle: {
-        color: 'orange', // Màu cam cho tiêu đề
+        color: 'orange',
         fontWeight: 'bold',
     }
 });

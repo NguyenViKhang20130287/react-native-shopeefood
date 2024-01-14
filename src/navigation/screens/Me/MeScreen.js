@@ -25,7 +25,7 @@ const Action = ({ icon, title, color, screen }) => {
                 <Text>{title}</Text>
             </View>
             <Ionicons size={20} name={'chevron-forward'} color={'gray'} />
-            
+
         </View>
 
     );
@@ -70,7 +70,6 @@ export default function MeScreen({ navigation }) {
     }, [isFocused]);
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar backgroundColor='#F55C32' />
             <View>
                 <View style={styles.headerContainer} >
                     <View style={styles.userInfo}>

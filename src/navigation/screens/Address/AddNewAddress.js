@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -5,25 +7,55 @@ import { TextInput } from 'react-native';
 import { Pressable, StyleSheet } from 'react-native';
 import { Text, View } from 'react-native';
 
-export default function AddNewAddress({ navigation }) {
+export default function AddNewAddress({ route, navigation }) {
+    const source = route.params.source;
+    console.log(source);
     const [input1, setInput1] = useState('');
     const [input2, setInput2] = useState('');
     const [input3, setInput3] = useState('');
     const [input4, setInput4] = useState('');
+    const [input5, setInput5] = useState('');
     const [saveButtonEnabled, setSaveButtonEnabled] = useState(false);
 
     const checkSaveButton = () => {
-        setSaveButtonEnabled(input1 !== '' && input2 !== '' && input3 !== '' && input4 !== '');
+        setSaveButtonEnabled(input2 !== '' && input3 !== '' && input4 !== '' && input5 !== '');
     };
 
     // Sử dụng useEffect để theo dõi sự thay đổi của input1, input2, input3, input4
     useEffect(() => {
         checkSaveButton();
-    }, [input1, input2, input3, input4]);
+    }, [input2, input3, input4, input5]);
 
-    const handleSave = () => {
-        console.log('Dữ liệu đã được lưu!');
-    };
+    const handleAddAddress = async () => {
+        try {
+            const user_id = await AsyncStorage.getItem('user_id');
+            if (user_id) {
+                console.log(user_id);
+                const requestData = {
+                    user: {
+                        id: user_id
+                    },
+                    building_flnum: input1,
+                    hnum_sname: input2,
+                    ward_commune: input3,
+                    county_district: input4,
+                    province_city: input5
+                };
+                const response = await axios.post(`http://localhost:8080/api/addresses/add`,
+                    requestData,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                );
+                console.log('Địa chỉ mới đã được thêm:', response.data);
+                navigation.navigate(source, { refresh: new Date().getTime() });
+            }
+        } catch (error) {
+            console.error('Lỗi khi thêm địa chỉ mới:', error);
+        }
+    }
     return (
         <View style={{ flex: 1, position: 'relative' }}>
             <View style={{
@@ -43,7 +75,7 @@ export default function AddNewAddress({ navigation }) {
                 <View style={{ backgroundColor: 'white', marginTop: 10 }}>
                     <View style={styles.action}>
                         <TextInput
-                            placeholder='Số nhà, Tên đường'
+                            placeholder='Tòa nhà, Số tầng (Không bắt buộc)'
                             placeholderTextColor='#BCBCBC'
                             value={input1}
                             onChangeText={(text) => {
@@ -53,7 +85,7 @@ export default function AddNewAddress({ navigation }) {
                     </View>
                     <View style={styles.action}>
                         <TextInput
-                            placeholder='Xã, Phường'
+                            placeholder='Số nhà, Tên đường'
                             placeholderTextColor='#BCBCBC'
                             value={input2}
                             onChangeText={(text) => {
@@ -63,7 +95,7 @@ export default function AddNewAddress({ navigation }) {
                     </View>
                     <View style={styles.action}>
                         <TextInput
-                            placeholder='Quận, Huyện'
+                            placeholder='Xã, Phường'
                             placeholderTextColor='#BCBCBC'
                             value={input3}
                             onChangeText={(text) => {
@@ -73,11 +105,21 @@ export default function AddNewAddress({ navigation }) {
                     </View>
                     <View style={styles.action}>
                         <TextInput
-                            placeholder='Tỉnh, Thành phố'
+                            placeholder='Quận, Huyện'
                             placeholderTextColor='#BCBCBC'
                             value={input4}
                             onChangeText={(text) => {
                                 setInput4(text);
+                                checkSaveButton();
+                            }} />
+                    </View>
+                    <View style={styles.action}>
+                        <TextInput
+                            placeholder='Tỉnh, Thành phố'
+                            placeholderTextColor='#BCBCBC'
+                            value={input5}
+                            onChangeText={(text) => {
+                                setInput5(text);
                                 checkSaveButton();
                             }} />
                     </View>
@@ -95,7 +137,7 @@ export default function AddNewAddress({ navigation }) {
                 right: 0
             }}>
                 <Pressable backgroundColor={saveButtonEnabled ? '#ED4D2D' : '#E8E8E8'}
-                    onPress={handleSave} disabled={!saveButtonEnabled}
+                    onPress={handleAddAddress} disabled={!saveButtonEnabled}
                     style={{ padding: 13, alignItems: 'center', borderRadius: 3, }}>
                     <Text style={{ fontSize: 15, color: saveButtonEnabled ? 'white' : '#ACACAC' }}>Lưu</Text>
                 </Pressable>
