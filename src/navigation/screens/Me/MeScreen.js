@@ -84,7 +84,6 @@ export default function MeScreen({ navigation }) {
                         <Pressable style={styles.button} onPress={() => navigation.navigate('Login')}>
                             <Text style={styles.text}>Đăng nhập / Đăng ký</Text>
                         </Pressable>
-                        {/* <Pressable style={styles.button} onPress={() => navigation.navigate('LoginScreen')}></Pressable> */}
                     </View>) : null}
                     
                 </View>
