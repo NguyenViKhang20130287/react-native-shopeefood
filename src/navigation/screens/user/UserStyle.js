@@ -97,42 +97,62 @@ const userStyle = StyleSheet.create({
     width: 280,
     marginLeft: 'auto',
     marginRight: 'auto',
-  },
-  cellRoot: {
-    width: 30,
-    height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottomColor: '#ccc',
-    borderBottomWidth: 1,
-  },
-  cellText: {
-    color: '#000',
-    fontSize: 36,
-    textAlign: 'center',
-  },
-  focusCell: {
-    borderBottomColor: '#007AFF',
-    borderBottomWidth: 2,
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 10,
-    backgroundColor: 'rgba(0,0,0,0.9)',
-    borderRadius: 20,
-    padding: 20,
-    alignItems: 'center',
-  },
-  modalText: {
-    color: 'white',
-    textAlign: 'center',
-    marginTop: 10,
-  },
+    },
+    cellRoot: {
+        width: 30,
+        height: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomColor: '#ccc',
+        borderBottomWidth: 1,
+    },
+    cellText: {
+        color: '#000',
+        fontSize: 36,
+        textAlign: 'center',
+    },
+    focusCell: {
+        borderBottomColor: '#007AFF',
+        borderBottomWidth: 2,
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
+    },
+    modalView: {
+        margin: 10,
+        backgroundColor: 'rgba(0,0,0,0.9)',
+        borderRadius: 20,
+        padding: 20,
+        alignItems: 'center',
+    },
+    modalText: {
+        color: 'white',
+        textAlign: 'center',
+        marginTop: 10,
+    },
+    imageBox: {
+        backgroundColor: 'orangered',
+        paddingVertical: 40,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    iconUser: {
+        backgroundColor: '#fff',
+        color: 'orangered',
+        padding: 20,
+        borderRadius: 50,
+    },
+    informationBox: {
+        backgroundColor: '#fff',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 10,
+        borderBottomWidth: 0.2,  // Đặt độ dày của đường border bottom
+        borderBottomColor: 'gray',  // Đặt màu của đường border bottom
+    },
 
 })
 export default userStyle;
