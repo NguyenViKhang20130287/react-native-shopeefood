@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RefreshControl, ScrollView, TouchableOpacity, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, RefreshControl, ScrollView, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { useState } from 'react';
 import { Text } from 'react-native';
@@ -71,10 +71,10 @@ export default function LikesScreen({ navigation }) {
                         }
                         const data = response.data;
                         setFavoriteStore(data);
-                        setIsLoading(false);
+                        setTimeout(() => {
+                            setIsLoading(false);
+                        }, 300);
                         console.log(data);
-                    }else{
-                        setFavoriteStore([]);
                     }
                 } catch (error) {
                     console.error('Error fetching data:', error);
@@ -82,7 +82,7 @@ export default function LikesScreen({ navigation }) {
             };
 
             fetchData();
-        }, [currentValue, refresh]);
+        }, [currentValue, isLoading, refresh]);
 
         const handleItemChange = (item) => {
             setCurrentValue(item.value);
@@ -97,7 +97,7 @@ export default function LikesScreen({ navigation }) {
                     setHasData(false);
                 }
             }
-        }, [currentValue, favoriteStore]);
+        }, [currentValue, favoriteStore, isLoading]);
 
         return (
             <View style={{ position: 'absolute', top: 0, bottom: isOpen ? 0 : 600, left: 0, right: 0, zIndex: 1 }}>
@@ -142,30 +142,22 @@ export default function LikesScreen({ navigation }) {
     };
 
     const LatestRoute = () => {
-        if (hasData) {
-            return (<ScrollView refreshControl={<RefreshControl refreshing={refresh} onRefresh={() => pullToRefresh()} />} style={styles.hasDataContainer}>
-                {!isLoading ? (
-                    favoriteStore && favoriteStore.map((fa, index) => (
-                        <FavoriteItem
-                            key={index}
-                            id={fa.id}
-                            storeName={fa.name}
-                            imageURL={fa.image}
-                        />
-                    ))
-                ) : (
-                    <Text>No favorites available.</Text>
-                )}
+        return (<ScrollView refreshControl={<RefreshControl refreshing={refresh} onRefresh={() => pullToRefresh()} />} style={hasData ? styles.hasDataContainer : styles.noDataContainer}>
+            {!isLoading ? (<>{hasData ? (<>{favoriteStore && favoriteStore.map((fa, index) => (
+                <FavoriteItem
+                    key={index}
+                    id={fa.id}
+                    storeName={fa.name}
+                    imageURL={fa.image}
+                />
+            ))}
                 <View style={{ paddingVertical: 25, alignItems: 'center', backgroundColor: '#FAFAFA' }}>
                     <Text style={{ color: '#737373' }}>Đã hiển thị tất cả kết quả</Text>
-                </View>
-            </ScrollView>
-            );
-        } else {
-            return (
-                <NoFavoriteItem />
-            );
-        }
+                </View></>)
+                : (<NoFavoriteItem />)}</>)
+                : (<View style={{ paddingTop: 150, justifyContent: "center", alignItems: "center" }}><ActivityIndicator size={"large"} color={"orangered"} /></View>)}
+        </ScrollView>
+        );
     }
 
 

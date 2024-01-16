@@ -15,6 +15,14 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         zIndex: 1
+    },
+    noDataContainer: {
+        position: 'absolute',
+        top: 215,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1
     }
 });
 export default styles;
