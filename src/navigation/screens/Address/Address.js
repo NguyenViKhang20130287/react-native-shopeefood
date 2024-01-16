@@ -19,8 +19,9 @@ export default function Address({ route, navigation }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const user_id = await AsyncStorage.getItem('user_id');
-                if (user_id) {
+                const userStorage = JSON.parse(await AsyncStorage.getItem('user'));
+                if (userStorage) {
+                    const user_id = userStorage.id;
                     console.log('User id: ', user_id);
                     const response = await axios.get(`http://localhost:8080/api/addresses/user/${user_id}`);
                     const data = response.data;

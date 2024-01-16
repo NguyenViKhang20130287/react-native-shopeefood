@@ -9,7 +9,8 @@ export default function FavoriteItem({ id, storeName, imageURL, rating, distance
     const [isClose, setIsClose] = useState(false);
     const [isLike, setIsLike] = useState(true);
     const handleToggleFavorite = async (item_id) => {
-        const user_id = await AsyncStorage.getItem('user_id');
+        const userStorage = JSON.parse(await AsyncStorage.getItem('user'));
+        const user_id = userStorage.id;
         if (!isLike) {
             try {
                 if (user_id) {

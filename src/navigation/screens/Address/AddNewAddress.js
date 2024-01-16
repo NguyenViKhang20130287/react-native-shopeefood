@@ -9,17 +9,26 @@ import { Text, View } from 'react-native';
 
 export default function AddNewAddress({ route, navigation }) {
     const source = route.params.source;
-    console.log(source);
     const [input1, setInput1] = useState('');
     const [input2, setInput2] = useState('');
     const [input3, setInput3] = useState('');
     const [input4, setInput4] = useState('');
     const [input5, setInput5] = useState('');
     const [saveButtonEnabled, setSaveButtonEnabled] = useState(false);
+    const [user, setUser] = useState({});
 
     const checkSaveButton = () => {
         setSaveButtonEnabled(input2 !== '' && input3 !== '' && input4 !== '' && input5 !== '');
     };
+
+    const getUser = async () =>{
+        const userStorage = JSON.parse(await AsyncStorage.getItem('user'));
+        setUser(userStorage);
+    }
+
+    useEffect(() => {
+        getUser();
+    }, []);
 
     // Sử dụng useEffect để theo dõi sự thay đổi của input1, input2, input3, input4
     useEffect(() => {
@@ -28,8 +37,8 @@ export default function AddNewAddress({ route, navigation }) {
 
     const handleAddAddress = async () => {
         try {
-            const user_id = await AsyncStorage.getItem('user_id');
-            if (user_id) {
+            if (user) {
+                const user_id = user.id;
                 console.log(user_id);
                 const requestData = {
                     user: {
@@ -66,10 +75,10 @@ export default function AddNewAddress({ route, navigation }) {
             }}>
                 <View style={{ backgroundColor: 'white', marginTop: 3 }}>
                     <View style={styles.action}>
-                        <Text>Đăng Khoa</Text>
+                        <Text>{user ? user.full_name : "No data"}</Text>
                     </View>
                     <View style={styles.action}>
-                        <Text>08397179739</Text>
+                        <Text>{user ? user.phone_number : "No data"}</Text>
                     </View>
                 </View>
                 <View style={{ backgroundColor: 'white', marginTop: 10 }}>

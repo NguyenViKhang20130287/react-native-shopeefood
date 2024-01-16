@@ -37,7 +37,7 @@ export default function MeScreen({ navigation }) {
     const [user, setUser] = useState(null);
     const LogOut = async () => {
         await AsyncStorage.removeItem('user');
-        setUser(null) 
+        setUser(null)
         setShowContent(false)
     }
     const getUserId = async () => {
@@ -49,20 +49,20 @@ export default function MeScreen({ navigation }) {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                params : {
+                params: {
                     id: userId
                 }
             })
-            .then(async response => {
-                await AsyncStorage.setItem('user', JSON.stringify(response.data))
-                setUser(response.data)
-                setShowContent(true)
-                await AsyncStorage.removeItem('user_id');
-                console.log(user)
-            })
-            .catch(error => {
-                console.log('Error: ', error)
-            })
+                .then(async response => {
+                    await AsyncStorage.setItem('user', JSON.stringify(response.data))
+                    setUser(response.data)
+                    setShowContent(true)
+                    await AsyncStorage.removeItem('user_id');
+                    console.log(user)
+                })
+                .catch(error => {
+                    console.log('Error: ', error)
+                })
         }
     }
     useEffect(() => {
@@ -76,16 +76,16 @@ export default function MeScreen({ navigation }) {
                         <View style={styles.userIcon}>
                             <Ionicons name='person' style={styles.icon} />
                         </View>
-                        {showContent && (<Text style={{ color: 'white', marginLeft: 10, fontSize: 15, fontWeight: 'bold' }}
-                        onPress={()=> navigation.navigate('UserDetail')}>{user ? user.email : null}</Text>)}
+                        {showContent && (<Text style={{ color: 'white', marginLeft: 10, fontSize: 20, fontWeight: 'bold' }}
+                            onPress={() => navigation.navigate('UserDetail')}>{user ? user.email : null}</Text>)}
                     </View>
-                    {!user ? 
-                    (<View style={styles.loginRegister}>
-                        <Pressable style={styles.button} onPress={() => navigation.navigate('Login')}>
-                            <Text style={styles.text}>Đăng nhập / Đăng ký</Text>
-                        </Pressable>
-                    </View>) : null}
-                    
+                    {!user ?
+                        (<View style={styles.loginRegister}>
+                            <Pressable style={styles.button} onPress={() => navigation.navigate('Login')}>
+                                <Text style={styles.text}>Đăng nhập / Đăng ký</Text>
+                            </Pressable>
+                        </View>) : null}
+
                 </View>
             </View>
             <View>
