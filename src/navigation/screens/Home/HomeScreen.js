@@ -24,12 +24,15 @@ export default function HomeScreen({ route, navigation }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const user_id = await AsyncStorage.getItem('user_id');
-                if (user_id) {
+                const userStorage = JSON.parse(await AsyncStorage.getItem('user'));
+                if (userStorage) {
+                    const user_id = userStorage.id;
                     const response = await axios.get(`http://localhost:8080/api/addresses/default/user/${user_id}`);
                     const data = response.data;
                     setDefaultAddress(data);
                     console.log(data);
+                } else {
+                    setDefaultAddress(null);
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -41,12 +44,12 @@ export default function HomeScreen({ route, navigation }) {
         <ScrollView refreshControl={<RefreshControl refreshing={refresh} onRefresh={() => pullToRefresh()} />} style={styles.container} stickyHeaderIndices={[0]}>
             {/* Top */}
             <View style={styles.topzone}>
-                <StatusBar backgroundColor={"white"} barStyle={"dark-content"}/>
+                <StatusBar backgroundColor={"white"} barStyle={"dark-content"} />
                 <View style={styles.addressContainer}>
                     <Text style={{ fontSize: 15, marginBottom: 8, color: '#595959', paddingHorizontal: 5 }}>Giao đến:</Text>
                     <View style={styles.address}>
                         <IconEntypo name='location-pin' size={25} color={'#F95030'} />
-                        <Text onPress={() => navigation.navigate('PickAddress')} numberOfLines={1} ellipsizeMode="tail" style={styles.addressText}>
+                        <Text onPress={() => navigation.navigate('PickAddress', { source: 'Home' })} numberOfLines={1} ellipsizeMode="tail" style={styles.addressText}>
                             {defaultAddress ? (
                                 <>
                                     {defaultAddress.building_flnum ? `[${defaultAddress.building_flnum}] ` : ""}

@@ -8,6 +8,8 @@ import axios from 'axios';
 import { ScrollView } from 'react-native';
 
 export default function PickAddress({ route, navigation }) {
+    const source = route.params.source;
+    console.log(source);
     const [defaultAddress, setDefaultAddress] = useState({});
     const [nonDefaultAddress, setNonDefaultAddress] = useState([]);
     const [refresh, setRefresh] = useState(false);
@@ -20,8 +22,9 @@ export default function PickAddress({ route, navigation }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const user_id = await AsyncStorage.getItem('user_id');
-                if (user_id) {
+                const userStorage = JSON.parse(await AsyncStorage.getItem('user'));
+                if (userStorage) {
+                    const user_id = userStorage.id;
                     const response = await axios.get(`http://localhost:8080/api/addresses/user/${user_id}`);
                     const data = response.data;
 
@@ -30,6 +33,8 @@ export default function PickAddress({ route, navigation }) {
 
                     const nonDefaultAddress = data.filter(address => address.is_default === 0);
                     setNonDefaultAddress(nonDefaultAddress);
+                } else {
+                    setDefaultAddress(null);
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -40,8 +45,9 @@ export default function PickAddress({ route, navigation }) {
     }, [route.params?.refresh, refresh]);
     const handleSetDefaulAddress = async (address_id) => {
         try {
-            const user_id = await AsyncStorage.getItem('user_id');
-            if (user_id) {
+            const userStorage = JSON.parse(await AsyncStorage.getItem('user'));
+            if (userStorage) {
+                const user_id = userStorage.id;
                 const response = await axios.put(`http://localhost:8080/api/addresses/default_update?address_id=${address_id}`);
 
                 const updatedResponse = await axios.get(`http://localhost:8080/api/addresses/user/${user_id}`);
@@ -53,7 +59,7 @@ export default function PickAddress({ route, navigation }) {
 
                 const updatedDefaultAddress = updatedData.find(address => address.is_default === 1);
                 setDefaultAddress(updatedDefaultAddress);
-                navigation.navigate('Home', { refresh: new Date().getTime() })
+                navigation.navigate(source, { refresh: new Date().getTime() })
             }
         } catch (error) {
             console.error('Error updating address:', error);
