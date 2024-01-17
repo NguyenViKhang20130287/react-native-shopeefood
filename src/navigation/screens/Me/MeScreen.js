@@ -4,9 +4,12 @@ import { Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import { StatusBar } from 'react-native';
 import { View, Text } from 'react-native';
-import { StyleSheet } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
+import styles from './MeScreen.style';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
+import axios from 'axios';
 
 const Action = ({ icon, title, color, screen }) => {
     return (
@@ -22,30 +25,67 @@ const Action = ({ icon, title, color, screen }) => {
                 <Text>{title}</Text>
             </View>
             <Ionicons size={20} name={'chevron-forward'} color={'gray'} />
+
         </View>
 
     );
 }
 
 export default function MeScreen({ navigation }) {
+    const isFocused = useIsFocused();
     const [showContent, setShowContent] = useState(false);
+    const [user, setUser] = useState(null);
+    const LogOut = async () => {
+        await AsyncStorage.removeItem('user');
+        setUser(null)
+        setShowContent(false)
+    }
+    const getUserId = async () => {
+        const storageUserId = await AsyncStorage.getItem('user_id');
+        if (storageUserId) {
+            const apiUrl = 'http://localhost:8080/api/user/find-user-by-id'
+            const userId = parseInt(storageUserId, 10);
+            axios.get(apiUrl, {
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                params: {
+                    id: userId
+                }
+            })
+                .then(async response => {
+                    await AsyncStorage.setItem('user', JSON.stringify(response.data))
+                    setUser(response.data)
+                    setShowContent(true)
+                    await AsyncStorage.removeItem('user_id');
+                    console.log(user)
+                })
+                .catch(error => {
+                    console.log('Error: ', error)
+                })
+        }
+    }
+    useEffect(() => {
+        getUserId();
+    }, [isFocused]);
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar backgroundColor='#F55C32' />
             <View>
-                <View style={styles.headerContainer}>
+                <View style={styles.headerContainer} >
                     <View style={styles.userInfo}>
                         <View style={styles.userIcon}>
                             <Ionicons name='person' style={styles.icon} />
                         </View>
-                        {showContent && (<Text style={{ color: 'white', marginLeft: 10, fontSize: 20, fontWeight: 'bold' }}>nndangkhoa</Text>)}
+                        {showContent && (<Text style={{ color: 'white', marginLeft: 10, fontSize: 20, fontWeight: 'bold' }}
+                            onPress={() => navigation.navigate('UserDetail')}>{user ? user.email : null}</Text>)}
                     </View>
-                    <View style={styles.loginRegister}>
-                        {!showContent && (<Pressable style={styles.button} onPress={() => setShowContent(!showContent)}>
-                            <Text style={styles.text}>Đăng nhập / Đăng ký</Text>
-                        </Pressable>)}
-                        {/* <Pressable style={styles.button} onPress={() => navigation.navigate('LoginScreen')}></Pressable> */}
-                    </View>
+                    {!user ?
+                        (<View style={styles.loginRegister}>
+                            <Pressable style={styles.button} onPress={() => navigation.navigate('Login')}>
+                                <Text style={styles.text}>Đăng nhập / Đăng ký</Text>
+                            </Pressable>
+                        </View>) : null}
+
                 </View>
             </View>
             <View>
@@ -60,83 +100,15 @@ export default function MeScreen({ navigation }) {
                 </View>
                 <View style={{ borderBottomWidth: 10, borderBottomColor: '#F5F6F8' }}>
                     <Action icon={'file-text-o'} title={'Chính sách quy định'} color={'green'}></Action>
-                    <Action icon={'gear'} title={'Cài đặt'} color={'blue'}></Action>
+                    <Pressable onPress={() => navigation.navigate("Setting")}><Action icon={'gear'} title={'Cài đặt'} color={'blue'}></Action></Pressable>
                     <Action icon={'info'} title={'Về ShopeeFood'} color={'orange'}></Action>
                 </View>
             </View>
             <View style={styles.logoutContainer}>
-                {showContent && (<Pressable style={styles.logoutBtn}>
-                    <Text style={{ color: 'white', fontSize: 16 }} onPress={() => setShowContent(!showContent)}>Đăng xuất</Text>
+                {showContent && (<Pressable style={styles.logoutBtn} onPress={LogOut}>
+                    <Text style={{ color: 'white', fontSize: 16 }} >Đăng xuất</Text>
                 </Pressable>)}
             </View>
         </SafeAreaView>
     );
 }
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    headerContainer: {
-        backgroundColor: '#F55C32',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-end',
-        height: 120,
-        padding: 15,
-    },
-    userInfo: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    loginRegister: {
-        height: '50%',
-    },
-    userIcon: {
-        width: 60,
-        height: 60,
-        backgroundColor: 'white',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 100,
-    },
-    button: {
-        padding: 5,
-        backgroundColor: 'white',
-        borderRadius: 2,
-    },
-    text: {
-        color: 'orangered',
-        fontSize: 15,
-    },
-    icon: {
-        fontSize: 40,
-        color: 'orangered',
-    },
-    logoutContainer: {
-        marginHorizontal: 15,
-        marginVertical: 10
-    },
-    logoutBtn: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'orangered',
-        padding: 12,
-        borderRadius: 2.
-    },
-    action: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderBottomWidth: 1,
-        backgroundColor: 'white',
-        borderBottomColor: 'whitesmoke',
-        paddingRight: 8,
-    },
-    iconContainer: {
-        width: 50,
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-});

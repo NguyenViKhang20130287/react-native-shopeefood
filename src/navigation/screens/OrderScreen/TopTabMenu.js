@@ -16,7 +16,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import Incoming from "./Incoming";
 import History from "./History";
 import Rate from "./Rate";
-import Checkout from "./Checkout";
+import Example from "./ExampleOrder";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -24,12 +24,11 @@ const TopTabMenu = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-          let rn = route.name;
-        },
         tabBarActiveTintColor: "orangered",
         tabBarInactiveTintColor: "gray",
+        tabBarIndicatorStyle: {
+          backgroundColor: 'orangered'
+        }
       })}
     >
       <Tab.Screen
@@ -41,8 +40,8 @@ const TopTabMenu = () => {
       <Tab.Screen style={styles.navigator} component={Rate} name="Đánh giá" />
       <Tab.Screen
         style={styles.navigator}
-        component={Checkout}
-        name="Thanh toán"
+        component={Example}
+        name="Đơn nháp"
       />
     </Tab.Navigator>
   );

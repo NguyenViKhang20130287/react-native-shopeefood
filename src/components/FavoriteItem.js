@@ -1,16 +1,60 @@
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 import * as React from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-export default function FavoriteItem({ foodName, imageURL, rating, distance, deliveryTime, hashtags }) {
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
+export default function FavoriteItem({ id, storeName, imageURL, rating, distance, deliveryTime }) {
     const [isClose, setIsClose] = useState(false);
+    const [isLike, setIsLike] = useState(true);
+    const handleToggleFavorite = async (item_id) => {
+        const userStorage = JSON.parse(await AsyncStorage.getItem('user'));
+        const user_id = userStorage.id;
+        if (!isLike) {
+            try {
+                if (user_id) {
+                    const requestData = {
+                        store: {
+                            id: item_id
+                        },
+                        user: {
+                            id: user_id
+                        },
+                    };
+                    const response = await axios.post(`http://localhost:8080/api/user/favorite-stores/add`,
+                        requestData,
+                        {
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        }
+                    );
+                    console.log('Cửa hàng đã được thêm vào yêu thích:', response.data);
+                    setIsLike(true);
+                }
+            } catch (error) {
+                console.error('Lỗi khi thêm của hàng yêu thích:', error);
+            }
+        } else {
+            try {
+                if (user_id) {
+                    const response = await axios.delete(`http://localhost:8080/api/user/favorite-stores/remove?store_id=${item_id}&user_id=${user_id}`);
+                    console.log('Cửa hàng đã được xóa khỏi yêu thích:', response.data);
+                    setIsLike(false);
+                }
+
+            } catch (error) {
+                console.error('Lỗi khi xóa cửa hàng yêu thích:', error);
+            }
+        }
+    }
     return (
         <View style={styles.container}>
             <View style={styles.topContainer}>
                 <View style={styles.imageContainer}>
-                    {/* Hình vuông chứa hình ảnh */}
                     <Image
-                        source={imageURL}
+                        source={{ uri: imageURL }}
                         style={styles.image}
                     />
                 </View>
@@ -21,24 +65,25 @@ export default function FavoriteItem({ foodName, imageURL, rating, distance, del
                             <Text style={{ color: '#757575' }}>Hẹn giao vào 10:00 Hôm nay</Text>
                         </Text>
                     </View>)}
-                    {/* Tên món ăn */}
-                    <Text style={styles.foodName}>{foodName}</Text>
+                    <Text style={styles.foodName}><Ionicons
+                        style={{ fontSize: 16 }}
+                        name="shield-checkmark"
+                        color={"orange"}
+                    ></Ionicons>{" "}{storeName}</Text>
                     <View style={styles.infoContainer}>
-                        {/* Dòng thông tin: số sao đánh giá, khoảng cách, thời gian giao hàng ước lượng */}
-                        <Text style={[styles.infoText, { paddingRight: 6 }]}>⭐{rating} 4.7</Text>
+                        <Text style={[styles.infoText, { paddingRight: 6 }]}><Ionicons
+                            style={{ fontSize: 14 }}
+                            name="star"
+                            color={"orange"}
+                        ></Ionicons>{rating} 4.7</Text>
                         <Text style={[styles.infoText, { borderLeftWidth: 1, borderRightWidth: 1, paddingHorizontal: 6 }]}>{distance} 3.5 km</Text>
                         <Text style={[styles.infoText, { paddingLeft: 6 }]}>{deliveryTime} 22 phút</Text>
                     </View>
-                    {/* Dòng hashtags */}
-                    <View style={styles.hashtagsContainer}>
-                        {hashtags.map((tag, index) => (
-                            <Text key={index} style={styles.hashtag}>#{tag}</Text>
-                        ))}
-                    </View>
+
                 </View>
             </View>
             <View style={styles.heartContainer}>
-                <FontAwesome name={'heart'} size={18} color={'#EF4C2D'} />
+                <Pressable onPress={() => handleToggleFavorite(id)}><FontAwesome name={isLike ? "heart" : "heart-o"} size={18} color={'#EF4C2D'} /></Pressable>
             </View>
         </View>
     );
@@ -57,7 +102,7 @@ const styles = StyleSheet.create({
     image: {
         width: 100,
         height: 100,
-        aspectRatio: 1, // Hình vuông
+        aspectRatio: 1,
     },
     detailsContainer: {
         flex: 2,
@@ -74,21 +119,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     infoText: {
-        fontSize: 12,
+        fontSize: 13,
         color: '#757575',
         borderColor: '#E8E8E8',
-    },
-    hashtagsContainer: {
-        flexDirection: 'row',
-    },
-    hashtag: {
-        marginRight: 5,
-        color: 'orangered',
-        fontSize: 10,
-        borderWidth: 0.5,
-        borderColor: 'orangered',
-        padding: 3,
-        borderRadius: 3
     },
     heartContainer: {
         flexDirection: 'row',

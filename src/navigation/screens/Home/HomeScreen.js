@@ -1,55 +1,118 @@
 import * as React from 'react';
-import { View, Text, TextInput, Image, ScrollView } from 'react-native';
+import { View, Text, TextInput, Image, ScrollView, Pressable, StatusBar, RefreshControl } from 'react-native';
 import styles from './Home.style'
 
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import EvilIcon from 'react-native-vector-icons/EvilIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import BannerSlider from '../../../components/BannerSlider';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ route, navigation }) {
+    const [defaultAddress, setDefaultAddress] = useState({});
+    const [refresh, setRefresh] = useState(false);
+    const pullToRefresh = () => {
+        setRefresh(true);
+        setTimeout(() => {
+            setRefresh(false);
+        }, 1000)
+    }
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const userStorage = JSON.parse(await AsyncStorage.getItem('user'));
+                if (userStorage) {
+                    const user_id = userStorage.id;
+                    const response = await axios.get(`http://localhost:8080/api/addresses/default/user/${user_id}`);
+                    const data = response.data;
+                    setDefaultAddress(data);
+                    console.log(data);
+                } else {
+                    setDefaultAddress(null);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+        fetchData();
+    }, [route.params?.refresh, refresh]);
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView refreshControl={<RefreshControl refreshing={refresh} onRefresh={() => pullToRefresh()} />} style={styles.container} stickyHeaderIndices={[0]}>
             {/* Top */}
             <View style={styles.topzone}>
+                <StatusBar backgroundColor={"white"} barStyle={"dark-content"} />
                 <View style={styles.addressContainer}>
-                    <Text style={{ fontSize: 16, marginBottom: 8 }}>Giao đến:</Text>
+                    <Text style={{ fontSize: 15, marginBottom: 8, color: '#595959', paddingHorizontal: 5 }}>Giao đến:</Text>
                     <View style={styles.address}>
                         <IconEntypo name='location-pin' size={25} color={'#F95030'} />
-                        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.addressText}>
-                            2/7c, Đường Số 106 Phường Tăng Nhơn Phú A, Thành Phố Thủ Đức, TP. Hồ Chí Minh
+                        <Text onPress={() => navigation.navigate('PickAddress', { source: 'Home' })} numberOfLines={1} ellipsizeMode="tail" style={styles.addressText}>
+                            {defaultAddress ? (
+                                <>
+                                    {defaultAddress.building_flnum ? `[${defaultAddress.building_flnum}] ` : ""}
+                                    {defaultAddress.hnum_sname}, {defaultAddress.ward_commune}, {defaultAddress.county_district}, {defaultAddress.province_city}
+                                </>
+                            ) : (
+                                'Vui lòng chọn địa chỉ'
+                            )}
                         </Text>
                         <MaterialIcons name='navigate-next' size={25} />
                     </View>
                 </View>
-                <View style={styles.searchContainer}>
-                    <View style={styles.search}>
-                        <EvilIcon name='search' size={25} color={'#757587'} />
-                        <TextInput style={styles.searchInput} placeholder='Ăn vặt thoả thích, Freeship 0Đ' />
+                <Pressable onPress={() => navigation.navigate('Search')}>
+                    <View style={styles.searchContainer}>
+                        <View style={styles.search}>
+                            <EvilIcon name='search' size={25} color={'#757587'} />
+                            <TextInput editable={false} style={styles.searchInput} placeholder='Ăn vặt thoả thích, Freeship 0Đ' />
+                        </View>
                     </View>
-                </View>
+                </Pressable>
             </View>
 
             {/* Center */}
             <View style={styles.centerzone}>
-                {/* Slider */}
-                <View style={styles.sliderContainer}>
-                    <Image style={styles.SlideImage} source={require('../../../../assets/Slider/slide_1.png')} />
-                </View>
+                <BannerSlider />
 
                 {/* category */}
                 <View style={styles.categoryContainer}>
                     <View style={styles.cateIcon}>
-                        <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-beer-50.png')} />
-                        <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-boba-96.png')} />
-                        <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-cart-64.png')} />
-                        <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-flower-64.png')} />
+                        <View style={styles.iconContainer}>
+                            <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-rice-50.png')} />
+                            <Text style={styles.iconText}>Đồ ăn</Text>
+                        </View>
+                        <View style={styles.iconContainer}>
+                            <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-guacamole-50.png')} />
+                            <Text style={styles.iconText}>Thực phẩm</Text>
+                        </View>
+                        <View style={styles.iconContainer}>
+                            <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-beer-50.png')} />
+                            <Text style={styles.iconText}>Bia</Text>
+                        </View>
+                        <View style={styles.iconContainer}>
+                            <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-flower-64.png')} />
+                            <Text style={styles.iconText}>Hoa</Text>
+                        </View>
                     </View>
                     <View style={styles.cateIcon}>
-                        <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-guacamole-50.png')} />
-                        <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-medicine-50.png')} />
-                        <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-pet-50.png')} />
-                        <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-rice-50.png')} />
+                        <View style={styles.iconContainer}>
+                            <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-boba-96.png')} />
+                            <Text style={styles.iconText}>Trà sữa</Text>
+                        </View>
+                        <View style={styles.iconContainer}>
+                            <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-cart-64.png')} />
+                            <Text style={styles.iconText}>Siêu thị</Text>
+                        </View>
+                        <View style={styles.iconContainer}>
+                            <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-medicine-50.png')} />
+                            <Text style={styles.iconText}>Thuốc</Text>
+                        </View>
+                        <View style={styles.iconContainer}>
+                            <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-pet-50.png')} />
+                            <Text style={styles.iconText}>Thú cưng</Text>
+                        </View>
                     </View>
                 </View>
 
@@ -63,8 +126,8 @@ export default function HomeScreen({ navigation }) {
                                 F<MaterialCommunityIcons name='lightning-bolt' size={20} />ASH SALE</Text>
                         </View>
                         <View style={styles.flashSale_header_right}>
-                            <Text>Xem tất cả</Text>
-                            <MaterialIcons name='navigate-next' size={25} />
+                            <Text style={{ fontSize: 13, color: '#757575' }}>Xem tất cả</Text>
+                            <MaterialIcons name='navigate-next' size={25} color={'#757575'} />
                         </View>
                     </View>
 
@@ -139,15 +202,18 @@ export default function HomeScreen({ navigation }) {
                     <View style={styles.flashSale_header}>
                         <View style={styles.flashSale_header_left}>
                             <Text style={styles.flashSale_textBold}>
-                                Top quán rating 5*</Text>
+                                Top Quán Rating 5*</Text>
                         </View>
                         <View style={styles.flashSale_header_right}>
-                            <Text>Xem tất cả</Text>
-                            <MaterialIcons name='navigate-next' size={25} />
+                            <Text style={{ fontSize: 13, color: '#757575' }}>Xem tất cả</Text>
+                            <MaterialIcons name='navigate-next' size={25} color={'#757575'} />
                         </View>
                     </View>
+                    <View style={{ marginTop: 10 }}>
+                        <Text style={{ color: '#757575', fontSize: 12 }}>Gợi ý quán được tín đồ ẩm thực đánh giá 5*</Text>
+                    </View>
 
-                    <ScrollView horizontal style={styles.flashSale_content}>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.flashSale_content}>
 
                         {/* product */}
                         <View style={styles.flashSale_product}>
@@ -209,20 +275,22 @@ export default function HomeScreen({ navigation }) {
 
                 </View>
 
-                 {/* Best seller */}
-                 <View style={styles.flashSaleContainer}>
+                {/* Best seller */}
+                <View style={styles.flashSaleContainer}>
                     <View style={styles.flashSale_header}>
                         <View style={styles.flashSale_header_left}>
                             <Text style={styles.flashSale_textBold}>
-                                Top món bán chạy</Text>
+                                Top Quán Bán Chạy</Text>
                         </View>
                         <View style={styles.flashSale_header_right}>
-                            <Text>Xem tất cả</Text>
-                            <MaterialIcons name='navigate-next' size={25} />
+                            <Text style={{ fontSize: 13, color: '#757575' }}>Xem tất cả</Text>
+                            <MaterialIcons name='navigate-next' size={25} color={'#757575'} />
                         </View>
                     </View>
-
-                    <ScrollView horizontal style={styles.flashSale_content}>
+                    <View style={{ marginTop: 10 }}>
+                        <Text style={{ color: '#757575', fontSize: 12 }}>Gợi ý quán được tín đồ ẩm thực đánh giá 5*</Text>
+                    </View>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.flashSale_content}>
 
                         {/* product */}
                         <View style={styles.flashSale_product}>
@@ -289,7 +357,7 @@ export default function HomeScreen({ navigation }) {
                     <View style={styles.flashSale_header}>
                         <View style={styles.flashSale_header_left}>
                             <Text style={styles.flashSale_textBold}>
-                                Món ăn được đánh giá tốt</Text>
+                                Quán Được Đánh Giá Tốt</Text>
                         </View>
                         <View style={styles.flashSale_header_right}>
                             <Text>Xem tất cả</Text>
@@ -297,7 +365,7 @@ export default function HomeScreen({ navigation }) {
                         </View>
                     </View>
 
-                    <ScrollView horizontal style={styles.flashSale_content}>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.flashSale_content}>
 
                         {/* product */}
                         <View style={styles.flashSale_product}>
@@ -364,15 +432,17 @@ export default function HomeScreen({ navigation }) {
                     <View style={styles.flashSale_header}>
                         <View style={styles.flashSale_header_left}>
                             <Text style={styles.flashSale_textBold}>
-                                Quán ngon lâu đời</Text>
+                                Quán Ngon Lâu Đời</Text>
                         </View>
                         <View style={styles.flashSale_header_right}>
                             <Text>Xem tất cả</Text>
                             <MaterialIcons name='navigate-next' size={25} />
                         </View>
                     </View>
-
-                    <ScrollView horizontal style={styles.flashSale_content}>
+                    <View style={{ marginTop: 10 }}>
+                        <Text style={{ color: '#757575', fontSize: 12 }}>Đặt ngay những quán ngon lâu đời</Text>
+                    </View>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.flashSale_content}>
 
                         {/* product */}
                         <View style={styles.flashSale_product}>

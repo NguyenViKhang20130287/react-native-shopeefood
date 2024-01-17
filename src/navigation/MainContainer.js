@@ -1,16 +1,15 @@
 import * as React from "react";
 
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
 //Screen
 import HomeScreen from "./screens/Home/HomeScreen";
 import ProductsScreen from './screens/Product/ProductsScreen';
-import LikesScreen from "./screens/LikesScreen";
-import MeScreen from "./screens/MeScreen";
+import LikesScreen from "./screens/Likes/LikesScreen";
+import MeScreen from "./screens/Me/MeScreen";
 import MyOrdersScreen from "./screens/OrderScreen/MyOrdersScreen";
-import NotificationsScreen from "./screens/NotificationsScreen";
+import NotificationsScreen from "./screens/Notifications/NotificationsScreen";
 
 // test
 import SearchScreen from "./screens/Search/SearchScreen";
@@ -86,3 +85,4 @@ export default function MainContainer() {
         </Tab.Navigator>
     );
 }
+
