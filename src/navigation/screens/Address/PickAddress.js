@@ -62,7 +62,7 @@ export default function PickAddress({ route, navigation }) {
                 navigation.navigate(source, { refresh: new Date().getTime() })
             }
         } catch (error) {
-            console.error('Error updating address:', error);
+            console.error('Error setting default address:', error);
         }
     }
     return (
@@ -94,7 +94,7 @@ export default function PickAddress({ route, navigation }) {
                 <View>
                     <Text style={{ color: '#707070', padding: 15 }}>Địa chỉ đã lưu</Text>
                 </View>
-                {nonDefaultAddress && nonDefaultAddress.map((item, index) => (<Pressable key={index} onPress={() => handleSetDefaulAddress(item.id)}><View style={{ paddingHorizontal: 10, backgroundColor: 'white', paddingTop: 10 }}>
+                {nonDefaultAddress && nonDefaultAddress.map((item, index) => (<Pressable key={item.id} onPress={() => handleSetDefaulAddress(item.id)}><View style={{ paddingHorizontal: 10, backgroundColor: 'white', paddingTop: 10 }}>
                     <View style={styles.action}>
                         <View style={styles.iconContainer}>
                             <FontAwesome name='home' size={18} color='black' />
