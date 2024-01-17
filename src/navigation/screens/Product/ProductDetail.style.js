@@ -6,11 +6,10 @@ const colors = {
 
 const styles = StyleSheet.create({
     //Product Details
-detailContainer:{
+  prodDContainer:{
     flex: 1,
     borderColor: '#000',
-    backgroundColor: '#f0f0f0',
-    // backgroundColor: "#fff", 
+    backgroundColor: 'white'
   },
   header: {
     backgroundColor: 'white',
@@ -29,43 +28,135 @@ detailContainer:{
     backgroundColor: 'white',
     // flexDirection: 'row',
   },
+  // flash sale
+  productDWrapperTitle: {
+    backgroundColor: colors.primaryColor,
+    paddingVertical: 2,
+  },
+  flashSale_header: {
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+    flexDirection: "row",
+    justifyContent: 'space-between',
+  },
+
+  flashSale_header_left: {
+    flexDirection: "row",
+    alignItems: 'left'
+  },
+  flashSale_header_left_icon: {
+      width: 25,
+      height: 25,
+      // marginRight: 10
+  },
+  flashSale_header_right: {
+    flexDirection: "row",
+    alignItems: 'right'
+  },
+  flashSale_text: {
+    fontSize: 15,
+    fontWeight: '500',
+    color: 'white',
+    // marginRight: 20
+  },
+  flashSale_text1: {
+    fontSize: 13,
+    fontWeight: '500',
+    color: 'white',
+    // marginRight: 20
+  },
+  flashSale_textBold: {
+      fontSize: 15,
+      fontWeight: 'bold',
+      color: 'white',
+  },
   imageContainer: {
     alignSelf: 'center',
-    height: 200,
-    marginTop: 10,
-    padding: 5,
+    width: '100%',
+    height: 300,
   },
   productDImage: {
-    minWidth: 370,
-    minHeight: 200,
     alignSelf: 'center',
-    borderRadius: 5,
+    minWidth:420,
+    minHeight: 300,
+  },
+  producDSale: {
+    textAlign: 'center',
+    fontSize: 15,
+    fontWeight: '600',
+    color: 'white',
   },
   productDetails: {
     padding: 10,
   },
   productDName: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 7,
-  },
-  productDStatus: {
-    fontSize: 16,
-    fontWeight: '500',
     marginBottom: 8,
   },
+  detailTextWrapper:{
+    flexDirection: "row",
+
+  },
+  productDSold: {
+    fontSize: 14,
+    fontWeight: '450',
+  },
+  productDLikes: {
+    fontSize: 14,
+    fontWeight: '450',
+  },
   productDQuantity: {
-    fontSize: 16,
-    fontWeight: '500',
+    fontSize: 14,
+    fontWeight: '450',
+    color: 'red'
   },
   productDPrice:{
     fontSize: 16,
     fontWeight: '500',
-    marginBottom: 8,
+    color:'white'
   },
   productDDescription: {
     fontSize: 14,
+    fontWeight: '400',
     marginBottom: 5,
+  },
+  //flash timer
+  timerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  timerBox: {
+    padding: 1,
+    borderRadius: 5,
+    marginHorizontal: 3,
+    borderWidth: 1,
+    borderColor :'#fff',
+  },
+  timerText: {
+    color: '#fff',
+    fontSize: 13,
+    fontWeight: '500',
+  },
+  timerDivider: {
+    fontSize: 13,
+    fontWeight: '500',
+    color: '#fff',
+  },
+  // divider
+  horizontalDivider: {
+    width: '94%', 
+    alignSelf:'center',
+    height: 1,
+    backgroundColor: '#fff',
+    marginVertical: 6,
+  },
+  verticalDivider: {
+    height: '100%',
+    width: 1,
+    backgroundColor: 'gray',
+    marginHorizontal: 10,
   },
   //add to cart and buy button
   buttonDContainer: {
@@ -91,42 +182,12 @@ detailContainer:{
     paddingVertical: 10,
     borderRadius: 5,
     alignItems: 'center',
-    marginBottom: 5
-  },
-  // Description Detaul
-  descContainer:{
-    marginTop: 10,
-    backgroundColor : 'white',
-    width: '100%',
-  },
-  descTitle:{
-    fontSize: 18,
-    fontWeight: '600',
-    padding: 8,
-  }, 
-  productDDescription:{
-    paddingLeft: 8,
-    fontSize: 14,
-    paddingBottom:5
-  },
-  productDWrapperTitle: {
-    backgroundColor: colors.primaryColor,
-    borderRadius: 999,
-    paddingVertical: 2,
-    marginBottom: 5
-  },
-  producDSale: {
-    textAlign: 'center',
-    fontSize: 15,
-    fontWeight: '600',
-    color: 'white',
   },
   // Review Detail
   reviewContainer:{
-    marginTop: 10,
     paddingBottom: 15,
-    backgroundColor : 'white',
     width: '100%',
+    backgroundColor: 'white'
   },
   reviewTitle:{
     fontSize: 18,
@@ -134,111 +195,44 @@ detailContainer:{
     padding: 8,
   }, 
   reviewContent:{
-    marginTop: 6,
-    width: '97%',
-    alignSelf: 'center',
-    flexDirection: 'row',
-    backgroundColor: 'orange',
-    borderRadius :5
+    marginTop: 3,
+    width: '100%',
+    padding:4,
+    flexDirection: 'column',
+    backgroundColor: 'white',
+  },
+  userInfo:{
+    width: '100%',
+    flexDirection:'row'
   },
   reviewAvatar:{
-    padding: 8,
-    width: 60,
-    height: 60,
-    borderRadius : 5
+    marginHorizontal: 4,
+    width: 25,
+    height: 25,
+    borderRadius : 99
+  }, 
+  reviewUser:{
+    marginHorizontal: 4,
+    fontSize: 16,
+    fontWeight: '500',
   }, 
   reviewTextWrapper:{
-    paddingVertical: 4,
-    marginLeft:5,
-    alignContent:'top'
+    width: "100%",
+    flexDirection: 'column',
+    paddingLeft: 38
   },
-  reviewUser:{
-    fontSize: 16,
-    fontWeight: '600',
-  }, 
   reviewText:{
-    marginTop: 3,
     fontSize: 14,
     fontWeight: '500',
   },
   reviewTime:{
-    textAlign: 'right',
+    marginTop: 4,
     fontSize: 12,
     fontWeight: '400',
   },
   reviewStar:{
     paddingLeft: 8,
     
-  },
-  // related product
-  flashSaleContainer: {
-    marginTop: 14,
-    backgroundColor: '#fff',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-  },
-
-  flashSale_header: {
-      flexDirection: "row",
-      justifyContent: 'space-between',
-      alignItems: 'center',
-  },
-  flashSale_header_left_icon: {
-      width: 25,
-      height: 25,
-      marginRight: 10
-  },
-  flashSale_textBold: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      color: '#F95030'
-  },
-  flashSale_header_right: {
-      flexDirection: "row",
-      alignItems: 'center'
-  },
-  flashSale_content: {
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    flexDirection: 'row',
-  },
-  flashSale_product: {
-      width: 110,
-      overflow: 'hidden',
-      marginRight: 10
-  },
-  flashSale_imageContainer: {
-
-  },
-  flashSale_image: {
-      width: 110,
-      height: 110,
-  },
-
-  flashSale_contentContainer: {
-
-  },
-  flashSale_name: {
-      fontSize: 13,
-      fontWeight: '500'
-  },
-  flashSale_price: {
-      textAlign: 'center',
-      fontSize: 12,
-      fontWeight: '500',
-      color: '#F95030',
-  },
-  flashSale_wrapperTitle: {
-      backgroundColor: colors.primaryColor,
-      borderRadius: 999,
-      paddingVertical: 2
-
-  },
-  flashSale_title: {
-      color: '#fff',
-      textAlign: 'center',
-      fontSize: 12,
-      fontWeight: '500',
   },
 })
 export default styles;
