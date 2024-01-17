@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
 
   // order_content
   content: {
-    display: "flex",
+    // display: "flex",
     marginBottom: 10,
     backgroundColor: "white",
     padding: 15
@@ -170,12 +170,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 15
-    // marginHorizontal: 10,
-    // paddingVertical: 10
   },
 
   title_order: {
-    flexBasis: "70%",
     flexDirection: "row",
     alignItems: "center",
   },
