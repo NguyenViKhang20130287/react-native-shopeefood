@@ -5,7 +5,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
-export default function FavoriteItem({ id, storeName, imageURL, rating, distance, deliveryTime }) {
+export default function FavoriteItem({ id, storeName, imageURL, address }) {
     const [isClose, setIsClose] = useState(false);
     const [isLike, setIsLike] = useState(true);
     const handleToggleFavorite = async (item_id) => {
@@ -71,19 +71,15 @@ export default function FavoriteItem({ id, storeName, imageURL, rating, distance
                         color={"orange"}
                     ></Ionicons>{" "}{storeName}</Text>
                     <View style={styles.infoContainer}>
-                        <Text style={[styles.infoText, { paddingRight: 6 }]}><Ionicons
-                            style={{ fontSize: 14 }}
-                            name="star"
-                            color={"orange"}
-                        ></Ionicons>{rating} 4.7</Text>
-                        <Text style={[styles.infoText, { borderLeftWidth: 1, borderRightWidth: 1, paddingHorizontal: 6 }]}>{distance} 3.5 km</Text>
-                        <Text style={[styles.infoText, { paddingLeft: 6 }]}>{deliveryTime} 22 phút</Text>
+                        <View>
+                            <Text numberOfLines={1} style={{ color: "#989898" }}>{address}</Text>
+                        </View>
                     </View>
 
                 </View>
             </View>
             <View style={styles.heartContainer}>
-                <Pressable onPress={() => handleToggleFavorite(id)}><FontAwesome name={isLike ? "heart" : "heart-o"} size={18} color={'#EF4C2D'} /></Pressable>
+                <Pressable onPress={() => handleToggleFavorite(id)}><FontAwesome name={isLike ? "heart" : "heart-o"} size={18} color={isLike ? '#EF4C2D' : '#757575'} /></Pressable>
             </View>
         </View>
     );

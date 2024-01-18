@@ -141,32 +141,17 @@ const Incoming = () => {
           </View>
           <View style={styles.details}>
             <View style={styles.food_name}>
-              <Text style={styles.food_tilte}>
+              <Text numberOfLines={1} ellipsizeMode="tail" style={styles.food_tilte}>
                 <Ionicons
                   style={styles.icons}
                   name="shield-checkmark"
                   color={"orange"}
                 ></Ionicons>{" "}
-                Cơm tấm Phúc Lộc Thọ - TPHCM
+                Cơm Gà Xối Mỡ 142 - Ba Đình
               </Text>
             </View>
-            <View style={styles.info}>
-              <View style={styles.rating}>
-                <Text style={styles.rating_text}>
-                  <Ionicons
-                    style={styles.icons}
-                    name="star"
-                    color={"orange"}
-                  ></Ionicons>{" "}
-                  4.6
-                </Text>
-              </View>
-              <View style={styles.distance}>
-                <Text style={styles.distance_text}>0.2km</Text>
-              </View>
-              <View style={styles.times}>
-                <Text style={styles.times_text}>15 phút</Text>
-              </View>
+            <View>
+              <Text numberOfLines={1} style={styles.example_address}>142 Ba Đình, P. 10, Quận 8, TP. HCM</Text>
             </View>
           </View>
         </View>
@@ -179,108 +164,17 @@ const Incoming = () => {
           </View>
           <View style={styles.details}>
             <View style={styles.food_name}>
-              <Text style={styles.food_tilte}>
+              <Text numberOfLines={1} ellipsizeMode="tail" style={styles.food_tilte}>
                 <Ionicons
                   style={styles.icons}
                   name="shield-checkmark"
                   color={"orange"}
                 ></Ionicons>{" "}
-                Cơm tấm Phúc Lộc Thọ - TPHCM
+                Cơm Gà Xối Mỡ 142 - Ba Đình
               </Text>
             </View>
-            <View style={styles.info}>
-              <View style={styles.rating}>
-                <Text style={styles.rating_text}>
-                  <Ionicons
-                    style={styles.icons}
-                    name="star"
-                    color={"orange"}
-                  ></Ionicons>{" "}
-                  4.6
-                </Text>
-              </View>
-              <View style={styles.distance}>
-                <Text style={styles.distance_text}>0.2km</Text>
-              </View>
-              <View style={styles.times}>
-                <Text style={styles.times_text}>15 phút</Text>
-              </View>
-            </View>
-          </View>
-        </View>
-        <View style={styles.food}>
-          <View style={styles.image}>
-            <Image
-              style={styles.foods_image}
-              source={require("../../../../assets/product/prod_1.jpeg")}
-            />
-          </View>
-          <View style={styles.details}>
-            <View style={styles.food_name}>
-              <Text style={styles.food_tilte}>
-                <Ionicons
-                  style={styles.icons}
-                  name="shield-checkmark"
-                  color={"orange"}
-                ></Ionicons>{" "}
-                Cơm tấm Phúc Lộc Thọ - TPHCM
-              </Text>
-            </View>
-            <View style={styles.info}>
-              <View style={styles.rating}>
-                <Text style={styles.rating_text}>
-                  <Ionicons
-                    style={styles.icons}
-                    name="star"
-                    color={"orange"}
-                  ></Ionicons>{" "}
-                  4.6
-                </Text>
-              </View>
-              <View style={styles.distance}>
-                <Text style={styles.distance_text}>0.2km</Text>
-              </View>
-              <View style={styles.times}>
-                <Text style={styles.times_text}>15 phút</Text>
-              </View>
-            </View>
-          </View>
-        </View>
-        <View style={styles.food}>
-          <View style={styles.image}>
-            <Image
-              style={styles.foods_image}
-              source={require("../../../../assets/product/prod_1.jpeg")}
-            />
-          </View>
-          <View style={styles.details}>
-            <View style={styles.food_name}>
-              <Text style={styles.food_tilte}>
-                <Ionicons
-                  style={styles.icons}
-                  name="shield-checkmark"
-                  color={"orange"}
-                ></Ionicons>{" "}
-                Cơm tấm Phúc Lộc Thọ - TPHCM
-              </Text>
-            </View>
-            <View style={styles.info}>
-              <View style={styles.rating}>
-                <Text style={styles.rating_text}>
-                  <Ionicons
-                    style={styles.icons}
-                    name="star"
-                    color={"orange"}
-                  ></Ionicons>{" "}
-                  4.6
-                </Text>
-              </View>
-              <View style={styles.distance}>
-                <Text style={styles.distance_text}>0.2km</Text>
-              </View>
-              <View style={styles.times}>
-                <Text style={styles.times_text}>15 phút</Text>
-              </View>
+            <View>
+              <Text numberOfLines={1} style={styles.example_address}>142 Ba Đình, P. 10, Quận 8, TP. HCM</Text>
             </View>
           </View>
         </View>

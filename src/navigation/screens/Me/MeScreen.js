@@ -91,7 +91,7 @@ export default function MeScreen({ navigation }) {
             <View>
                 <View style={{ borderBottomWidth: 10, borderBottomColor: '#F5F6F8' }}>
                     <Action icon={'gift'} title={'Ví Voucher'} color={'orange'}></Action>
-                    <Pressable onPress={() => navigation.navigate('OrderConfirmation')}><Action icon={'credit-card'} title={'Thanh toán'} color={'orange'}></Action></Pressable>
+                    <Action icon={'credit-card'} title={'Thanh toán'} color={'orange'}></Action>
                     <Pressable onPress={() => navigation.navigate('Address')}><Action icon={'map-marker'} title={'Địa chỉ'} color={'green'}></Action></Pressable>
                 </View>
                 <View style={{ borderBottomWidth: 10, borderBottomColor: '#F5F6F8' }}>

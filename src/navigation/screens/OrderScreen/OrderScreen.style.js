@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
 
   details: {
-    // marginLeft: 10,
+    marginLeft: 10,
   },
 
   food_name: {
