@@ -24,7 +24,7 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     // <>
-    //   <MainContainer />
+    //   <Admin />
     // </>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Main">
@@ -141,6 +141,14 @@ export default function App() {
           <Stack.Screen name="Search" component={SearchScreen}
           options={{
             headerTitle: 'Tìm kiếm',
+            headerTintColor: 'orangered',
+            headerTitleStyle: {
+              color: 'black',
+            },
+          }} />
+          <Stack.Screen name="Admin" component={Admin}
+          options={{
+            headerTitle: 'Admin',
             headerTintColor: 'orangered',
             headerTitleStyle: {
               color: 'black',

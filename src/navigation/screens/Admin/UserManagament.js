@@ -7,10 +7,16 @@ import {
   Image,
   Button,
   SafeAreaView,
+  ScrollView
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./Admin.style";
 import { FontAwesome } from "@expo/vector-icons";
+import { useState } from "react";
+import axios from "axios";
+import { useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {decode as atob, encode as btoa} from 'base-64'
 
 const Action = ({ icon, title, color, screen }) => {
   return (
@@ -31,9 +37,35 @@ const Action = ({ icon, title, color, screen }) => {
   );
 };
 
+
 const UserMangement = () => {
+
+  const [user, setUser] = useState([]);
+
+
+  const loadUserNoLock = async () => {
+    const storageUser = await AsyncStorage.getItem('user');
+    console.log(storageUser);
+    const url = 'http://localhost:8080/api/user/admin/find-all-user-no-lock';
+    try {
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `Basic ${btoa(`${storageUser.email}:${storageUser.storagePass}`)}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    loadUserNoLock()
+  }, [user])
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.account_list}>
         <View style={styles.table_title}>
           <Text style={styles.title_text}>
@@ -300,7 +332,7 @@ const UserMangement = () => {
           </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
