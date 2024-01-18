@@ -14,7 +14,6 @@ import NotificationsScreen from "./screens/Notifications/NotificationsScreen";
 
 // test
 import SearchScreen from "./screens/Search/SearchScreen";
-import ProductDetail from "./screens/Product/ProductDetail";
 // import ProductsScreen from './screens/Product/ProductDetail';
 
 const homeName = "Home";
@@ -60,8 +59,13 @@ export default function MainContainer() {
                 options={{ headerShown: false }}
             />
             <Tab.Screen
-                name={myOrdersName}
+                name={produtcName}
                 component={ProductsScreen}
+                options={{ headerShown: false }}
+            />
+            <Tab.Screen
+                name={myOrdersName}
+                component={MyOrdersScreen}
                 options={{ headerShown: false }}
             />
             <Tab.Screen
