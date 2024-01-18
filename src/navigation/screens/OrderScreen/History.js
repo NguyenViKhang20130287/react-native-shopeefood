@@ -12,12 +12,40 @@ import { Ionicons } from "@expo/vector-icons";
 import styles from "./OrderScreen.style";
 import { ScrollView } from "react-native";
 import { useState } from "react";
+import { useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 const History = () => {
-  const [hasData, setHasData] = useState(true);
+  const [orders, setOrders] = useState([]);
+  const CurrencyFormatter = ({ style, amount }) => {
+    const formattedAmount = new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+    }).format(amount);
+
+    return <Text style={style}>{formattedAmount}</Text>;
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userStorage = JSON.parse(await AsyncStorage.getItem('user'));
+        if (userStorage) {
+          const user_id = userStorage.id;
+          const response = await axios.get(`http://localhost:8080/api/user/${user_id}/orders?status=Hoàn thành`);
+          const data = response.data;
+          setOrders(data);
+          // setIsLoading(false);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    fetchData();
+  }, [])
   return (
     <View style={styles.container}>
-      {hasData ? (
+      {orders.length > 0 && orders ? (
         <ScrollView>
           <View style={styles.order}>
             <View style={styles.rate_noti}>
@@ -33,14 +61,14 @@ const History = () => {
               </View>
               <Ionicons name="arrow-forward-outline"></Ionicons>
             </View>
-            <View style={styles.content}>
+            {orders && orders.map((item) => (<View key={item.id} style={styles.content}>
               <View style={styles.content_title}>
                 <View style={styles.title_order}>
-                  <Text style={styles.cate_title}>Đồ ăn</Text>
-                  <Text style={styles.id_title}> #1702</Text>
+                  <Text style={styles.cate_title}>{item.store.subCategory.mainCategory.name}</Text>
+                  <Text style={styles.id_title}> #{1000 + item.id}</Text>
                 </View>
                 <View style={styles.title_time}>
-                  <Text style={styles.time_title}>Hôm nay 18:30</Text>
+                  <Text style={styles.time_title}>{item.order_date}</Text>
                 </View>
               </View>
               <View style={styles.history_content_details}>
@@ -51,29 +79,29 @@ const History = () => {
                       name="shield-checkmark"
                       color={"orange"}
                     ></Ionicons>{" "}
-                    Cơm tấm Phúc Lộc Thọ - TPHCM
+                    {item.store.name}
                   </Text>
                 </View>
                 <View style={styles.history_content_info}>
                   <View style={styles.content_image}>
                     <Image
                       style={styles.foods_image}
-                      source={require("../../../../assets/product/prod_1.jpeg")}
+                      source={{ uri: item.store.image }}
                     />
                   </View>
                   <View style={styles.history_content_price}>
                     <View style={styles.price}>
-                      <Text style={styles.price_text}>120.000đ</Text>
+                      <CurrencyFormatter style={styles.price_text} amount={item.order_total + item.shipping_cost} />
                     </View>
                     <View style={styles.quantity}>
-                      <Text style={styles.quantity_text}>2 món</Text>
+                      <Text style={styles.quantity_text}>{item.total_quantity} món</Text>
                     </View>
                   </View>
                 </View>
               </View>
               <View style={styles.status_now_complete}>
                 <View style={styles.now1_complete}>
-                  <Text style={styles.complete_text}>Hoàn thành</Text>
+                  <Text style={styles.complete_text}>{item.orderStatus.name}</Text>
                 </View>
                 <View style={styles.now2_complete}>
                   <View style={styles.reorder_button}>
@@ -81,135 +109,7 @@ const History = () => {
                   </View>
                 </View>
               </View>
-            </View>
-          </View>
-          <View style={styles.order}>
-            <View style={styles.rate_noti}>
-              <View style={styles.rate_title_container}>
-                <Ionicons
-                  size={22}
-                  name="heart-circle-outline"
-                  color={"#FFC813"}
-                ></Ionicons>
-                <Text style={styles.rate_title}>
-                  {" "}Đánh giá quán, nhận ngay 500 Xu
-                </Text>
-              </View>
-              <Ionicons name="arrow-forward-outline"></Ionicons>
-            </View>
-            <View style={styles.content}>
-              <View style={styles.content_title}>
-                <View style={styles.title_order}>
-                  <Text style={styles.cate_title}>Đồ ăn</Text>
-                  <Text style={styles.id_title}> #1702</Text>
-                </View>
-                <View style={styles.title_time}>
-                  <Text style={styles.time_title}>Hôm nay 18:30</Text>
-                </View>
-              </View>
-              <View style={styles.history_content_details}>
-                <View style={styles.content_name}>
-                  <Text numberOfLines={1} ellipsizeMode="tail" style={styles.history_name_text}>
-                    <Ionicons
-                      style={styles.icons}
-                      name="shield-checkmark"
-                      color={"orange"}
-                    ></Ionicons>{" "}
-                    Cơm tấm Phúc Lộc Thọ - TPHCM
-                  </Text>
-                </View>
-                <View style={styles.history_content_info}>
-                  <View style={styles.content_image}>
-                    <Image
-                      style={styles.foods_image}
-                      source={require("../../../../assets/product/prod_1.jpeg")}
-                    />
-                  </View>
-                  <View style={styles.history_content_price}>
-                    <View style={styles.price}>
-                      <Text style={styles.price_text}>120.000đ</Text>
-                    </View>
-                    <View style={styles.quantity}>
-                      <Text style={styles.quantity_text}>2 món</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View style={styles.status_now_complete}>
-                <View style={styles.now1_complete}>
-                  <Text style={styles.complete_text}>Hoàn thành</Text>
-                </View>
-                <View style={styles.now2_complete}>
-                  <View style={styles.reorder_button}>
-                    <Button color={"#EE4E2E"} title="Đặt lại" />
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View style={styles.order}>
-            <View style={styles.rate_noti}>
-              <View style={styles.rate_title_container}>
-                <Ionicons
-                  size={22}
-                  name="heart-circle-outline"
-                  color={"#FFC813"}
-                ></Ionicons>
-                <Text style={styles.rate_title}>
-                  {" "}Đánh giá quán, nhận ngay 500 Xu
-                </Text>
-              </View>
-              <Ionicons name="arrow-forward-outline"></Ionicons>
-            </View>
-            <View style={styles.content}>
-              <View style={styles.content_title}>
-                <View style={styles.title_order}>
-                  <Text style={styles.cate_title}>Đồ ăn</Text>
-                  <Text style={styles.id_title}> #1702</Text>
-                </View>
-                <View style={styles.title_time}>
-                  <Text style={styles.time_title}>Hôm nay 18:30</Text>
-                </View>
-              </View>
-              <View style={styles.history_content_details}>
-                <View style={styles.content_name}>
-                  <Text numberOfLines={1} ellipsizeMode="tail" style={styles.history_name_text}>
-                    <Ionicons
-                      style={styles.icons}
-                      name="shield-checkmark"
-                      color={"orange"}
-                    ></Ionicons>{" "}
-                    Cơm tấm Phúc Lộc Thọ - TPHCM
-                  </Text>
-                </View>
-                <View style={styles.history_content_info}>
-                  <View style={styles.content_image}>
-                    <Image
-                      style={styles.foods_image}
-                      source={require("../../../../assets/product/prod_1.jpeg")}
-                    />
-                  </View>
-                  <View style={styles.history_content_price}>
-                    <View style={styles.price}>
-                      <Text style={styles.price_text}>120.000đ</Text>
-                    </View>
-                    <View style={styles.quantity}>
-                      <Text style={styles.quantity_text}>2 món</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View style={styles.status_now_complete}>
-                <View style={styles.now1_complete}>
-                  <Text style={styles.complete_text}>Hoàn thành</Text>
-                </View>
-                <View style={styles.now2_complete}>
-                  <View style={styles.reorder_button}>
-                    <Button color={"#EE4E2E"} title="Đặt lại" />
-                  </View>
-                </View>
-              </View>
-            </View>
+            </View>))}
           </View>
         </ScrollView>
       ) :
