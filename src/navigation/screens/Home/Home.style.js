@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     topzone: {
         paddingHorizontal: 5,
         paddingVertical: 10,
-        paddingTop: 20,
+        paddingTop: 15,
         backgroundColor: '#fff',
     },
 
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     addressText: {
         flexShrink: 1,
         width: '85%',
-        fontSize: 16
+        fontSize: 15
     },
 
     // search box
@@ -72,19 +72,26 @@ const styles = StyleSheet.create({
 
     // category
     categoryContainer: {
-        paddingHorizontal: 20,
-        paddingVertical: 20,
+        paddingVertical: 15,
         backgroundColor: '#fff',
     },
     cateIcon: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 20
     },
     cateImg: {
-        height: 40,
-        width: 40,
+        height: 35,
+        width: 35,
+        marginBottom: 10
+    },
+    iconText: {
+        fontSize: 12
+    },
+    iconContainer: {
+        marginBottom: 20,
+        flex: 1,
+        alignItems: 'center',
     },
 
     //
@@ -121,40 +128,45 @@ const styles = StyleSheet.create({
 
     // products
     flashSale_content: {
-        paddingHorizontal: 10,
+        // paddingHorizontal: 10,
         paddingVertical: 10,
         flexDirection: 'row',
     },
     flashSale_product: {
-        width: 110,
+        width: 131,
         overflow: 'hidden',
-        marginRight: 10
+        marginRight: 10,
+        borderWidth: 0.5,
+        borderColor: '#E3E3E3',
     },
     flashSale_imageContainer: {
 
     },
     flashSale_image: {
-        width: 110,
-        height: 110,
+        width: 130,
+        height: 130,
     },
 
     flashSale_contentContainer: {
-
+        backgroundColor: '#FAFAFA',
+        padding: 10
     },
     flashSale_name: {
-        fontSize: 13,
-        fontWeight: '500'
+        fontSize: 14,
+        fontWeight: '500',
     },
     flashSale_price: {
         textAlign: 'center',
-        fontSize: 12,
+        fontSize: 14,
         fontWeight: '500',
         color: '#F95030',
+        marginBottom: 7,
+        fontWeight: 'bold'
     },
     flashSale_wrapperTitle: {
         backgroundColor: colors.primaryColor,
         borderRadius: 999,
-        paddingVertical: 2
+        paddingVertical: 2,
 
     },
     flashSale_title: {
@@ -162,18 +174,21 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 12,
         fontWeight: '500',
+        textTransform: 'uppercase'
     }
     ,
     topRating_wrapperTitle: {
         marginTop: 15,
-        width: '80%',
-        borderWidth: 1,
-        borderColor: colors.primaryColor,
-        paddingHorizontal: 5,
+        flexDirection: 'row',
     },
     topRating_title: {
+        borderWidth: 0.5,
         color: colors.primaryColor,
-        fontSize: 12,
+        fontSize: 10,
+        borderRadius: 2,
+        borderColor: colors.primaryColor,
+        paddingHorizontal: 5,
+        paddingVertical: 3
     }
 
 });
