@@ -1,6 +1,6 @@
 import * as React from "react";
-import { useState, useRef,useEffect} from "react";
-import { ScrollView, TouchableOpacity, Text, View,FlatList,Image} from "react-native";
+import { useState, useRef, useEffect } from "react";
+import { ScrollView, TouchableOpacity, Text, View, FlatList, Image, Pressable } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import styles from './Product.style'
@@ -9,18 +9,18 @@ import { useCallback } from "react";
 //Test Data
 const categories = [
   {
-      name: 'Đồ Ăn',
-      subcategories: ['Cơm', 'Canh', 'Cá'],
-  },{
-      name: 'Nước Uống',
-      subcategories: ['Bia', 'Coca', 'Nước Lọc'],
-  },{
+    name: 'Đồ Ăn',
+    subcategories: ['Cơm', 'Canh', 'Cá'],
+  }, {
+    name: 'Nước Uống',
+    subcategories: ['Bia', 'Coca', 'Nước Lọc'],
+  }, {
     name: 'Tráng Miệng',
     subcategories: ['Bia', 'Bánh Kem', 'Kẹo'],
-  },{
+  }, {
     name: 'Trà Sữa',
     subcategories: ['Bia', 'Bánh Kem', 'Kẹo'],
-  },{
+  }, {
     name: 'Bánh Kem',
     subcategories: ['Bia', 'Bánh Kem', 'Kẹo'],
   }
@@ -78,14 +78,14 @@ const ProductTopTab = () => {
       scrollToSection(index);
     }
   }, [setSelectedTab, scrollViewRef, scrollToSection]);
-  
+
   useEffect(() => {
     scrollToSection(selectedTab);
   }, [selectedTab]);
-  
+
   const scrollToSection = (index) => {
     if (scrollViewRef.current) {
-      const yOffset = index * 500; 
+      const yOffset = index * 500;
       scrollViewRef.current.scrollTo({ y: yOffset, animated: true });
     }
   };
@@ -93,19 +93,18 @@ const ProductTopTab = () => {
     <TouchableOpacity
       onPress={() => handleCategorySelect(index)}
       style={{
-        padding: 9,
-        height: 50,
-        backgroundColor: selectedTab === index ? "orangered" : "white",
+        padding: 10,
+        backgroundColor: "white",
         borderBottomWidth: 2,
-        borderBottomColor: selectedTab === index ? "#4c4c4c" : "transparent",
-      }} 
+        borderBottomColor: selectedTab === index ? "#F95030" : "transparent",
+      }}
     >
-      <Text style={{ color: selectedTab === index ? "white" : "black", fontSize:16,paddingVertical:6,}}>{item.name}</Text>
+      <Text style={{ color: selectedTab === index ? "#F95030" : "black", fontSize: 15, fontWeight: selectedTab === index ? "500" : "400" }}>{item.name}</Text>
     </TouchableOpacity>
   );
 
   return (
-    <View style={{ flex: 1,}}>
+    <View style={{ flex: 1, }}>
       <View style={{ flexDirection: 'row', backgroundColor: "lightgray" }}>
         <FlatList
           data={categories}
@@ -136,54 +135,55 @@ const ProductTopTab = () => {
         ref={scrollViewRef}
         style={{ flex: 1 }}
         showsVerticalScrollIndicator={false}>
-       {categories.map((category, index) => (
-          <View key={index} style={{ height: 330, backgroundColor: '#f2f2f2', marginBottom: 10 }}>
+        {categories.map((category, index) => (
+          <View key={index} style={{ backgroundColor: 'white', marginBottom: 2 }}>
             <View style={styles.productContainer}>
               <View style={styles.prodsContainer}>
-                <View style={{width:"100%",backgroundColor:"#ffffff"}}>
-                  <Text style={styles.textTitle}>{category.name}</Text>
+                <View style={{ backgroundColor: "#ffffff", paddingBottom: 5 }}>
+                  <Text style={styles.cateTitle}>{category.name} (5)</Text>
                 </View>
                 <View style={styles.productContent}>
-                    <View style={styles.imageContainer}>
-                        <Image style={styles.productImage}source={require('../../../../assets/product/prod_1.jpeg')} />
+                  <View style={styles.imageContainer}>
+                    <Image style={styles.productImage} source={require('../../../../assets/product/prod_1.jpeg')} />
+                  </View>
+                  <View style={styles.producContentContainer}>
+                    <Text numberOfLines={1} ellipsizeMode="tail" style={styles.producName}>Cơm Ba Ghiên - Nguyễn Văn Trỗi s sdsd</Text>
+                    <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >40 đã bán | 1 lượt thích</Text>
+                    <View style={styles.contentWrapper}>
+                      <View style={{ flexDirection: "row", alignItems: "center" }}>
+                        <Text style={styles.oldPrice}>20.000đ</Text>
+                        <Text style={styles.pProdPrice}> 36.000đ</Text>
+                      </View>
+                      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Pressable><FontAwesome name="minus-square-o" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
+                        <Text style={{ marginHorizontal: 10 }}>1</Text>
+                        <Pressable><FontAwesome name="plus-square" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
+                      </View>
                     </View>
-                    <View style={styles.producContentContainer}>
-                        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.producName}>Cơm Ba Ghiên - Nguyễn Văn Trỗi</Text>
-                        <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >1moo ta moo ta momoa ojoi ho h iaw 12e1edw awdawd 123 da wdawe1231 f fweq  req22e1 fv fwaf awd1 2dqw awaw fa 1 f qafaw 41234 1 f  ag  a3gb     25 31 c1c5235 13v 32513132 m1c 1x1 đ</Text>
-                        <View style={styles.contentWrapper}>
-                            <Text style={styles.productPrice}>100.000đ</Text>
-                            <IconEntypo name="squared-plus" size={25} color={'#F95030'}></IconEntypo>
-                        </View>
-                    </View>
-                </View> 
+                  </View>
+                </View>
                 <View style={styles.productContent}>
-                    <View style={styles.imageContainer}>
-                        <Image style={styles.productImage}source={require('../../../../assets/product/prod_1.jpeg')} />
+                  <View style={styles.imageContainer}>
+                    <Image style={styles.productImage} source={require('../../../../assets/product/prod_1.jpeg')} />
+                  </View>
+                  <View style={styles.producContentContainer}>
+                    <Text numberOfLines={1} ellipsizeMode="tail" style={styles.producName}>Cơm Ba Ghiên - Nguyễn Văn Trỗi s sdsd</Text>
+                    <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >40 đã bán | 1 lượt thích</Text>
+                    <View style={styles.contentWrapper}>
+                      <View style={{ flexDirection: "row", alignItems: "center" }}>
+                        <Text style={styles.oldPrice}>20.000đ</Text>
+                        <Text style={styles.pProdPrice}> 36.000đ</Text>
+                      </View>
+                      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Pressable><FontAwesome name="minus-square-o" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
+                        <Text style={{ marginHorizontal: 10 }}>1</Text>
+                        <Pressable><FontAwesome name="plus-square" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
+                      </View>
                     </View>
-                    <View style={styles.producContentContainer}>
-                        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.producName}>Cơm Ba Ghiên - Nguyễn Văn Trỗi</Text>
-                        <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >1moo ta moo ta momoa ojoi ho h iaw 12e1edw awdawd 123 da wdawe1231 f fweq  req22e1 fv fwaf awd1 2dqw awaw fa 1 f qafaw 41234 1 f  ag  a3gb     25 31 c1c5235 13v 32513132 m1c 1x1 đ</Text>
-                        <View style={styles.contentWrapper}>
-                            <Text style={styles.productPrice}>100.000đ</Text>
-                            <IconEntypo name="squared-plus" size={25} color={'#F95030'}></IconEntypo>
-                        </View>
-                    </View>
-                </View> 
-                <View style={styles.productContent}>
-                    <View style={styles.imageContainer}>
-                        <Image style={styles.productImage}source={require('../../../../assets/product/prod_1.jpeg')} />
-                    </View>
-                    <View style={styles.producContentContainer}>
-                        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.producName}>Cơm Ba Ghiên - Nguyễn Văn Trỗi</Text>
-                        <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >1moo ta moo ta momoa ojoi ho h iaw 12e1edw awdawd 123 da wdawe1231 f fweq  req22e1 fv fwaf awd1 2dqw awaw fa 1 f qafaw 41234 1 f  ag  a3gb     25 31 c1c5235 13v 32513132 m1c 1x1 đ</Text>
-                        <View style={styles.contentWrapper}>
-                            <Text style={styles.productPrice}>100.000đ</Text>
-                            <IconEntypo name="squared-plus" size={25} color={'#F95030'}></IconEntypo>
-                        </View>
-                    </View>
-                </View> 
+                  </View>
+                </View>
               </View>
-           </View>
+            </View>
           </View>
         ))}
       </ScrollView>

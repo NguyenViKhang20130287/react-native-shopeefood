@@ -1,25 +1,25 @@
 import { StyleSheet } from "react-native";
 
 const colors = {
-    primaryColor: '#F95030'
+  primaryColor: '#F95030'
 }
 
 const styles = StyleSheet.create({
 
   container: {
-      borderColor: '#000',
-      backgroundColor: '#f0f0f0',
+    borderColor: '#000',
+    backgroundColor: '#f0f0f0',
   },
   topzone: {
-      paddingHorizontal: 5,
-      paddingVertical: 10,
-      backgroundColor: '#fff',
-      // flexDirection: 'row',
-    },
+    paddingHorizontal: 5,
+    paddingVertical: 10,
+    backgroundColor: '#fff',
+    // flexDirection: 'row',
+  },
   //
   shopContainer: {
-    marginTop: 10,
-    backgroundColor: '#fff',
+    // // marginTop: 10,
+    // backgroundColor: '#fff',
   },
   sImageContainer: {
     alignSelf: 'center',
@@ -28,161 +28,179 @@ const styles = StyleSheet.create({
   },
   shopImage: {
     alignSelf: 'center',
-    minWidth:420,
+    minWidth: 420,
     minHeight: 200,
     resizeMode: 'cover',
   },
   // main shop 
-  mainSContainer:{
-    marginVertical: 5,
-    width:'100%',
+  mainSContainer: {
+    paddingHorizontal: 15,
+    paddingVertical: 20,
+    width: '100%',
     backgroundColor: 'white',
-    flexDirection:'column'
+    flexDirection: 'column'
   },
-  sTopContent:{
-    flexDirection:'row',
+  sTopContent: {
+    flexDirection: 'row',
   },
   favorBox: {
+    alignSelf: "flex-start",
     padding: 4,
     borderRadius: 3,
-    marginHorizontal: 4,
-    backgroundColor: colors.primaryColor
+    // marginHorizontal: 4,
+    backgroundColor: colors.primaryColor,
   },
-  favorText:{
-    color:"white",
-    fontWeight:'bold',
-    fontSize: 14
+  favorText: {
+    color: "white",
+    fontWeight: 'bold',
+    fontSize: 14,
+    backgroundColor: "#F95030",
+    padding: 4,
+    borderRadius: 3,
   },
-  shopName:{
-    fontSize: 18,
-    fontWeight:'bold',
-    marginLeft:5,
+  shopName: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    flex: 1
   },
-  sBotContent:{
-    marginLeft:5,
-    marginTop:4,
-    flexDirection:'row'
+  sBotContent: {
+    marginTop: 15,
+    flexDirection: 'row',
+    justifyContent: "space-between"
   },
   // delivery expected
-  deliveryContent:{
-    backgroundColor:'white',
-    width:'100%'
+  deliveryContent: {
+    flexDirection: "row",
+    backgroundColor: 'white',
+    padding: 15,
+    marginVertical: 10,
+    alignItems: "center",
   },
-  deliver:{
+  deliver: {
     width: '100%',
-    flexDirection:'row',
+    flexDirection: 'row',
   },
-  deliverPic:{
-    marginHorizontal: 4,
+  deliverPic: {
     width: 45,
     height: 45,
-    borderRadius : 99
+    borderRadius: 99
   },
-  dTextContainer:{
+  dTextContainer: {
     marginHorizontal: 4,
   },
-  deliverText:{
+  deliverText: {
     fontSize: 16,
     fontWeight: 'bold',
-  }, 
-  timeTextExpect:{
+  },
+  timeTextExpect: {
     fontSize: 16,
   },
-  changeAddress:{
-    width:'29%',
-    marginVertical: 4,
+  changeAddress: {
+    width: '29%',
+    // marginVertical: 4,
   },
-  changeText:{
+  changeText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color :'orange',
+    color: 'orange',
     textAlign: 'right'
   },
   //sale code
-  saleContainer:{
+  saleContainer: {
     width: '100%',
-    flexDirection:"row"
+    flexDirection: "row"
   },
-  saleTextContent:{
-    paddingLeft:3,
-    flexDirection:'column',
-    width:'70%',
+  saleTextContent: {
+    // paddingLeft: 3,
+    flexDirection: 'column',
+    width: '70%',
   },
-  saleCodeText:{
+  saleCodeText: {
     fontSize: 12,
-    fontWeight:'500'
+    fontWeight: '500'
   },
-  seeAllCode:{
-    width:'30%',
+  seeAllCode: {
+    width: '30%',
   },
-  seeAllText:{
+  seeAllText: {
     fontWeight: 'bold',
     textAlign: 'right',
     paddingRight: 18,
-    color:'orange'
+    color: 'orange'
   },
   //popular products
-  pProdsContainer:{
+  pProdsContainer: {
     width: '100%',
-    backgroundColor:'white',
+    backgroundColor: 'white',
+    padding: 15,
+    marginTop: 15
   },
-  textTitle:{
-    color:colors.primaryColor,
-    paddingLeft: 5,
-    fontSize: 19,
+  textTitle: {
+    color: colors.primaryColor,
+    marginBottom: 10,
+    fontSize: 16,
     fontWeight: 'bold',
-  }, 
-  pProds:{
-    paddingLeft: 5,
   },
-  pProdContent:{
-    marginRight:6,
+  cateTitle: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#595959"
+  },
+  pProds: {
+    // paddingLeft: 5,
+  },
+  pProdContent: {
+    marginRight: 10,
     borderRadius: 3,
-    borderWidth:1,
-    borderColor: '#d3d3d3',
-    backgroundColor:'#ededed',
-    flexDirection:'row'
+    borderWidth: 0.5,
+    borderColor: '#E8E8E8',
+    backgroundColor: '#FAFAFA',
+    flexDirection: 'row'
   },
   pProdPic: {
-    padding:5,
-    minWidth:80,
-    minHeight:80
+    padding: 5,
+    width: 95,
+    height: 95
   },
-  pProdTextCont:{
-    paddingRight: 5,
-    marginLeft: 10,
-    flexDirection:'column',
+  pProdTextCont: {
+    // padding: 15,
+    marginHorizontal: 10,
+    flexDirection: 'column',
+    width: 200
   },
   pProdName: {
     marginTop: 8,
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: '500',
   },
   pProdPrice: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color:colors.primaryColor
+    fontSize: 17,
+    fontWeight: '500',
+    color: colors.primaryColor
+  },
+  oldPrice: {
+    textDecorationLine: 'line-through',
+    fontSize: 13,
+    color: "#737373"
   },
   //divider
   verticalDivider: {
-    height: '100%',
+    // height: '100%',
     width: 1,
     backgroundColor: 'gray',
-    marginHorizontal: 5,
   },
   horizontalDivider: {
-    width: '94%', 
-    alignSelf:'center',
+    width: '94%',
+    alignSelf: 'center',
     height: 1,
     backgroundColor: 'gray',
     marginVertical: 6,
   },
   horizontalDivider1: {
-    width: '94%', 
-    alignSelf:'center',
-    height: 2,
-    backgroundColor: 'gray',
-    marginVertical: 15,
+    alignSelf: 'center',
+    height: 15,
+    width: "100%",
+    backgroundColor: '#FAFAFA',
   },
   // search box
   searchContainer: {
@@ -191,77 +209,77 @@ const styles = StyleSheet.create({
   },
 
   search: {
-      flexDirection: 'row',
-      paddingHorizontal: 5,
-      paddingVertical: 5,
-      overflow: 'hidden',
-      backgroundColor: '#f0f0f0',
-      alignItems: 'center',
-      borderRadius: 3,
+    flexDirection: 'row',
+    paddingHorizontal: 5,
+    paddingVertical: 5,
+    overflow: 'hidden',
+    backgroundColor: '#f0f0f0',
+    alignItems: 'center',
+    borderRadius: 3,
   },
   searchInput: {
-      width: '95%',
-      paddingHorizontal: 5,
-      fontSize: 16
+    width: '95%',
+    paddingHorizontal: 5,
+    fontSize: 16
   },
   // category
   categoryContainer: {
-      paddingHorizontal: 20,
-      paddingVertical: 20,
-      backgroundColor: '#fff',
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    backgroundColor: '#fff',
   },
   cateIcon: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: 20
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20
   },
   cateImg: {
-      height: 40,
-      width: 40,
+    height: 40,
+    width: 40,
   },
   // products tab cate container
   productContainer: {
     width: '100%',
-    paddingHorizontal: 5,
-    paddingVertical: 5,
   },
-  prodsContainer:{
+  prodsContainer: {
     backgroundColor: '#ffffff',
     flexDirection: 'column',
+    padding: 15,
   },
   // products content
   productContent: {
-    marginTop:8,
-    width: '97%',
-    alignSelf:'center',
+    paddingVertical: 15,
+    flex: 1,
     flexDirection: 'row',
-    backgroundColor:"#ffffff"
+    backgroundColor: "#ffffff",
   },
-  contentWrapper:{
-    flexDirection:'row', 
-    justifyContent:'space-between', 
-    paddingTop: 15  
+  contentWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: "center",
   },
-  imageContainer:{
-    width: '27%',
+  imageContainer: {
   },
   productImage: {
-    width:90,
-    height:90
+    width: 90,
+    height: 90
   },
-  producContentContainer:{
-    paddingVertical:5,
-    paddingLeft: 5,
-    width:'70%'
+  producContentContainer: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+    marginLeft: 15,
+    flex: 1,
   },
   producName: {
-      fontSize: 17,
-      fontWeight: '600'
+    fontSize: 17,
+    fontWeight: '600'
   },
-  productDesc:{
-    fontSize: 14,
+  productDesc: {
+    fontSize: 13,
     fontWeight: '300',
+    color: "#757575",
+    marginBottom: 10
   },
   productPrice: {
     fontSize: 16,
@@ -275,72 +293,72 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   flashSale_title: {
-      color: '#fff',
-      textAlign: 'center',
-      fontSize: 12,
-      fontWeight: '500',
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 12,
+    fontWeight: '500',
   },
   // tab categories
-  tabSelected:{
+  tabSelected: {
     borderBottomColor: '#4c4c4c'
   },
   //Cate List 
-  modalContainer:{
-    backgroundColor :'white',
-    width:'100%',
+  modalContainer: {
+    backgroundColor: 'white',
+    width: '100%',
   },
-  mainCateContainer:{
-    flexDirection:'column'
+  mainCateContainer: {
+    flexDirection: 'column'
   },
-  cateOption:{
-    width:'100%',
-    padding: 9 ,
-    borderTopColor:'gray',
+  cateOption: {
+    width: '100%',
+    padding: 9,
+    borderTopColor: 'gray',
     borderTopWidth: 1,
   },
-  cateOptionText:{
+  cateOptionText: {
     fontSize: 16,
-    fontWeight:'400'
+    fontWeight: '400'
   },
-  cateAllOption:{
-    width:'100%',
-    padding: 9 ,
-    borderTopColor:'gray',
+  cateAllOption: {
+    width: '100%',
+    padding: 9,
+    borderTopColor: 'gray',
     borderTopWidth: 1,
     flexDirection: 'row',
-    justifyContent:'space-between', 
+    justifyContent: 'space-between',
   },
-  cateAllOptionText:{
-    paddingVertical:5,
+  cateAllOptionText: {
+    paddingVertical: 5,
     fontSize: 16,
-    fontWeight:'400'
+    fontWeight: '400'
   },
-  selectedCateOption:{
-    backgroundColor:'lightgray'
+  selectedCateOption: {
+    backgroundColor: 'lightgray'
   },
-  selectedCateOptionText:{
-    fontWeight:'bold',
-    color : colors.primaryColor
+  selectedCateOptionText: {
+    fontWeight: 'bold',
+    color: colors.primaryColor
   },
-  subCateContainer:{
-    flexDirection:'column'
+  subCateContainer: {
+    flexDirection: 'column'
   },
-  subCateOption:{
-    width:'100%',
+  subCateOption: {
+    width: '100%',
     padding: 8,
-    borderBottomColor:'lightgray',
+    borderBottomColor: 'lightgray',
     borderBottomWidth: 1
   },
-  subCateOptionText:{
+  subCateOptionText: {
     fontSize: 14,
-    fontWeight:'400',
+    fontWeight: '400',
   },
-  selectedSubCateOption:{
-    backgroundColor:'#323232'
+  selectedSubCateOption: {
+    backgroundColor: '#323232'
   },
-  selectedSubCateOptionText:{
-    color:'white',
-    fontWeight:'bold'
+  selectedSubCateOptionText: {
+    color: 'white',
+    fontWeight: 'bold'
   }
 });
 export default styles;
