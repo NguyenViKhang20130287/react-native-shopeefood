@@ -55,7 +55,7 @@ const ProductsScreen = ({ navigation }) => {
                                     </View>
                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                         <Pressable><FontAwesome name="minus-square-o" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
-                                        <Text style={{ marginHorizontal: 10 }}>1</Text>
+                                        <TextInput style={{ paddingHorizontal: 6, textAlign: "center" }}>1</TextInput>
                                         <Pressable><FontAwesome name="plus-square" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
                                     </View>
                                 </View>
@@ -74,7 +74,7 @@ const ProductsScreen = ({ navigation }) => {
                                     </View>
                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                         <Pressable><FontAwesome name="minus-square-o" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
-                                        <Text style={{ marginHorizontal: 10 }}>1</Text>
+                                        <TextInput keyboardType='numeric' style={{ paddingHorizontal: 6, textAlign: "center" }}>1</TextInput>
                                         <Pressable><FontAwesome name="plus-square" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
                                     </View>
                                 </View>
