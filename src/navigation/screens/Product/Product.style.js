@@ -7,64 +7,187 @@ const colors = {
 const styles = StyleSheet.create({
 
   container: {
-      flex: 1,
       borderColor: '#000',
       backgroundColor: '#f0f0f0',
   },
-
   topzone: {
       paddingHorizontal: 5,
       paddingVertical: 10,
-      paddingTop: 20,
       backgroundColor: '#fff',
-  },
+      // flexDirection: 'row',
+    },
   //
-  flashSaleContainer: {
-    marginTop: 14,
+  shopContainer: {
+    marginTop: 10,
     backgroundColor: '#fff',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
   },
-
-  flashSale_header: {
-      flexDirection: "row",
-      justifyContent: 'space-between',
-      alignItems: 'center',
+  sImageContainer: {
+    alignSelf: 'center',
+    width: '100%',
+    height: 200,
   },
-  flashSale_header_left_icon: {
-      width: 25,
-      height: 25,
-      marginRight: 10
+  shopImage: {
+    alignSelf: 'center',
+    minWidth:420,
+    minHeight: 200,
+    resizeMode: 'cover',
   },
-  flashSale_textBold: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      color: '#F95030'
+  // main shop 
+  mainSContainer:{
+    marginVertical: 5,
+    width:'100%',
+    backgroundColor: 'white',
+    flexDirection:'column'
   },
-  flashSale_header_right: {
-      flexDirection: "row",
-      alignItems: 'center'
+  sTopContent:{
+    flexDirection:'row',
   },
-  // address
-  addressContainer: {
+  favorBox: {
+    padding: 4,
+    borderRadius: 3,
+    marginHorizontal: 4,
+    backgroundColor: colors.primaryColor
   },
-
-  address: {
-      flexDirection: 'row',
-      justifyContent: 'flex-start',
-      alignItems: 'baseline'
+  favorText:{
+    color:"white",
+    fontWeight:'bold',
+    fontSize: 14
   },
-
-  addressText: {
-      flexShrink: 1,
-      width: '85%',
-      fontSize: 16
+  shopName:{
+    fontSize: 18,
+    fontWeight:'bold',
+    marginLeft:5,
   },
-
+  sBotContent:{
+    marginLeft:5,
+    marginTop:4,
+    flexDirection:'row'
+  },
+  // delivery expected
+  deliveryContent:{
+    backgroundColor:'white',
+    width:'100%'
+  },
+  deliver:{
+    width: '100%',
+    flexDirection:'row',
+  },
+  deliverPic:{
+    marginHorizontal: 4,
+    width: 45,
+    height: 45,
+    borderRadius : 99
+  },
+  dTextContainer:{
+    marginHorizontal: 4,
+  },
+  deliverText:{
+    fontSize: 16,
+    fontWeight: 'bold',
+  }, 
+  timeTextExpect:{
+    fontSize: 16,
+  },
+  changeAddress:{
+    width:'29%',
+    marginVertical: 4,
+  },
+  changeText:{
+    fontSize: 16,
+    fontWeight: 'bold',
+    color :'orange',
+    textAlign: 'right'
+  },
+  //sale code
+  saleContainer:{
+    width: '100%',
+    flexDirection:"row"
+  },
+  saleTextContent:{
+    paddingLeft:3,
+    flexDirection:'column',
+    width:'70%',
+  },
+  saleCodeText:{
+    fontSize: 12,
+    fontWeight:'500'
+  },
+  seeAllCode:{
+    width:'30%',
+  },
+  seeAllText:{
+    fontWeight: 'bold',
+    textAlign: 'right',
+    paddingRight: 18,
+    color:'orange'
+  },
+  //popular products
+  pProdsContainer:{
+    width: '100%',
+    backgroundColor:'white',
+  },
+  textTitle:{
+    color:colors.primaryColor,
+    paddingLeft: 5,
+    fontSize: 19,
+    fontWeight: 'bold',
+  }, 
+  pProds:{
+    paddingLeft: 5,
+  },
+  pProdContent:{
+    marginRight:6,
+    borderRadius: 3,
+    borderWidth:1,
+    borderColor: '#d3d3d3',
+    backgroundColor:'#ededed',
+    flexDirection:'row'
+  },
+  pProdPic: {
+    padding:5,
+    minWidth:80,
+    minHeight:80
+  },
+  pProdTextCont:{
+    paddingRight: 5,
+    marginLeft: 10,
+    flexDirection:'column',
+  },
+  pProdName: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  pProdPrice: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color:colors.primaryColor
+  },
+  //divider
+  verticalDivider: {
+    height: '100%',
+    width: 1,
+    backgroundColor: 'gray',
+    marginHorizontal: 5,
+  },
+  horizontalDivider: {
+    width: '94%', 
+    alignSelf:'center',
+    height: 1,
+    backgroundColor: 'gray',
+    marginVertical: 6,
+  },
+  horizontalDivider1: {
+    width: '94%', 
+    alignSelf:'center',
+    height: 2,
+    backgroundColor: 'gray',
+    marginVertical: 15,
+  },
   // search box
   searchContainer: {
-      marginTop: 10,
-      paddingHorizontal: 5
+    marginTop: 10,
+    paddingHorizontal: 5
   },
 
   search: {
@@ -97,42 +220,53 @@ const styles = StyleSheet.create({
       height: 40,
       width: 40,
   },
-  // products
+  // products tab cate container
   productContainer: {
     width: '100%',
     paddingHorizontal: 5,
     paddingVertical: 5,
-    flexDirection: "column",
   },
+  prodsContainer:{
+    backgroundColor: '#ffffff',
+    flexDirection: 'column',
+  },
+  // products content
   productContent: {
-    marginTop:7,
-    width: '100%',
-    height: 'auto',
-    backgroundColor: '#f0f0f0',
-    borderRadius: 1,
+    marginTop:8,
+    width: '97%',
+    alignSelf:'center',
+    flexDirection: 'row',
+    backgroundColor:"#ffffff"
   },
   contentWrapper:{
-    padding:5,
+    flexDirection:'row', 
+    justifyContent:'space-between', 
+    paddingTop: 15  
+  },
+  imageContainer:{
+    width: '27%',
   },
   productImage: {
-    minWidth:50,
-    minHeight:100
+    width:90,
+    height:90
+  },
+  producContentContainer:{
+    paddingVertical:5,
+    paddingLeft: 5,
+    width:'70%'
   },
   producName: {
-      fontSize: 14,
-      fontWeight: '700'
+      fontSize: 17,
+      fontWeight: '600'
+  },
+  productDesc:{
+    fontSize: 14,
+    fontWeight: '300',
   },
   productPrice: {
-      textAlign: 'left',
-      fontSize: 13,
-      fontWeight: '500',
-      color: '#F95030',
-  },
-  product_wrapperTitle: {
-      backgroundColor: colors.primaryColor,
-      borderRadius: 999,
-      paddingVertical: 2,
-      color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: colors.primaryColor,
   },
   productDiscount: {
     textAlign: 'center',
@@ -140,134 +274,73 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: 'white',
   },
-  detailLink:{
-    marginTop:5,
-    marginBottom: 5,
-  },
-  detailLinkText:{
-    textAlign: 'right',
-    fontSize: 12,
-    fontWeight: '500',
-    color: 'black',
-  },
   flashSale_title: {
       color: '#fff',
       textAlign: 'center',
       fontSize: 12,
       fontWeight: '500',
   },
-  // FILTER
-  container: {
-    flex: 1,
-    padding: 10,
+  // tab categories
+  tabSelected:{
+    borderBottomColor: '#4c4c4c'
   },
-  filterSection: {
-    marginBottom: 15,
-  },
-  filterButton:{
-    margin: 10,
-    backgroundColor: 'grey',
-    padding: 5,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  filterButtonText:{
-    color:'white'
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 12,
-    marginTop:5,
-    color: 'white'
-  },
-  filterTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 8,
-    color: 'white'
-  },
-  subFilterTitle:{
-    fontSize: 14,
-    fontWeight: 'bold',
-    marginVertical: 5,
-    color: 'white'
-  },
-  //button
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
-    marginBottom: 10,
-  },
-  applyButton: {
-    backgroundColor: 'green',
-    padding: 10,
-    borderRadius: 5,
-    flex: 1,
-    marginRight: 10,
-    alignItems: 'center',
-  },
-  resetButton: {
-    backgroundColor: 'red',
-    padding: 10,
-    borderRadius: 5,
-    flex: 1,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
+  //Cate List 
   modalContainer:{
-    width: '100%',
-    backgroundColor: '#2c2c2c',
-    borderBlockColor: '#gray'
+    backgroundColor :'white',
+    width:'100%',
   },
-  filtersContainer:{
-    width: '95%',
-    alignSelf: 'center'
+  mainCateContainer:{
+    flexDirection:'column'
   },
-  //filter category
-  cateOption: {
-    padding: 10,
-    marginBottom: 7,
-    backgroundColor: '#fff',
-    borderRadius: 5,
+  cateOption:{
+    width:'100%',
+    padding: 9 ,
+    borderTopColor:'gray',
+    borderTopWidth: 1,
   },
-  cateOptionText :{
-    // colors:'black'
+  cateOptionText:{
+    fontSize: 16,
+    fontWeight:'400'
+  },
+  cateAllOption:{
+    width:'100%',
+    padding: 9 ,
+    borderTopColor:'gray',
+    borderTopWidth: 1,
+    flexDirection: 'row',
+    justifyContent:'space-between', 
+  },
+  cateAllOptionText:{
+    paddingVertical:5,
+    fontSize: 16,
+    fontWeight:'400'
+  },
+  selectedCateOption:{
+    backgroundColor:'lightgray'
+  },
+  selectedCateOptionText:{
+    fontWeight:'bold',
+    color : colors.primaryColor
   },
   subCateContainer:{
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    marginBottom: 10,
-    backgroundColor: '#'
+    flexDirection:'column'
   },
   subCateOption:{
-    padding: 7,
-    marginBottom: 5,
-    backgroundColor: '#fff',
-    borderRadius: 6,
-  },
-  subTextContainer:{
-    marginBottom: 5,
+    width:'100%',
+    padding: 8,
+    borderBottomColor:'lightgray',
+    borderBottomWidth: 1
   },
   subCateOptionText:{
-    // colors:'black'
+    fontSize: 14,
+    fontWeight:'400',
   },
-  selectedCateOption: {
-    backgroundColor: '#595959',
+  selectedSubCateOption:{
+    backgroundColor:'#323232'
   },
-  selectedCateOptionText: {
-    color: 'white',
-    fontWeight: 'bold',
-
-  },
-  //filter slider
-  slider: {
-    width: '100%',
-    height: 40,
-  },
+  selectedSubCateOptionText:{
+    color:'white',
+    fontWeight:'bold'
+  }
 });
 export default styles;

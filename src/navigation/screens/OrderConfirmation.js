@@ -11,7 +11,7 @@ export default function OrderConfirmation({ route, navigation }) {
     const [cartItems, setCartItems] = useState([]);
     const [firstItem, setFirstItem] = useState(null);
     const [isModalVisible, setModalVisible] = useState(false);
-    const store_id = 2;
+    const store_id = 8;
     const CurrencyFormatter = ({ style, amount }) => {
         const formattedAmount = new Intl.NumberFormat('vi-VN', {
             style: 'currency',
@@ -23,8 +23,12 @@ export default function OrderConfirmation({ route, navigation }) {
     const calculateTotal = () => {
         return cartItems.reduce((total, item) => total + item.product.current_price * item.quantity, 0);
     };
+    const calculateTotalQuantity = () => {
+        return cartItems.reduce((total, item) => total + item.quantity, 0);
+    };
     const subTotal = calculateTotal();
-    const deliveryFee = 21000;
+    const totalQuantity = calculateTotalQuantity();
+    const deliveryFee = 15000;
     const totalAmount = subTotal + deliveryFee;
     useEffect(() => {
         const fetchData = async () => {
@@ -78,10 +82,11 @@ export default function OrderConfirmation({ route, navigation }) {
                         store: {
                             id: store_id
                         },
-                        status: {
+                        orderStatus: {
                             id: 1
                         },
                         order_total: subTotal,
+                        total_quantity: totalQuantity,
                         shipping_cost: deliveryFee
                     };
                     const response = await axios.post(`http://localhost:8080/api/user/${user_id}/orders/add`,
@@ -157,11 +162,11 @@ export default function OrderConfirmation({ route, navigation }) {
                 </View>
                 <View style={{ paddingHorizontal: 10, backgroundColor: 'white', paddingTop: 10, marginBottom: 10 }}>
                     <View style={styles.moneyContainer}>
-                        <Text style={styles.textMoney}>Tổng cộng ({cartItems.length} món)</Text>
+                        <Text style={styles.textMoney}>Tổng cộng ({totalQuantity} món)</Text>
                         <CurrencyFormatter style={styles.textMoney} amount={subTotal} />
                     </View>
                     <View style={styles.moneyContainer}>
-                        <Text style={styles.textMoney}>Phí giao hàng (4.3 km)</Text>
+                        <Text style={styles.textMoney}>Phí giao hàng</Text>
                         <CurrencyFormatter style={styles.textMoney} amount={deliveryFee} />
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 10, paddingBottom: 15 }}>

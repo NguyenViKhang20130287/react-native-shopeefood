@@ -61,7 +61,7 @@ export default function Address({ route, navigation }) {
                             </View>
                         </View>
                         <View style={{ width: 100 }}>
-                            <Pressable onPress={() => navigation.navigate('UpdateAddress', { source: 'Address', addressInfo: item })}><Text style={{ color: '#1084EB' }}>Sửa</Text></Pressable>
+                            <Pressable onPress={() => navigation.navigate('UpdateAddress', { source: 'Address', addressInfo: item, refresh: new Date().getTime() })}><Text style={{ color: '#1084EB' }}>Sửa</Text></Pressable>
                         </View>
                     </View>
                 </View>))}
