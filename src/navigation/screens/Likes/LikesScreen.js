@@ -149,6 +149,7 @@ export default function LikesScreen({ navigation }) {
                     id={fa.id}
                     storeName={fa.name}
                     imageURL={fa.image}
+                    address={fa.address}
                 />
             ))}
                 <View style={{ paddingVertical: 25, alignItems: 'center', backgroundColor: '#FAFAFA' }}>
