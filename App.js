@@ -3,8 +3,6 @@ import MainContainer from "./src/navigation/MainContainer";
 import Admin from "./src/navigation/screens/Admin/AdminContent";
 import UserEdit from "./src/navigation/screens/Admin/UserEdit";
 import ShopEdit from "./src/navigation/screens/Admin/ShopEdit";
-import * as React from 'react';
-import MainContainer from './src/navigation/MainContainer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import UpdateAddress from './src/navigation/screens/Address/UpdateAddress';
@@ -25,9 +23,9 @@ import SearchScreen from './src/navigation/screens/Search/SearchScreen';
 const Stack = createStackNavigator();
 export default function App() {
   return (
-    <>
-      <MainContainer />
-    </>
+    // <>
+    //   <MainContainer />
+    // </>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Main">
         <Stack.Screen name="Main" component={MainContainer} options={{ headerShown: false }} />
