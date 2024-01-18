@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '300',
     color: "#757575",
-    marginBottom: 10
+    paddingVertical:5
   },
   productPrice: {
     fontSize: 16,

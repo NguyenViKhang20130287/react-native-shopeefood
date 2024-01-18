@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useRef, useEffect } from "react";
-import { ScrollView, TouchableOpacity, Text, View, FlatList, Image, Pressable } from "react-native";
+import { ScrollView, TouchableOpacity, Text, View, FlatList, Image, Pressable, TextInput, Modal, Button, TouchableWithoutFeedback } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import styles from './Product.style'
@@ -25,45 +25,6 @@ const categories = [
     subcategories: ['Bia', 'Bánh Kem', 'Kẹo'],
   }
 ];
-// const CateList =({setShowCateList,selectedTab}) =>{
-//   const [selectedCategory, setSelectedCategory] = useState(null);
-//   const hideCateList = useCallback(() => {
-//     setShowCateList(false);
-//   }, [setShowCateList]);
-//   const handleCategorySelect=(selectedCategory)=>{
-//     setSelectedCategory(selectedCategory)
-//   };
-//   return (
-//     <View style={styles.modalContainer}>
-//       <View style= {styles.mainCateContainer}>
-//         <View style={styles.cateSection}>
-//           <TouchableOpacity style={[styles.cateAllOption]}>
-//                 <View style={{width:'93%'}}>
-//                   <Text style= {[styles.cateAllOptionText]}>Tất cả</Text>
-//               </View>
-//               <View style={{width:"7%"}} 
-//                 onPress={() => {
-//                     hideCateList();
-//                     handleCategorySelect(null);
-//                   }}>
-//                 <FontAwesome  name="chevron-up" size={25} 
-//                           color={'gray'} style={{marginTop: 1}}/>
-//               </View>
-//           </TouchableOpacity>
-//           {categories.map((category, index) => (
-//             <View key={index}>
-//               <TouchableOpacity style={[styles.cateOption, selectedCategory === category.name && styles.selectedCateOption]}
-//                   onPress={(handleCategorySelect(category.name),
-//                   hideCateList)}>
-//                   <Text style= {[styles.cateOptionText,selectedCategory === category.name && styles.selectedCateOptionText]}>
-//                   {category.name}</Text>
-//               </TouchableOpacity>
-//             </View>
-//           ))}
-//         </View>
-//       </View>
-//     </View>
-//   );}
 
 const ProductTopTab = () => {
   const scrollViewRef = useRef(null);
@@ -148,7 +109,8 @@ const ProductTopTab = () => {
                   </View>
                   <View style={styles.producContentContainer}>
                     <Text numberOfLines={1} ellipsizeMode="tail" style={styles.producName}>Cơm Ba Ghiên - Nguyễn Văn Trỗi s sdsd</Text>
-                    <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >40 đã bán | 1 lượt thích</Text>
+                    <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >Mô tả sản phẩm nếu có</Text>
+                    <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >40 đã bán</Text>
                     <View style={styles.contentWrapper}>
                       <View style={{ flexDirection: "row", alignItems: "center" }}>
                         <Text style={styles.oldPrice}>20.000đ</Text>
@@ -156,27 +118,7 @@ const ProductTopTab = () => {
                       </View>
                       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Pressable><FontAwesome name="minus-square-o" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
-                        <Text style={{ marginHorizontal: 10 }}>1</Text>
-                        <Pressable><FontAwesome name="plus-square" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-                <View style={styles.productContent}>
-                  <View style={styles.imageContainer}>
-                    <Image style={styles.productImage} source={require('../../../../assets/product/prod_1.jpeg')} />
-                  </View>
-                  <View style={styles.producContentContainer}>
-                    <Text numberOfLines={1} ellipsizeMode="tail" style={styles.producName}>Cơm Ba Ghiên - Nguyễn Văn Trỗi s sdsd</Text>
-                    <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >40 đã bán | 1 lượt thích</Text>
-                    <View style={styles.contentWrapper}>
-                      <View style={{ flexDirection: "row", alignItems: "center" }}>
-                        <Text style={styles.oldPrice}>20.000đ</Text>
-                        <Text style={styles.pProdPrice}> 36.000đ</Text>
-                      </View>
-                      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Pressable><FontAwesome name="minus-square-o" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
-                        <Text style={{ marginHorizontal: 10 }}>1</Text>
+                        <TextInput keyboardType="numeric" style={{ paddingHorizontal: 6, textAlign: "center" }}>1</TextInput>
                         <Pressable><FontAwesome name="plus-square" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
                       </View>
                     </View>
