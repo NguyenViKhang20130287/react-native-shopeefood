@@ -41,8 +41,8 @@ const Action = ({ icon, title, color, screen }) => {
 
 const AdminContent = () => {
   return (
-    <NavigationContainer>
-      <View>
+    <NavigationContainer independent={true}>
+      {/* <View>
         <View style={styles.header}>
           <Action
             style={styles.icon_header}
@@ -56,7 +56,7 @@ const AdminContent = () => {
             color={"orange"}
           ></Action>
         </View>
-      </View>
+      </View> */}
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
