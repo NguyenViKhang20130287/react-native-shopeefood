@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, TextInput, Image, ScrollView, Pressable, StatusBar, RefreshControl } from 'react-native';
+import { View, Text, TextInput, Image, ScrollView, Pressable, StatusBar, RefreshControl, TouchableWithoutFeedback } from 'react-native';
 import styles from './Home.style'
 
 import IconEntypo from 'react-native-vector-icons/Entypo';
@@ -41,6 +41,7 @@ export default function HomeScreen({ route, navigation }) {
         try {
             const response = await axios.get('http://localhost:8080/api/products/random')
             setFlashSale(response.data)
+            
         } catch (error) {
             console.log('Error:', error)
         }
@@ -163,10 +164,12 @@ export default function HomeScreen({ route, navigation }) {
                         {/* product */}
                         {flashSale.map((item) =>
                             <View style={styles.flashSale_product}>
-                                <View style={styles.flashSale_imageContainer}>
+                                <TouchableWithoutFeedback onPress={() => navigation.navigate('Store', {id: item.storeCategory.id})}>
+                                <View style={styles.flashSale_imageContainer} >
                                     <Image style={styles.flashSale_image}
                                         source={{uri: item.image}} />
                                 </View>
+                                </TouchableWithoutFeedback>
                                 <View style={styles.flashSale_contentContainer}>
                                     <Text numberOfLines={1} ellipsizeMode="tail" style={styles.flashSale_name}>{item.title}</Text>
                                     <Text style={styles.flashSale_price}>{item.current_price}đ</Text>
@@ -179,7 +182,7 @@ export default function HomeScreen({ route, navigation }) {
                     </ScrollView>
 
                 </View>
-                {storeBySubCategory.map((item, index) => 
+                {storeBySubCategory.map((item) => 
                     <View style={styles.flashSaleContainer}>
                         <View style={styles.flashSale_header}>
                             <View style={styles.flashSale_header_left}>
@@ -198,18 +201,20 @@ export default function HomeScreen({ route, navigation }) {
                         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.flashSale_content}>
                             {/* product */}
                             {item.map((item)=>
-                                <View style={styles.flashSale_product}>
-                                    <View style={styles.flashSale_imageContainer}>
-                                        <Image style={styles.flashSale_image}
-                                            source={{uri: item.image}} />
-                                    </View>
-                                    <View style={styles.flashSale_contentContainer}>
-                                        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.flashSale_name}>{item.name}</Text>
-                                        <View style={styles.topRating_wrapperTitle}>
-                                            <Text style={styles.topRating_title}>Mã giảm 15%</Text>
+                                <TouchableWithoutFeedback onPress={() => navigation.navigate('Store', {id: item.id})}>
+                                    <View style={styles.flashSale_product}>
+                                        <View style={styles.flashSale_imageContainer}>
+                                            <Image style={styles.flashSale_image}
+                                                source={{ uri: item.image }} />
+                                        </View>
+                                        <View style={styles.flashSale_contentContainer}>
+                                            <Text numberOfLines={1} ellipsizeMode="tail" style={styles.flashSale_name}>{item.name}</Text>
+                                            <View style={styles.topRating_wrapperTitle}>
+                                                <Text style={styles.topRating_title}>Mã giảm 15%</Text>
+                                            </View>
                                         </View>
                                     </View>
-                                </View>
+                                </TouchableWithoutFeedback>
                             )}
                             
 

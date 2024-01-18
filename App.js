@@ -16,6 +16,7 @@ import DeleteAccount from './src/navigation/screens/Setting/DeleteAccount';
 import UserDetail from './src/navigation/screens/user/UserDetail';
 import PickAddress from './src/navigation/screens/Address/PickAddress';
 import SearchScreen from './src/navigation/screens/Search/SearchScreen';
+import ProductsScreen from './src/navigation/screens/Product/ProductsScreen';
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -135,6 +136,15 @@ export default function App() {
           <Stack.Screen name="Search" component={SearchScreen}
           options={{
             headerTitle: 'Tìm kiếm',
+            headerTintColor: 'orangered',
+            headerTitleStyle: {
+              color: 'black',
+            },
+          }} />
+          <Stack.Screen name="Store" component={ProductsScreen}
+          options={{
+            headerTitle: ()=> null,
+            headerTransparent: true,
             headerTintColor: 'orangered',
             headerTitleStyle: {
               color: 'black',

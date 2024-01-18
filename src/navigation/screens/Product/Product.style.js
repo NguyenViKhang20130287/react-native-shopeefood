@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     },
   //
   shopContainer: {
-    marginTop: 10,
+    // marginTop: 10,
     backgroundColor: '#fff',
   },
   sImageContainer: {
@@ -145,8 +145,8 @@ const styles = StyleSheet.create({
   },
   pProdPic: {
     padding:5,
-    minWidth:80,
-    minHeight:80
+    width:80,
+    height:80
   },
   pProdTextCont:{
     paddingRight: 5,

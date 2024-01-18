@@ -57,11 +57,11 @@ export default function MainContainer() {
                 component={HomeScreen}
                 options={{ headerShown: false }}
             />
-            <Tab.Screen
+            {/* <Tab.Screen
                 name={produtcName}
                 component={ProductsScreen}
                 options={{ headerShown: false }}
-            />
+            /> */}
             <Tab.Screen
                 name={myOrdersName}
                 component={MyOrdersScreen}
