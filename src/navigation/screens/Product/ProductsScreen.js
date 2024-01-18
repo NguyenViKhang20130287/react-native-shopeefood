@@ -1,115 +1,93 @@
 import React, { useState } from 'react';
-import { View, Text,TouchableOpacity, Modal, TextInput, Image, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, TextInput, Image, ScrollView, Pressable } from 'react-native';
 import styles from './Product.style'
 
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import EvilIcon from 'react-native-vector-icons/EvilIcons'
 import ProductTopTab from './ProductTabCate';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 
-const ProductsScreen = ({navigation }) => {
+const ProductsScreen = ({ navigation }) => {
+    const [isLike, setIsLike] = useState(false);
     // const [selectedCategory, setSelectedCategory] = useState(null);
     return (
         <ScrollView style={styles.container}>
             {/* Top */}
-            <View style={styles.topzone}>
-                <View style={styles.searchContainer}>
-                    <TouchableOpacity>
-                        <MaterialIcons name="arrow-back" size={24} color="black" />
-                    </TouchableOpacity>
-                    <View style={styles.search}>
-                        <EvilIcon name='search' size={25} color={'#757587'} />
-                        <TextInput style={styles.searchInput} placeholder='Ăn vặt thoả thích, Freeship 0Đ' />
-                    </View>
-                </View>
-            </View>
             <View style={styles.shopContainer}>
-                <ScrollView horizontal style={styles.sImageContainer} 
-                stickyHeaderIndices={[0]} 
-                showsVerticalScrollIndicator={false}>
-                    <Image style={styles.shopImage} source={require('../../../../assets/product/prod_1.jpeg')} />
+                <ScrollView horizontal style={styles.sImageContainer}
+                    stickyHeaderIndices={[0]}
+                    showsVerticalScrollIndicator={false}>
+                    <Image style={styles.shopImage} source={{ uri: "https://images.foody.vn/res/g2/11349/prof/s280x175/image-3111762a-200910114155.jpeg" }} />
                 </ScrollView>
                 <View style={styles.mainSContainer}>
                     <View style={styles.sTopContent}>
-                        <View style={styles.favorBox}>
-                            <Text style={styles.favorText}>Yêu thích</Text>
-                        </View>
-                        <Text style={styles.shopName}>Hương kí 6 - Cơm chiên 18 món</Text>
+                        <Text style={styles.shopName}><Ionicons
+                            size={20}
+                            name="shield-checkmark"
+                            color={"orange"}
+                        ></Ionicons>{' '}Hương kí 6 - Cơm chiên 18 món cơm chiên 18 món</Text>
                     </View>
                     <View style={styles.sBotContent}>
-                        <Text style={styles.reviewScore}>4.7</Text>
-                        <View style={styles.verticalDivider} />
-                        <Text style={styles.numComments}>9999+ bình luận</Text>
-                        <View style={styles.verticalDivider} />
-                        <Text style={styles.timer}>17 phút</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            <FontAwesome name='map-marker' size={22} color='orangered' />
+                            <View style={{ marginLeft: 10 }}>
+                                <Text style={{ fontSize: 15 }}>142 Ba Đình, P. 10, Quận 8, TP. HCM</Text>
+                            </View>
+                        </View>
+                        <FontAwesome name={isLike ? "heart" : "heart-o"} size={22} color={'#757575'} />
                     </View>
                 </View>
-                <View style={styles.horizontalDivider}/>
-                <View style={styles.deliveryContent}>
-                    <View style={styles.deliver}>
-                        <Image style={styles.deliverPic} source={require('../../../../assets/product/prod_1.jpeg')} />
-                        <View style={styles.dTextContainer}>
-                            <Text style={styles.deliverText} >Giao hàng tiêu chuẩn</Text>
-                            <Text style={styles.timeTextExpect} >Dự kiến giao hàng lúc 10:45</Text>
-                        </View>
-                        <View style={styles.changeAddress}><Text style={styles.changeText}>Thay đổi</Text></View>
-                    </View>
-                    <View style={styles.horizontalDivider}/>
-                    <View style={styles.saleContainer}>
-                        <View style={styles.saleTextContent}>
-                            <Text style={styles.saleCodeText}> Nhập 'Hieudeptrai': Giảm 15% trên giá món</Text>
-                            <Text style={styles.saleCodeText}> Nhập 'Hieudeptrai': Giảm 15% trên giá món</Text>
-                        </View>
-                        <View style={styles.seeAllCode}><Text style={styles.seeAllText}>Xem thêm</Text></View>
-                    </View>
-                </View>
-                <View style={styles.horizontalDivider1}/>
                 {/* popular products */}
                 <View horizontal style={styles.pProdsContainer}>
-                    <View style={{width:'100%',marginBottom:8}}><Text style={styles.textTitle}>Món phổ biến</Text></View>
+                    <View><Text style={styles.textTitle}>Món phổ biến</Text></View>
                     <ScrollView horizontal style={styles.pProds}>
-                        <TouchableOpacity style={styles.pProdContent}>
+                        <Pressable style={styles.pProdContent}>
                             <View style={styles.pProdImage}>
                                 <Image style={styles.pProdPic} source={require('../../../../assets/product/prod_1.jpeg')} />
                             </View>
                             <View style={styles.pProdTextCont}>
-                                <Text style={styles.pProdName} numberOfLines={1} ellipsizeMode="tail">Cơm chiên Trứng Hộp Lớn</Text>
-                                <View style={{flexDirection:'row', justifyContent:'space-between', paddingTop: 15}}>
-                                    <Text style={styles.pProdPrice}>20.000đ</Text>
-                                    <IconEntypo name="squared-plus" size={25} color={'#F95030'}></IconEntypo>
+                                <Text style={styles.pProdName} numberOfLines={1} ellipsizeMode="tail">Cơm chiên Trứng Hộp Lớn Lớn</Text>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 10 }}>
+                                    <View style={{ flexDirection: 'column' }}>
+                                        <Text style={styles.oldPrice}>20.000đ</Text>
+                                        <Text style={styles.pProdPrice}>36.000đ</Text>
+                                    </View>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                        <Pressable><FontAwesome name="minus-square-o" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
+                                        <TextInput style={{ paddingHorizontal: 6, textAlign: "center" }}>1</TextInput>
+                                        <Pressable><FontAwesome name="plus-square" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
+                                    </View>
                                 </View>
                             </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.pProdContent}>
+                        </Pressable>
+                        <Pressable style={styles.pProdContent}>
                             <View style={styles.pProdImage}>
                                 <Image style={styles.pProdPic} source={require('../../../../assets/product/prod_1.jpeg')} />
                             </View>
                             <View style={styles.pProdTextCont}>
-                                <Text style={styles.pProdName}>Cơm chiên Trứng Hộp Lớn</Text>
-                                <View style={{flexDirection:'row', justifyContent:'space-between', paddingTop: 15}}>
-                                    <Text style={styles.pProdPrice}>20.000đ</Text>
-                                    <IconEntypo name="squared-plus" size={25} color={'#F95030'}></IconEntypo>
+                                <Text style={styles.pProdName} numberOfLines={1} ellipsizeMode="tail">Cơm chiên Trứng Hộp Lớn Lớn</Text>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 10 }}>
+                                    <View style={{ flexDirection: 'column' }}>
+                                        <Text style={styles.oldPrice}>20.000đ</Text>
+                                        <Text style={styles.pProdPrice}>36.000đ</Text>
+                                    </View>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                        <Pressable><FontAwesome name="minus-square-o" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
+                                        <TextInput keyboardType='numeric' style={{ paddingHorizontal: 6, textAlign: "center" }}>1</TextInput>
+                                        <Pressable><FontAwesome name="plus-square" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
+                                    </View>
                                 </View>
                             </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.pProdContent}>
-                            <View style={styles.pProdImage}>
-                                <Image style={styles.pProdPic} source={require('../../../../assets/product/prod_1.jpeg')} />
-                            </View>
-                            <View style={styles.pProdTextCont}>
-                                <Text style={styles.pProdName}>Cơm chiên Trứng Hộp Lớn</Text>
-                                <View style={{flexDirection:'row', justifyContent:'space-between', paddingTop: 15}}>
-                                    <Text style={styles.pProdPrice}>20.000đ</Text>
-                                    <IconEntypo name="squared-plus" size={25} color={'#F95030'}></IconEntypo>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
+                        </Pressable>
+
                     </ScrollView>
                 </View>
-              </View>
+            </View>
+            <View style={styles.horizontalDivider1} />
             {/* <ProductTopTab/> */}
-            <View style={{marginTop:15}}>
-                <ProductTopTab/>
+            <View style={{ marginTop: 15 }}>
+                <ProductTopTab />
             </View>
         </ScrollView>
     );
