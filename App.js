@@ -20,6 +20,8 @@ import UserDetail from './src/navigation/screens/user/UserDetail';
 import PickAddress from './src/navigation/screens/Address/PickAddress';
 import SearchScreen from './src/navigation/screens/Search/SearchScreen';
 import ProductsScreen from './src/navigation/screens/Product/ProductsScreen';
+import SearchResultScreen from "./src/navigation/screens/Search/SearchResultScreen";
+import MainCategoryScreen from "./src/navigation/screens/Home/MainCategoryScreen";
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -141,11 +143,16 @@ export default function App() {
           }} />
           <Stack.Screen name="Search" component={SearchScreen}
           options={{
+            headerShown: false,
             headerTitle: 'Tìm kiếm',
             headerTintColor: 'orangered',
             headerTitleStyle: {
               color: 'black',
             },
+          }} />
+          <Stack.Screen name="SearchResult" component={SearchResultScreen}
+          options={{
+            headerShown: false,
           }} />
           <Stack.Screen name="Store" component={ProductsScreen}
           options={{
@@ -164,6 +171,15 @@ export default function App() {
               color: 'black',
             },
           }} />
+          <Stack.Screen name="MainCategory" component={MainCategoryScreen}
+          options={{
+            headerTitle: 'Cửa hàng',
+            headerTintColor: 'orangered',
+            headerTitleStyle: {
+              color: 'black',
+            },
+          }} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

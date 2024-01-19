@@ -108,40 +108,54 @@ export default function HomeScreen({ route, navigation }) {
                 {/* category */}
                 <View style={styles.categoryContainer}>
                     <View style={styles.cateIcon}>
-                        <View style={styles.iconContainer}>
-                            <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-rice-50.png')} />
-                            <Text style={styles.iconText}>Đồ ăn</Text>
-                        </View>
-                        <View style={styles.iconContainer}>
-                            <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-guacamole-50.png')} />
-                            <Text style={styles.iconText}>Thực phẩm</Text>
-                        </View>
-                        <View style={styles.iconContainer}>
-                            <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-beer-50.png')} />
-                            <Text style={styles.iconText}>Bia</Text>
-                        </View>
-                        <View style={styles.iconContainer}>
-                            <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-flower-64.png')} />
-                            <Text style={styles.iconText}>Hoa</Text>
-                        </View>
+                        <TouchableWithoutFeedback onPress={()=> navigation.navigate('MainCategory', {id: 1})}>
+                            <View style={styles.iconContainer}>
+                                <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-rice-50.png')} />
+                                <Text style={styles.iconText}>Đồ ăn</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={()=> navigation.navigate('MainCategory', {id: 2})}>
+                            <View style={styles.iconContainer}>
+                                <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-guacamole-50.png')} />
+                                <Text style={styles.iconText}>Thực phẩm</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={()=> navigation.navigate('MainCategory', {id: 3})}>
+                            <View style={styles.iconContainer}>
+                                <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-beer-50.png')} />
+                                <Text style={styles.iconText}>Bia</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={()=> navigation.navigate('MainCategory', {id: 4})}>
+                            <View style={styles.iconContainer}>
+                                <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-flower-64.png')} />
+                                <Text style={styles.iconText}>Hoa</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
                     </View>
                     <View style={styles.cateIcon}>
-                        <View style={styles.iconContainer}>
+                        <TouchableWithoutFeedback onPress={()=> navigation.navigate('MainCategory', {id: 5})}>
+                            <View style={styles.iconContainer}>
+                                <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-cart-64.png')} />
+                                <Text style={styles.iconText}>Siêu thị</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={()=> navigation.navigate('MainCategory', {id: 6})}>
+                            <View style={styles.iconContainer}>
+                                <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-medicine-50.png')} />
+                                <Text style={styles.iconText}>Thuốc</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={()=> navigation.navigate('MainCategory', {id: 7})}>
+                            <View style={styles.iconContainer}>
+                                <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-pet-50.png')} />
+                                <Text style={styles.iconText}>Thú cưng</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        {/* <View style={styles.iconContainer}>
                             <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-boba-96.png')} />
-                            <Text style={styles.iconText}>Trà sữa</Text>
-                        </View>
-                        <View style={styles.iconContainer}>
-                            <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-cart-64.png')} />
-                            <Text style={styles.iconText}>Siêu thị</Text>
-                        </View>
-                        <View style={styles.iconContainer}>
-                            <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-medicine-50.png')} />
-                            <Text style={styles.iconText}>Thuốc</Text>
-                        </View>
-                        <View style={styles.iconContainer}>
-                            <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-pet-50.png')} />
-                            <Text style={styles.iconText}>Thú cưng</Text>
-                        </View>
+                            <Text style={styles.iconText}>Tất cả</Text>
+                        </View> */}
                     </View>
                 </View>
 
@@ -162,8 +176,8 @@ export default function HomeScreen({ route, navigation }) {
 
                     <ScrollView horizontal style={styles.flashSale_content}>
                         {/* product */}
-                        {flashSale.map((item) =>
-                            <View style={styles.flashSale_product}>
+                        {flashSale.map((item, index) =>
+                            <View key={index} style={styles.flashSale_product}>
                                 <TouchableWithoutFeedback onPress={() => navigation.navigate('Store', {id: item.storeCategory.id})}>
                                 <View style={styles.flashSale_imageContainer} >
                                     <Image style={styles.flashSale_image}
@@ -182,8 +196,8 @@ export default function HomeScreen({ route, navigation }) {
                     </ScrollView>
 
                 </View>
-                {storeBySubCategory.map((item) => 
-                    <View style={styles.flashSaleContainer}>
+                {storeBySubCategory.map((item, index) => 
+                    <View key={index} style={styles.flashSaleContainer}>
                         <View style={styles.flashSale_header}>
                             <View style={styles.flashSale_header_left}>
                                 <Text style={styles.flashSale_textBold}>
@@ -200,8 +214,8 @@ export default function HomeScreen({ route, navigation }) {
                         
                         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.flashSale_content}>
                             {/* product */}
-                            {item.map((item)=>
-                                <TouchableWithoutFeedback onPress={() => navigation.navigate('Store', {id: item.id})}>
+                            {item.map((item, index)=>
+                                <TouchableWithoutFeedback key={index} onPress={() => navigation.navigate('Store', {id: item.id})}>
                                     <View style={styles.flashSale_product}>
                                         <View style={styles.flashSale_imageContainer}>
                                             <Image style={styles.flashSale_image}

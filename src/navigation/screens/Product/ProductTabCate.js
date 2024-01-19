@@ -8,11 +8,9 @@ import { useCallback } from "react";
 import axios from "axios";
 
 const ViewProductOfStoreCategory = ({idStore, idStoreCate}) => {
-  console.log(idStoreCate);
   const [products, setProducts] = useState([])
   const api = async () => {
     const response = await axios.get(`http://localhost:8080/api/stores/${idStore}/categories/${idStoreCate}/products`)
-    console.log(response.data)
     setProducts(response.data)
   }
   useEffect(()=> {
@@ -49,7 +47,6 @@ const ViewProductOfStoreCategory = ({idStore, idStoreCate}) => {
 }
 
 const ProductTopTab = ({categories}) => {
-  console.log(categories)
   const scrollViewRef = useRef(null);
   const [showCateList, setShowCateList] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);

@@ -15,7 +15,6 @@ const ProductsScreen = ({ navigation }) => {
     // const [selectedCategory, setSelectedCategory] = useState(null);
     const route = useRoute()
     const id = route.params?.id
-    console.log(id);
     const [store, setStore] = useState({})
     const [storeCategory, setStoreCategory] = useState([])
     const [productOfStoreCategory, setProductOfStoreCategory] = useState([])
