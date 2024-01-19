@@ -7,8 +7,7 @@ import styles from './Product.style'
 import { useCallback } from "react";
 import axios from "axios";
 
-const ViewProductOfStoreCategory = ({ idStore, idStoreCate }) => {
-  console.log(idStoreCate);
+const ViewProductOfStoreCategory = ({idStore, idStoreCate}) => {
   const [products, setProducts] = useState([])
   const CurrencyFormatter = ({ style, amount }) => {
     const formattedAmount = new Intl.NumberFormat('vi-VN', {
@@ -20,7 +19,6 @@ const ViewProductOfStoreCategory = ({ idStore, idStoreCate }) => {
   };
   const api = async () => {
     const response = await axios.get(`http://localhost:8080/api/stores/${idStore}/categories/${idStoreCate}/products`)
-    console.log(response.data)
     setProducts(response.data)
   }
   useEffect(() => {
@@ -56,8 +54,7 @@ const ViewProductOfStoreCategory = ({ idStore, idStoreCate }) => {
   )
 }
 
-const ProductTopTab = ({ categories }) => {
-  console.log(categories)
+const ProductTopTab = ({categories}) => {
   const scrollViewRef = useRef(null);
   const [showCateList, setShowCateList] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
