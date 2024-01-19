@@ -60,7 +60,7 @@ export default function MainContainer() {
             />
             <Tab.Screen
                 name={myOrdersName}
-                component={ProductsScreen}
+                component={MyOrdersScreen}
                 options={{ headerShown: false }}
             />
             <Tab.Screen
