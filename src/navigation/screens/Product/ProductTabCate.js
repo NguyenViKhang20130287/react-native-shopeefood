@@ -7,15 +7,23 @@ import styles from './Product.style'
 import { useCallback } from "react";
 import axios from "axios";
 
-const ViewProductOfStoreCategory = ({idStore, idStoreCate}) => {
+const ViewProductOfStoreCategory = ({ idStore, idStoreCate }) => {
   console.log(idStoreCate);
   const [products, setProducts] = useState([])
+  const CurrencyFormatter = ({ style, amount }) => {
+    const formattedAmount = new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+    }).format(amount);
+
+    return <Text style={style}>{formattedAmount}</Text>;
+  };
   const api = async () => {
     const response = await axios.get(`http://localhost:8080/api/stores/${idStore}/categories/${idStoreCate}/products`)
     console.log(response.data)
     setProducts(response.data)
   }
-  useEffect(()=> {
+  useEffect(() => {
     api()
   }, [products.id])
 
@@ -24,16 +32,16 @@ const ViewProductOfStoreCategory = ({idStore, idStoreCate}) => {
       {products.map((item) =>
         <View key={item.id} style={styles.productContent}>
           <View style={styles.imageContainer}>
-            <Image style={styles.productImage} source={{uri: item.image}} />
+            <Image style={styles.productImage} source={{ uri: item.image }} />
           </View>
           <View style={styles.producContentContainer}>
             <Text numberOfLines={1} ellipsizeMode="tail" style={styles.producName}>{item.title}</Text>
-            <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >{item.description}</Text>
+            {item.description != "" ? (<Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >{item.description}</Text>) : null}
             <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >40 đã bán</Text>
             <View style={styles.contentWrapper}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Text style={styles.oldPrice}>{item.old_price}</Text>
-                <Text style={styles.pProdPrice}> {item.current_price}</Text>
+                {item.old_price > 0 ? (<CurrencyFormatter style={styles.oldPrice} amount={item.old_price} />) : null}
+                <CurrencyFormatter style={styles.pProdPrice} amount={item.current_price} />
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Pressable><FontAwesome name="minus-square-o" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
@@ -48,7 +56,7 @@ const ViewProductOfStoreCategory = ({idStore, idStoreCate}) => {
   )
 }
 
-const ProductTopTab = ({categories}) => {
+const ProductTopTab = ({ categories }) => {
   console.log(categories)
   const scrollViewRef = useRef(null);
   const [showCateList, setShowCateList] = useState(false);
@@ -126,7 +134,7 @@ const ProductTopTab = ({categories}) => {
                 <View style={{ backgroundColor: "#ffffff", paddingBottom: 5 }}>
                   <Text style={styles.cateTitle}>{category.name}</Text>
                 </View>
-                <ViewProductOfStoreCategory idStore={category.store.id} idStoreCate={category.id}/>
+                <ViewProductOfStoreCategory idStore={category.store.id} idStoreCate={category.id} />
               </View>
             </View>
           </View>
