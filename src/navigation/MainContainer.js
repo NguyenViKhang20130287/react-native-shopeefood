@@ -64,11 +64,6 @@ export default function MainContainer() {
                 options={{ headerShown: false }}
             />
             <Tab.Screen
-                name={myOrdersName}
-                component={MyOrdersScreen}
-                options={{ headerShown: false }}
-            />
-            <Tab.Screen
                 name={likesName}
                 component={LikesScreen}
                 options={{ headerShown: false }}

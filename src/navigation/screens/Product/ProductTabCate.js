@@ -22,7 +22,7 @@ const ViewProductOfStoreCategory = ({idStore, idStoreCate}) => {
   return (
     <View>
       {products.map((item) =>
-        <View style={styles.productContent}>
+        <View key={item.id} style={styles.productContent}>
           <View style={styles.imageContainer}>
             <Image style={styles.productImage} source={{uri: item.image}} />
           </View>

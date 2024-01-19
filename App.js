@@ -151,21 +151,14 @@ export default function App() {
           }} />
         <Stack.Screen name="Store" component={ProductsScreen}
           options={{
-            headerShown: false,
-          }} />
-          <Stack.Screen name="BottomCartView" component={BottomCartView}
-          options={{
-            headerShown: false,
-          <Stack.Screen name="Store" component={ProductsScreen}
-          options={{
-            headerTitle: ()=> null,
+            headerTitle: () => null,
             headerTransparent: true,
             headerTintColor: 'orangered',
             headerTitleStyle: {
               color: 'black',
             },
           }} />
-          <Stack.Screen name="Admin" component={Admin}
+        <Stack.Screen name="Admin" component={Admin}
           options={{
             headerTitle: 'Admin',
             headerTintColor: 'orangered',
