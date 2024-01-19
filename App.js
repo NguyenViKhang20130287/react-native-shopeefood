@@ -205,17 +205,6 @@ export default function App() {
           name="Admin"
           component={Admin}
           options={{
-            headerTitle: "Tìm kiếm",
-            headerTintColor: "orangered",
-            headerTitleStyle: {
-              color: "black",
-            },
-          }}
-        />
-        <Stack.Screen
-          name="Admin"
-          component={Admin}
-          options={{
             headerTitle: "Admin",
             headerTintColor: "orangered",
             headerTitleStyle: {
