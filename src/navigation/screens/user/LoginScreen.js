@@ -41,6 +41,8 @@ export default function LoginScreen({ navigation }) {
                 console.log(response.data);
                 if (response.data.body.body.id) {
                     await AsyncStorage.setItem("user_id", JSON.stringify(response.data.body.body.id))
+                    await AsyncStorage.setItem("email", JSON.stringify(response.data.body.body.email))
+                    await AsyncStorage.setItem("password", JSON.stringify(response.data.body.body.password))
                     navigation.navigate('Tôi')
                 } else {
                     showModal()
