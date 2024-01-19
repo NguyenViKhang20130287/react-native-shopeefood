@@ -1,5 +1,8 @@
-import * as React from 'react';
-import MainContainer from './src/navigation/MainContainer';
+import * as React from "react";
+import MainContainer from "./src/navigation/MainContainer";
+import Admin from "./src/navigation/screens/Admin/AdminContent";
+import UserEdit from "./src/navigation/screens/Admin/UserEdit";
+import ShopEdit from "./src/navigation/screens/Admin/ShopEdit";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import UpdateAddress from './src/navigation/screens/Address/UpdateAddress';
@@ -23,6 +26,9 @@ import BottomCartView from './src/components/BottomCartView';
 const Stack = createStackNavigator();
 export default function App() {
   return (
+    // <>
+    //   <Admin />
+    // </>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Main">
         <Stack.Screen name="Main" component={MainContainer} options={{ headerShown: false }} />
@@ -150,6 +156,22 @@ export default function App() {
           <Stack.Screen name="BottomCartView" component={BottomCartView}
           options={{
             headerShown: false,
+          <Stack.Screen name="Store" component={ProductsScreen}
+          options={{
+            headerTitle: ()=> null,
+            headerTransparent: true,
+            headerTintColor: 'orangered',
+            headerTitleStyle: {
+              color: 'black',
+            },
+          }} />
+          <Stack.Screen name="Admin" component={Admin}
+          options={{
+            headerTitle: 'Admin',
+            headerTintColor: 'orangered',
+            headerTitleStyle: {
+              color: 'black',
+            },
           }} />
       </Stack.Navigator>
     </NavigationContainer>

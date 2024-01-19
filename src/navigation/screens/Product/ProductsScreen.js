@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, TextInput, Image, ScrollView, Pressable } from 'react-native';
 import styles from './Product.style'
 
@@ -9,10 +9,32 @@ import ProductTopTab from './ProductTabCate';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { BottomTabView } from '@react-navigation/bottom-tabs';
 import BottomCartView from '../../../components/BottomCartView';
+import { useRoute } from '@react-navigation/native';
+import axios from 'axios';
 
 const ProductsScreen = ({ navigation }) => {
     const [isLike, setIsLike] = useState(false);
     // const [selectedCategory, setSelectedCategory] = useState(null);
+    const route = useRoute()
+    const id = route.params?.id
+    console.log(id);
+    const [store, setStore] = useState({})
+    const [storeCategory, setStoreCategory] = useState([])
+    const [productOfStoreCategory, setProductOfStoreCategory] = useState([])
+    const storeAPI= async ()=> {
+        try {
+            const response = await axios.get(`http://localhost:8080/api/stores/${id}`)
+            setStore(response.data)
+            const responseStoreCategory =  await axios.get(`http://localhost:8080/api/stores/${id}/categories`)
+            setStoreCategory(responseStoreCategory.data)
+        } catch (error) {
+            console.log('Error:', error)
+        }
+    }
+    useEffect(()=> {
+        storeAPI()
+    }, [store.id])
+
     return (
         <View style={{ flex: 1, position: 'relative' }}>
             <ScrollView style={styles.container}>
@@ -37,6 +59,27 @@ const ProductsScreen = ({ navigation }) => {
                                 <View style={{ marginLeft: 10 }}>
                                     <Text style={{ fontSize: 15 }}>142 Ba Đình, P. 10, Quận 8, TP. HCM</Text>
                                 </View>
+        <ScrollView style={styles.container}>
+            {/* Top */}
+            <View style={styles.shopContainer}>
+                <ScrollView horizontal style={styles.sImageContainer}
+                    stickyHeaderIndices={[0]}
+                    showsVerticalScrollIndicator={false}>
+                    <Image style={styles.shopImage} source={{ uri: store.image }} />
+                </ScrollView>
+                <View style={styles.mainSContainer}>
+                    <View style={styles.sTopContent}>
+                        <Text style={styles.shopName}><Ionicons
+                            size={20}
+                            name="shield-checkmark"
+                            color={"orange"}
+                        ></Ionicons>{' '}{store.name}</Text>
+                    </View>
+                    <View style={styles.sBotContent}>
+                        <View style={{ flexDirection: 'row' }}>
+                            <FontAwesome name='map-marker' size={22} color='orangered' />
+                            <View style={{ marginLeft: 10 }}>
+                                <Text style={{ fontSize: 15 }}>{store.address}</Text>
                             </View>
                             <FontAwesome name={isLike ? "heart" : "heart-o"} size={22} color={'#757575'} />
                         </View>
@@ -95,7 +138,13 @@ const ProductsScreen = ({ navigation }) => {
             </ScrollView>
             <BottomCartView />
         </View>
-
+            </View>
+            <View style={styles.horizontalDivider1} />
+            {/* <ProductTopTab/> */}
+            <View style={{ marginTop: 15 }}>
+                {storeCategory ? <ProductTopTab categories={storeCategory}/> : null}
+            </View>
+        </ScrollView>
     );
 }
 export default ProductsScreen;

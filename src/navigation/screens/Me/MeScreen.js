@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
-import { Pressable } from 'react-native';
+import { Pressable, TouchableWithoutFeedback } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import { StatusBar } from 'react-native';
 import { View, Text } from 'react-native';
@@ -89,6 +89,14 @@ export default function MeScreen({ navigation }) {
                 </View>
             </View>
             <View>
+                {(user && user.role_id === 0) ?
+                <TouchableWithoutFeedback onPress={() => navigation.navigate('Admin')}>
+                    <View  style={{ borderBottomWidth: 10, borderBottomColor: '#F5F6F8' }}>
+                        <Action icon={'user'} title={'Admin'} color={'orange'}></Action>
+                    </View>
+                </TouchableWithoutFeedback>
+                     : null
+                }
                 <View style={{ borderBottomWidth: 10, borderBottomColor: '#F5F6F8' }}>
                     <Action icon={'gift'} title={'Ví Voucher'} color={'orange'}></Action>
                     <Action icon={'credit-card'} title={'Thanh toán'} color={'orange'}></Action>

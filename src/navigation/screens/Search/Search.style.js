@@ -81,7 +81,160 @@ const styles = StyleSheet.create({
     popularItemImage: {
         width: 60,
         height: 60
-    }
+    },
+    //Search Result
+    searchRContainer:{
+        backgroundColor: 'white',
+    },
+    topzone: {
+        paddingHorizontal: 2,
+        paddingVertical: 10,
+        backgroundColor: '#fff',
+    },
+    // search box
+    searchContainer: {
+        paddingHorizontal: 5,
+        flexDirection: 'row',
+    },
+    search: {
+        width:330,
+        flexDirection: 'row',
+        paddingHorizontal: 5,
+        paddingVertical: 4,
+        backgroundColor: '#ffffff',
+        borderRadius: 3,
+    },
+    arrowBack:{
+        paddingTop : 6,
+        paddingRight : 5 
+    },
+    searchInput: {
+        width: '95%',
+        paddingHorizontal: 5,
+        fontSize: 16
+    },
+    //search filter 
+    searchFilterContainer:{
+        flexDirection :'row',
+    },
+    orderBy:{
+        flexDirection :'row',
+        margin:5,
+        borderColor: 'white',
+        borderRadius: 3,
+        borderWidth :1,
+        backgroundColor: '#f2f2f2'
+    },
+    filterSearch:{
+        margin:5,
+        borderColor: 'white',
+        borderRadius: 3,
+        borderWidth :1,
+        backgroundColor: '#f2f2f2'
+    },
+    filterText:{
+        padding: 5,
+        fontSize: 16
+    },
+    //OrderByFilter
+    filterOrderBy:{
+        width: "100%",
+        display:'flex',
+        flexDirection: "column",
+        borderColor: 'red',
+        borderWidth: 1,
+        backgroundColor: 'white',
+        marginTop: 90
+    },
+    orderSelection:{
+        borderBottomColor: 'lightgray',
+        borderBottomWidth: 1
+    },
+    orderSelected:{
+        borderBottomColor: 'lightgray',
+        borderBottomWidth: 1,
+        backgroundColor: '#f2f2f2'
+    },
+    orderTextSelect:{
+        padding: 5,
+        fontSize: 16
+    },
+    // 
+    food_container:{
+        paddingHorizontal: 10,
+        fontWeight: "500",
+        backgroundColor: 'white'
+    },
+    food: {
+    marginTop: 15,
+    display: "flex",
+    flexDirection: "row",
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#E8E8E8'
+    },
+
+    image: {
+    marginBottom: 15,
+    },
+
+    foods_image: {
+    width: 100,
+    height: 100,
+    },
+
+    details: {
+    // marginLeft: 10,
+    },
+
+    food_name: {
+    // marginLeft: 10,
+    // justifyContent: "center",
+    // fontSize: 50,
+    // fontWeight: "600",
+    },
+    food_tilte: {
+        paddingLeft : 5,
+        fontSize: 16,
+        fontWeight: "500",
+    },
+
+    rating_text: {
+        paddingVertical: 3,
+        fontWeight: "400",
+        color: "gray",
+        marginRight: 8,
+    },
+
+    distance_text: {
+        paddingVertical: 3,
+        marginLeft: 8,
+        marginRight: 8,
+        fontWeight: "400",
+        color: "gray",
+    },
+
+  times_text: {
+    paddingVertical: 3,
+    marginLeft: 8,
+    fontWeight: "400",
+    color: "gray",
+    },
+    info: {
+    display: "flex",
+    flexDirection: "row",
+    padding: 5,
+    marginLeft: 5,
+    },
+
+    distance: {
+    borderLeftWidth: 0.5,
+    borderLeftColor: "gray",
+    },
+
+    times: {
+    borderLeftWidth: 0.5,
+    borderLeftColor: "gray",
+    },
 })
 
 export default styles

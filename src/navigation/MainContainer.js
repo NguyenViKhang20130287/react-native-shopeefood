@@ -1,4 +1,5 @@
 import * as React from "react";
+import { View, Text } from "react-native"
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
@@ -13,7 +14,6 @@ import NotificationsScreen from "./screens/Notifications/NotificationsScreen";
 
 // test
 import SearchScreen from "./screens/Search/SearchScreen";
-import ProductDetail from "./screens/Product/ProductDetail";
 // import ProductsScreen from './screens/Product/ProductDetail';
 
 const homeName = "Home";
@@ -56,6 +56,11 @@ export default function MainContainer() {
             <Tab.Screen
                 name={homeName}
                 component={HomeScreen}
+                options={{ headerShown: false }}
+            />
+            <Tab.Screen
+                name={myOrdersName}
+                component={MyOrdersScreen}
                 options={{ headerShown: false }}
             />
             <Tab.Screen
