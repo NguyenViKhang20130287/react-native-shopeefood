@@ -80,7 +80,7 @@ export default function HomeScreen({ route, navigation }) {
                 <View style={styles.categoryContainer}>
                     <View style={styles.cateIcon}>
                         <View style={styles.iconContainer}>
-                            <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-rice-50.png')} />
+                            <Pressable onPress={() => navigation.navigate('Store')}><Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-rice-50.png')} /></Pressable>
                             <Text style={styles.iconText}>Đồ ăn</Text>
                         </View>
                         <View style={styles.iconContainer}>
