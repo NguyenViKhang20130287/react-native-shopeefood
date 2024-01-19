@@ -161,7 +161,19 @@ const styles = StyleSheet.create({
   pProdPic: {
     padding: 5,
     width: 95,
-    height: 95
+    height: 95,
+    position: "relative"
+  },
+  soldCountContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    backgroundColor: '#FFBB00',
+    padding: 5,
+  },
+  soldCountText: {
+    color: 'white',
+    fontSize: 11
   },
   pProdTextCont: {
     // padding: 15,
@@ -280,7 +292,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '300',
     color: "#757575",
-    paddingVertical:5
+    paddingVertical: 5
   },
   productPrice: {
     fontSize: 16,
@@ -360,6 +372,24 @@ const styles = StyleSheet.create({
   selectedSubCateOptionText: {
     color: 'white',
     fontWeight: 'bold'
-  }
+  },
+  modalLikeContainer: {
+    position: "absolute",
+    top: 330,
+    bottom: 300,
+    right: 100,
+    left: 140,
+    width: 120,
+    height: 60,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    // padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: "center"
+  },
+  modalText: {
+    color: 'white',
+    fontSize: 17,
+  },
 });
 export default styles;

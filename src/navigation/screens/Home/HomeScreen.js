@@ -29,7 +29,7 @@ export default function HomeScreen({ route, navigation }) {
             const responses = await Promise.all(
                 subIdArray.map(async (item) => {
                     const response = await axios.get(`http://localhost:8080/api/stores/sub_category/${item}`)
-                    return response.data.slice(0, 4)
+                    return response.data.slice(0, 8)
                 })
             )
             setStoreBySubCategory(responses)
@@ -163,8 +163,8 @@ export default function HomeScreen({ route, navigation }) {
                     <ScrollView horizontal style={styles.flashSale_content}>
                         {/* product */}
                         {flashSale.map((item) =>
-                            <View style={styles.flashSale_product}>
-                                <TouchableWithoutFeedback onPress={() => navigation.navigate('Store', { id: item.storeCategory.id })}>
+                            <View key={item.id} style={styles.flashSale_product}>
+                                <TouchableWithoutFeedback onPress={() => navigation.navigate('Store', { id: item.storeCategory.store.id })}>
                                     <View style={styles.flashSale_imageContainer} >
                                         <Image style={styles.flashSale_image}
                                             source={{ uri: item.image }} />
@@ -186,8 +186,8 @@ export default function HomeScreen({ route, navigation }) {
                     <View style={styles.flashSaleContainer}>
                         <View style={styles.flashSale_header}>
                             <View style={styles.flashSale_header_left}>
-                                <Text style={styles.flashSale_textBold}>
-                                    {item[0].subCategory.name}</Text>
+                                {/* <Text style={styles.flashSale_textBold}>
+                                    {item[0].subCategory.name}</Text> */}
                             </View>
                             <View style={styles.flashSale_header_right}>
                                 <Text style={{ fontSize: 13, color: '#757575' }}>Xem tất cả</Text>
@@ -201,7 +201,7 @@ export default function HomeScreen({ route, navigation }) {
                         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.flashSale_content}>
                             {/* product */}
                             {item.map((item) =>
-                                <TouchableWithoutFeedback onPress={() => navigation.navigate('Store', { id: item.id })}>
+                                <TouchableWithoutFeedback key={item.id} onPress={() => navigation.navigate('Store', { id: item.id })}>
                                     <View style={styles.flashSale_product}>
                                         <View style={styles.flashSale_imageContainer}>
                                             <Image style={styles.flashSale_image}

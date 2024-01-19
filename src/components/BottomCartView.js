@@ -2,14 +2,29 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Pressable, ScrollView, Image, TextInput } from 'react-native';
 
-const BottomCartView = () => {
+const BottomCartView = ({ data }) => {
     const [cartVisible, setCartVisible] = useState(false);
 
     const handleCartPress = () => {
-        // Toggle cart visibility
         setCartVisible(!cartVisible)
     };
 
+    const CurrencyFormatter = ({ style, amount }) => {
+        const formattedAmount = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+        }).format(amount);
+
+        return <Text style={style}>{formattedAmount}</Text>;
+    };
+    const calculateTotal = () => {
+        return data.reduce((total, item) => total + item.product.current_price * item.quantity, 0);
+    };
+    const calculateTotalQuantity = () => {
+        return data.reduce((total, item) => total + item.quantity, 0);
+    };
+    const subTotal = calculateTotal();
+    const totalQuantity = calculateTotalQuantity();
     return (
         <>
             {cartVisible ? (<TouchableOpacity
@@ -25,24 +40,24 @@ const BottomCartView = () => {
                     <Ionicons onPress={() => setCartVisible(false)} name='close' color={'#757575'} size={30} />
                 </View>
                 <ScrollView style={{ padding: 13 }}>
-                    <View style={styles.productContent}>
-                        <Image style={styles.productImage} source={{ uri: "https://images.foody.vn/res/g2/11349/s120x120/996ba2cf-f0f2-4d5a-b8d2-50390f33-7fa18d03-231216123158.jpeg" }} />
+                    {data && data.map((item) => (<View key={item.id} style={styles.productContent}>
+                        <Image style={styles.productImage} source={{ uri: item.product.image }} />
                         <View style={styles.producContentContainer}>
-                            <Text numberOfLines={1} ellipsizeMode="tail" style={styles.producName}>Cơm Ba Ghiên - Nguyễn Văn Trỗi s sdsd</Text>
+                            <Text numberOfLines={1} ellipsizeMode="tail" style={styles.producName}>{item.product.title}</Text>
                             <View style={{ paddingVertical: 10 }}></View>
                             <View style={styles.contentWrapper}>
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <Text style={styles.oldPrice}>20.000đ</Text>
-                                    <Text style={styles.pProdPrice}> 36.000đ</Text>
+                                    {item.product.old_price > 0 ? (<CurrencyFormatter style={styles.oldPrice} amount={item.product.old_price} />) : null}
+                                    <CurrencyFormatter style={styles.pProdPrice} amount={item.product.current_price} />
                                 </View>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <Pressable><FontAwesome name="minus-square-o" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
-                                    <TextInput keyboardType="numeric" style={{ paddingHorizontal: 6, textAlign: "center" }}>1</TextInput>
+                                    <TextInput keyboardType="numeric" style={{ paddingHorizontal: 6, textAlign: "center" }}>{item.quantity}</TextInput>
                                     <Pressable><FontAwesome name="plus-square" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
                                 </View>
                             </View>
                         </View>
-                    </View>
+                    </View>))}
                 </ScrollView>
             </View>) : null}
             <View style={{
@@ -60,12 +75,12 @@ const BottomCartView = () => {
                                 <FontAwesome name={"shopping-cart"} size={35} color={'#EF4C2D'} />
 
                                 <View style={styles.badge}>
-                                    <Text style={styles.countText}>1</Text>
+                                    <Text style={styles.countText}>{totalQuantity}</Text>
                                 </View>
 
                             </View>
                         </Pressable>
-                        <Text style={styles.pProdPrice}> 36.000đ</Text>
+                        <CurrencyFormatter style={styles.pProdPrice} amount={subTotal} />
                     </View>
                     <View style={{ width: 150, backgroundColor: "#ED4D2D", alignItems: 'center', justifyContent: 'center' }}>
                         <Pressable>

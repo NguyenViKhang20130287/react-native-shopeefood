@@ -22,6 +22,7 @@ import SearchScreen from './src/navigation/screens/Search/SearchScreen';
 import ProductsScreen from './src/navigation/screens/Product/ProductsScreen';
 import ShoppingCartScreen from './src/components/BottomCartView';
 import BottomCartView from './src/components/BottomCartView';
+import SearchResultScreen from "./src/navigation/screens/Search/SearchResultScreen";
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -141,7 +142,7 @@ export default function App() {
               color: 'black',
             },
           }} />
-        <Stack.Screen name="Search" component={SearchScreen}
+        <Stack.Screen name="Search" component={SearchResultScreen}
           options={{
             headerTitle: 'Tìm kiếm',
             headerTintColor: 'orangered',
