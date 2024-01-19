@@ -20,7 +20,6 @@ const ViewProductOfStoreCategory = ({ idStore, idStoreCate, handleInc, handleDes
   };
   const api = async () => {
     const response = await axios.get(`http://localhost:8080/api/stores/${idStore}/categories/${idStoreCate}/products`)
-    console.log(response.data)
     setProducts(response.data)
   }
   useEffect(() => {

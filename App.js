@@ -22,6 +22,8 @@ import SearchScreen from "./src/navigation/screens/Search/SearchScreen";
 import ProductsScreen from "./src/navigation/screens/Product/ProductsScreen";
 import ShoppingCartScreen from "./src/components/BottomCartView";
 import BottomCartView from "./src/components/BottomCartView";
+import SearchResultScreen from "./src/navigation/screens/Search/SearchResultScreen";
+import MainCategoryScreen from "./src/navigation/screens/Home/MainCategoryScreen";
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -178,16 +180,23 @@ export default function App() {
           name="Search"
           component={SearchScreen}
           options={{
+<<<<<<< HEAD
             headerTitle: "Tìm kiếm",
             headerTintColor: "orangered",
+=======
+            headerShown: false,
+            headerTitle: 'Tìm kiếm',
+            headerTintColor: 'orangered',
+>>>>>>> 13aa75dca356e2515769aeb909f81dd2da3d8ff7
             headerTitleStyle: {
               color: "black",
             },
-          }}
-        />
-        <Stack.Screen
-          name="Store"
-          component={ProductsScreen}
+          }} />
+          <Stack.Screen name="SearchResult" component={SearchResultScreen}
+          options={{
+            headerShown: false,
+          }} />
+          <Stack.Screen name="Store" component={ProductsScreen}
           options={{
             headerTitle: () => null,
             headerTransparent: true,
@@ -203,11 +212,22 @@ export default function App() {
           options={{
             headerTitle: "Admin",
             headerTintColor: "orangered",
+<<<<<<< HEAD
+=======
             headerTitleStyle: {
               color: "black",
             },
-          }}
-        />
+          }} />
+          <Stack.Screen name="MainCategory" component={MainCategoryScreen}
+          options={{
+            headerTitle: 'Cửa hàng',
+            headerTintColor: 'orangered',
+>>>>>>> 13aa75dca356e2515769aeb909f81dd2da3d8ff7
+            headerTitleStyle: {
+              color: 'black',
+            },
+          }} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
