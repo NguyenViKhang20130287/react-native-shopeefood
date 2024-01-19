@@ -64,7 +64,7 @@ export default function HomeScreen({ route, navigation }) {
                 console.error('Error fetching data:', error);
             }
         }
-        // fetchData();
+        fetchData();
         getStoresBySubCategory()
         getFlashSale()
     }, [route.params?.refresh, refresh]);
@@ -183,7 +183,7 @@ export default function HomeScreen({ route, navigation }) {
 
                 </View>
                 {storeBySubCategory.map((item) =>
-                    <View style={styles.flashSaleContainer}>
+                    <View key={item.id} style={styles.flashSaleContainer}>
                         <View style={styles.flashSale_header}>
                             <View style={styles.flashSale_header_left}>
                                 {/* <Text style={styles.flashSale_textBold}>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ActivityIndicator, RefreshControl, ScrollView, TouchableOpacity, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, Pressable, RefreshControl, ScrollView, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { useState } from 'react';
 import { Text } from 'react-native';
@@ -144,13 +144,14 @@ export default function LikesScreen({ navigation }) {
     const LatestRoute = () => {
         return (<ScrollView refreshControl={<RefreshControl refreshing={refresh} onRefresh={() => pullToRefresh()} />} style={hasData ? styles.hasDataContainer : styles.noDataContainer}>
             {!isLoading ? (<>{hasData ? (<>{favoriteStore && favoriteStore.map((fa, index) => (
-                <FavoriteItem
-                    key={index}
-                    id={fa.id}
-                    storeName={fa.name}
-                    imageURL={fa.image}
-                    address={fa.address}
-                />
+                <Pressable key={index} onPress={() => navigation.navigate('Store', { id: fa.id })}>
+                    <FavoriteItem
+                        id={fa.id}
+                        storeName={fa.name}
+                        imageURL={fa.image}
+                        address={fa.address}
+                    />
+                </Pressable>
             ))}
                 <View style={{ paddingVertical: 25, alignItems: 'center', backgroundColor: '#FAFAFA' }}>
                     <Text style={{ color: '#737373' }}>Đã hiển thị tất cả kết quả</Text>

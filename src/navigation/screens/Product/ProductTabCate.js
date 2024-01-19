@@ -7,7 +7,7 @@ import styles from './Product.style'
 import { useCallback } from "react";
 import axios from "axios";
 
-const ViewProductOfStoreCategory = ({ idStore, idStoreCate }) => {
+const ViewProductOfStoreCategory = ({ idStore, idStoreCate, handleInc, handleDesc, cartItems }) => {
   console.log(idStoreCate);
   const [products, setProducts] = useState([])
   const CurrencyFormatter = ({ style, amount }) => {
@@ -44,9 +44,13 @@ const ViewProductOfStoreCategory = ({ idStore, idStoreCate }) => {
                 <CurrencyFormatter style={styles.pProdPrice} amount={item.current_price} />
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Pressable><FontAwesome name="minus-square-o" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
-                <TextInput keyboardType="numeric" style={{ paddingHorizontal: 6, textAlign: "center" }}>1</TextInput>
-                <Pressable><FontAwesome name="plus-square" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
+                {cartItems.map((cartItem) => (<>{cartItem.product.id == item.id && cartItem.quantity > 0 ? (<>
+                  <Pressable key={cartItem.id} onPress={() => handleDesc(cartItem)}><FontAwesome name="minus-square-o" size={26} color={'#F95030'}></FontAwesome></Pressable>
+                  <TextInput style={{ paddingHorizontal: 6, textAlign: "center" }}
+                    keyboardType="numeric"
+                    value={cartItem.quantity.toString()}
+                  /></>) : null}</>))}
+                <Pressable onPress={() => handleInc(item)}><FontAwesome name="plus-square" size={26} color={'#F95030'}></FontAwesome></Pressable>
               </View>
             </View>
           </View>
@@ -56,7 +60,8 @@ const ViewProductOfStoreCategory = ({ idStore, idStoreCate }) => {
   )
 }
 
-const ProductTopTab = ({ categories }) => {
+const ProductTopTab = ({ categories, items, increment, descrement }) => {
+  console.log("Cart items", items);
   console.log(categories)
   const scrollViewRef = useRef(null);
   const [showCateList, setShowCateList] = useState(false);
@@ -134,7 +139,7 @@ const ProductTopTab = ({ categories }) => {
                 <View style={{ backgroundColor: "#ffffff", paddingBottom: 5 }}>
                   <Text style={styles.cateTitle}>{category.name}</Text>
                 </View>
-                <ViewProductOfStoreCategory idStore={category.store.id} idStoreCate={category.id} />
+                <ViewProductOfStoreCategory idStore={category.store.id} idStoreCate={category.id} handleInc={increment} handleDesc={descrement} cartItems={items} />
               </View>
             </View>
           </View>

@@ -156,7 +156,7 @@ export default function App() {
           name="UserDetail"
           component={UserDetail}
           options={{
-            headerTitle: "Xác nhận đăng ký",
+            headerTitle: "Sửa hồ sơ",
             headerTintColor: "orangered",
             headerTitleStyle: {
               color: "black",
@@ -167,7 +167,7 @@ export default function App() {
           name="PickAddress"
           component={PickAddress}
           options={{
-            headerTitle: "Sửa hồ sơ",
+            headerTitle: "Địa chỉ giao hàng",
             headerTintColor: "orangered",
             headerTitleStyle: {
               color: "black",
@@ -178,7 +178,7 @@ export default function App() {
           name="Search"
           component={SearchScreen}
           options={{
-            headerTitle: "Địa chỉ giao hàng",
+            headerTitle: "Tìm kiếm",
             headerTintColor: "orangered",
             headerTitleStyle: {
               color: "black",
@@ -191,17 +191,6 @@ export default function App() {
           options={{
             headerTitle: () => null,
             headerTransparent: true,
-            headerTintColor: "orangered",
-            headerTitleStyle: {
-              color: "black",
-            },
-          }}
-        />
-        <Stack.Screen
-          name="Admin"
-          component={Admin}
-          options={{
-            headerTitle: "Tìm kiếm",
             headerTintColor: "orangered",
             headerTitleStyle: {
               color: "black",
