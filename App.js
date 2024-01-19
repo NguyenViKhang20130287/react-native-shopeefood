@@ -197,7 +197,7 @@ export default function App() {
             },
           }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Admin"
           component={Admin}
           options={{
@@ -207,7 +207,7 @@ export default function App() {
               color: "black",
             },
           }}
-        />
+        /> */}
         <Stack.Screen
           name="Admin"
           component={Admin}
@@ -219,6 +219,17 @@ export default function App() {
             },
           }}
         />
+        {/* <Stack.Screen
+          name="EditUserAdmin"
+          component={UserEdit}
+          options={{
+            headerTitle: "Sửa thông tin người dùng",
+            headerTintColor: "orangered",
+            headerTitleStyle: {
+              color: "black",
+            },
+          }}
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
