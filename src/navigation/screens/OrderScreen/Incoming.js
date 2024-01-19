@@ -19,6 +19,7 @@ import axios from "axios";
 const Incoming = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [orders, setOrders] = useState([]);
+  const [recommend, setRecommend] = useState([]);
   const CurrencyFormatter = ({ style, amount }) => {
     const formattedAmount = new Intl.NumberFormat('vi-VN', {
       style: 'currency',
@@ -44,6 +45,18 @@ const Incoming = () => {
     }
     fetchData();
   }, [])
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/stores/random`);
+        const data = response.data;
+        setRecommend(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    fetchData();
+  }, []);
   return (
     <ScrollView style={styles.container}>
       {orders.length > 0 && orders ?
@@ -132,52 +145,29 @@ const Incoming = () => {
         <View style={styles.title_top}>
           <Text style={styles.title_suggestion}>Có thể bạn cũng thích</Text>
         </View>
-        <View style={styles.food}>
+        {recommend && recommend.map((item) => (<View key={item.id} style={styles.food}>
           <View style={styles.image}>
             <Image
               style={styles.foods_image}
-              source={require("../../../../assets/product/prod_1.jpeg")}
+              source={{ uri: item.image }}
             />
           </View>
           <View style={styles.details}>
             <View style={styles.food_name}>
-              <Text numberOfLines={1} ellipsizeMode="tail" style={styles.food_tilte}>
+              <Text style={styles.food_tilte}>
                 <Ionicons
                   style={styles.icons}
                   name="shield-checkmark"
                   color={"orange"}
                 ></Ionicons>{" "}
-                Cơm Gà Xối Mỡ 142 - Ba Đình
+                {item.name}
               </Text>
             </View>
             <View>
-              <Text numberOfLines={1} style={styles.example_address}>142 Ba Đình, P. 10, Quận 8, TP. HCM</Text>
+              <Text numberOfLines={1} style={styles.example_address}>{item.address}</Text>
             </View>
           </View>
-        </View>
-        <View style={styles.food}>
-          <View style={styles.image}>
-            <Image
-              style={styles.foods_image}
-              source={require("../../../../assets/product/prod_1.jpeg")}
-            />
-          </View>
-          <View style={styles.details}>
-            <View style={styles.food_name}>
-              <Text numberOfLines={1} ellipsizeMode="tail" style={styles.food_tilte}>
-                <Ionicons
-                  style={styles.icons}
-                  name="shield-checkmark"
-                  color={"orange"}
-                ></Ionicons>{" "}
-                Cơm Gà Xối Mỡ 142 - Ba Đình
-              </Text>
-            </View>
-            <View>
-              <Text numberOfLines={1} style={styles.example_address}>142 Ba Đình, P. 10, Quận 8, TP. HCM</Text>
-            </View>
-          </View>
-        </View>
+        </View>))}
       </View>)}
     </ScrollView>
   );

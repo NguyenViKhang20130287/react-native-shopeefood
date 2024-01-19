@@ -5,28 +5,51 @@ import { FontAwesome } from "@expo/vector-icons";
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import styles from './Product.style'
 import { useCallback } from "react";
+import axios from "axios";
 
-//Test Data
-const categories = [
-  {
-    name: 'Đồ Ăn',
-    subcategories: ['Cơm', 'Canh', 'Cá'],
-  }, {
-    name: 'Nước Uống',
-    subcategories: ['Bia', 'Coca', 'Nước Lọc'],
-  }, {
-    name: 'Tráng Miệng',
-    subcategories: ['Bia', 'Bánh Kem', 'Kẹo'],
-  }, {
-    name: 'Trà Sữa',
-    subcategories: ['Bia', 'Bánh Kem', 'Kẹo'],
-  }, {
-    name: 'Bánh Kem',
-    subcategories: ['Bia', 'Bánh Kem', 'Kẹo'],
+const ViewProductOfStoreCategory = ({idStore, idStoreCate}) => {
+  console.log(idStoreCate);
+  const [products, setProducts] = useState([])
+  const api = async () => {
+    const response = await axios.get(`http://localhost:8080/api/stores/${idStore}/categories/${idStoreCate}/products`)
+    console.log(response.data)
+    setProducts(response.data)
   }
-];
+  useEffect(()=> {
+    api()
+  }, [products.id])
 
-const ProductTopTab = () => {
+  return (
+    <View>
+      {products.map((item) =>
+        <View key={item.id} style={styles.productContent}>
+          <View style={styles.imageContainer}>
+            <Image style={styles.productImage} source={{uri: item.image}} />
+          </View>
+          <View style={styles.producContentContainer}>
+            <Text numberOfLines={1} ellipsizeMode="tail" style={styles.producName}>{item.title}</Text>
+            <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >{item.description}</Text>
+            <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >40 đã bán</Text>
+            <View style={styles.contentWrapper}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text style={styles.oldPrice}>{item.old_price}</Text>
+                <Text style={styles.pProdPrice}> {item.current_price}</Text>
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Pressable><FontAwesome name="minus-square-o" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
+                <TextInput keyboardType="numeric" style={{ paddingHorizontal: 6, textAlign: "center" }}>1</TextInput>
+                <Pressable><FontAwesome name="plus-square" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
+              </View>
+            </View>
+          </View>
+        </View>
+      )}
+    </View>
+  )
+}
+
+const ProductTopTab = ({categories}) => {
+  console.log(categories)
   const scrollViewRef = useRef(null);
   const [showCateList, setShowCateList] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -101,29 +124,9 @@ const ProductTopTab = () => {
             <View style={styles.productContainer}>
               <View style={styles.prodsContainer}>
                 <View style={{ backgroundColor: "#ffffff", paddingBottom: 5 }}>
-                  <Text style={styles.cateTitle}>{category.name} (5)</Text>
+                  <Text style={styles.cateTitle}>{category.name}</Text>
                 </View>
-                <View style={styles.productContent}>
-                  <View style={styles.imageContainer}>
-                    <Image style={styles.productImage} source={require('../../../../assets/product/prod_1.jpeg')} />
-                  </View>
-                  <View style={styles.producContentContainer}>
-                    <Text numberOfLines={1} ellipsizeMode="tail" style={styles.producName}>Cơm Ba Ghiên - Nguyễn Văn Trỗi s sdsd</Text>
-                    <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >Mô tả sản phẩm nếu có</Text>
-                    <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >40 đã bán</Text>
-                    <View style={styles.contentWrapper}>
-                      <View style={{ flexDirection: "row", alignItems: "center" }}>
-                        <Text style={styles.oldPrice}>20.000đ</Text>
-                        <Text style={styles.pProdPrice}> 36.000đ</Text>
-                      </View>
-                      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Pressable><FontAwesome name="minus-square-o" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
-                        <TextInput keyboardType="numeric" style={{ paddingHorizontal: 6, textAlign: "center" }}>1</TextInput>
-                        <Pressable><FontAwesome name="plus-square" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
-                      </View>
-                    </View>
-                  </View>
-                </View>
+                <ViewProductOfStoreCategory idStore={category.store.id} idStoreCate={category.id}/>
               </View>
             </View>
           </View>

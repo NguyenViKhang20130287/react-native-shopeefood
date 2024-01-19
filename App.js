@@ -19,6 +19,9 @@ import DeleteAccount from "./src/navigation/screens/Setting/DeleteAccount";
 import UserDetail from "./src/navigation/screens/user/UserDetail";
 import PickAddress from "./src/navigation/screens/Address/PickAddress";
 import SearchScreen from "./src/navigation/screens/Search/SearchScreen";
+import ProductsScreen from "./src/navigation/screens/Product/ProductsScreen";
+import ShoppingCartScreen from "./src/components/BottomCartView";
+import BottomCartView from "./src/components/BottomCartView";
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -150,21 +153,10 @@ export default function App() {
           }}
         />
         <Stack.Screen
-          name="ConfirmRegister"
-          component={ConfirmRegisterScreen}
-          options={{
-            headerTitle: "Xác nhận đăng ký",
-            headerTintColor: "orangered",
-            headerTitleStyle: {
-              color: "black",
-            },
-          }}
-        />
-        <Stack.Screen
           name="UserDetail"
           component={UserDetail}
           options={{
-            headerTitle: "Sửa hồ sơ",
+            headerTitle: "Xác nhận đăng ký",
             headerTintColor: "orangered",
             headerTitleStyle: {
               color: "black",
@@ -175,7 +167,7 @@ export default function App() {
           name="PickAddress"
           component={PickAddress}
           options={{
-            headerTitle: "Địa chỉ giao hàng",
+            headerTitle: "Sửa hồ sơ",
             headerTintColor: "orangered",
             headerTitleStyle: {
               color: "black",
@@ -185,6 +177,29 @@ export default function App() {
         <Stack.Screen
           name="Search"
           component={SearchScreen}
+          options={{
+            headerTitle: "Địa chỉ giao hàng",
+            headerTintColor: "orangered",
+            headerTitleStyle: {
+              color: "black",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Store"
+          component={ProductsScreen}
+          options={{
+            headerTitle: () => null,
+            headerTransparent: true,
+            headerTintColor: "orangered",
+            headerTitleStyle: {
+              color: "black",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Admin"
+          component={Admin}
           options={{
             headerTitle: "Tìm kiếm",
             headerTintColor: "orangered",
