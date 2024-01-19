@@ -65,6 +65,17 @@ const AdminContent = () => {
           component={ShopMangement}
           name="Quản lý cửa hàng"
         />
+        {/* <Stack.Screen
+          name="EditUserAdmin"
+          component={UserEdit}
+          options={{
+            headerTitle: "Sửa thông tin người dùng",
+            headerTintColor: "orangered",
+            headerTitleStyle: {
+              color: "black",
+            },
+          }}
+        /> */}
       </Tab.Navigator>
 
       {/* <Stack.Navigator>
