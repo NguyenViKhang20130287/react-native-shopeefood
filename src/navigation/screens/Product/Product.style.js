@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
   container: {
     borderColor: '#000',
     backgroundColor: '#f0f0f0',
+    marginBottom: 50
   },
   topzone: {
     paddingHorizontal: 5,
@@ -187,14 +188,15 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   pProdPrice: {
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '500',
     color: colors.primaryColor
   },
   oldPrice: {
     textDecorationLine: 'line-through',
     fontSize: 13,
-    color: "#737373"
+    color: "#737373",
+    marginRight: 5
   },
   //divider
   verticalDivider: {

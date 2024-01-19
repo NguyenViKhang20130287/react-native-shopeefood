@@ -18,11 +18,16 @@ const ProductsScreen = ({ navigation }) => {
     const route = useRoute()
     const id = route.params?.id
     const [store, setStore] = useState({})
+    const [user, setUser] = useState({})
     const [storeCategory, setStoreCategory] = useState([]);
     const [cartItems, setCartItems] = useState([]);
     const [popularProducts, setPopularProducts] = useState([]);
     const [isModalVisible, setModalVisible] = useState(false);
+    const [totalQuantity, setTotalQuantity] = useState({})
+    const [updateData, setUpdatData] = useState(null);
     const [productOfStoreCategory, setProductOfStoreCategory] = useState([])
+    const [favoriteStore, setFavoriteStore] = useState([])
+
     const CurrencyFormatter = ({ style, amount }) => {
         const formattedAmount = new Intl.NumberFormat('vi-VN', {
             style: 'currency',
@@ -31,6 +36,56 @@ const ProductsScreen = ({ navigation }) => {
 
         return <Text style={style}>{formattedAmount}</Text>;
     };
+    const getUser = async () => {
+        const userStorage = JSON.parse(await AsyncStorage.getItem('user'));
+        setUser(userStorage);
+    }
+
+    useEffect(() => {
+        getUser();
+    }, []);
+
+    const addCartItem = async (cartItem) => {
+        try {
+            const requestData = cartItem;
+            const response = await axios.post(`http://localhost:8080/api/cart/add`,
+                requestData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+            console.log('Sản phẩm đã được thêm:', response.data);
+        } catch (error) {
+            console.error('Lỗi khi thêm sản phẩm:', error);
+        }
+    }
+    const updateCartItem = async (cartItem) => {
+        try {
+            const requestData = cartItem;
+            const response = await axios.put(`http://localhost:8080/api/cart/update`,
+                requestData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+            console.log('Số lượng đã được cập nhật:', response.data);
+        } catch (error) {
+            console.error('Lỗi khi cập nhật số lượng:', error);
+        }
+    }
+    const removeCartItem = async (cart_item_id) => {
+        try {
+            const response = await axios.delete(`http://localhost:8080/api/cart/remove?item_id=${cart_item_id}`);
+            console.log('Sản phẩm đã được xóa khỏi giỏ hàng:', response.data);
+
+        } catch (error) {
+            console.error('Lỗi khi xóa sản phẩm trong giỏ hàng:', error);
+        }
+    }
     const storeAPI = async () => {
         try {
             const response = await axios.get(`http://localhost:8080/api/stores/${id}`)
@@ -44,6 +99,44 @@ const ProductsScreen = ({ navigation }) => {
     useEffect(() => {
         storeAPI()
     }, [store.id])
+    const quantitySold = async (product_id) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/api/products/${product_id}/total_sold`)
+            setTotalQuantity((prevTotalSold) => ({
+                ...prevTotalSold,
+                [product_id]: response.data,
+            }));
+            console.log(totalQuantity);
+        } catch (error) {
+            console.log('Error:', error)
+        }
+    }
+    useEffect(() => {
+        popularProducts.forEach((product) => {
+            quantitySold(product.id);
+        });
+    }, [popularProducts]);
+    useEffect(() => {
+        setIsLike(favoriteStore.some((favorite) => favorite.id === id));
+    }, [favoriteStore.length > 0, store])
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const userStorage = JSON.parse(await AsyncStorage.getItem('user'));
+                if (userStorage) {
+                    const user_id = userStorage.id;
+                    console.log("User", user_id);
+                    const response = await axios.get(`http://localhost:8080/api/user/${user_id}/favorite-stores`);
+                    const data = response.data;
+                    setFavoriteStore(data);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, [store]);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -59,7 +152,7 @@ const ProductsScreen = ({ navigation }) => {
             }
         }
         fetchData();
-    }, []);
+    }, [updateData, route.params?.refresh]);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -118,6 +211,72 @@ const ProductsScreen = ({ navigation }) => {
             }
         }
     }
+
+    const handleIncrement = async (item) => {
+        const updatedCartItems = [...cartItems];
+        const index = updatedCartItems.findIndex((cartItem) => cartItem.product.id === item.id);
+
+        if (index != -1) {
+            const updatedCartItem = {
+                ...updatedCartItems[index],
+                quantity: (updatedCartItems[index].quantity || 0) + 1,
+            };
+            updatedCartItems[index] = updatedCartItem;
+            const cartItem = {
+                id: updatedCartItem.id,
+                product: {
+                    id: updatedCartItem.product.id
+                },
+                user: {
+                    id: user.id
+                },
+                quantity: updatedCartItem.quantity
+            }
+
+            await updateCartItem(cartItem);
+            setUpdatData(new Date().getTime())
+
+        } else {
+            const newCartItem = {
+                product: {
+                    id: item.id
+                },
+                user: {
+                    id: user.id
+                }
+            };
+
+            await addCartItem(newCartItem);
+            setUpdatData(new Date().getTime())
+        }
+    };
+    const handleDecrement = async (cartItem) => {
+        const updatedCartItems = [...cartItems];
+        const index = updatedCartItems.findIndex((item) => item.id === cartItem.id);
+
+        if (index !== -1) {
+            const updatedCartItem = { ...cartItem, quantity: cartItem.quantity - 1 };
+            updatedCartItems[index] = updatedCartItem;
+
+            const item = {
+                id: updatedCartItem.id,
+                product: {
+                    id: updatedCartItem.product.id
+                },
+                user: {
+                    id: user.id
+                },
+                quantity: updatedCartItem.quantity
+            }
+            if (updatedCartItem.quantity === 0) {
+                await removeCartItem(updatedCartItem.id);
+                setUpdatData(new Date().getTime())
+            } else {
+                await updateCartItem(item);
+                setUpdatData(new Date().getTime())
+            }
+        }
+    };
     return (
         <View style={{ position: 'relative' }}>
             <ScrollView style={styles.container}>
@@ -137,7 +296,7 @@ const ProductsScreen = ({ navigation }) => {
                             ></Ionicons>{' '}{store.name}</Text>
                         </View>
                         <View style={styles.sBotContent}>
-                            <View style={{ flexDirection: 'row', flex: 1, marginRight: 20 }}>
+                            <View style={{ flexDirection: 'row', flex: 1, marginRight: 20, alignItems: 'center' }}>
                                 <FontAwesome name='map-marker' size={22} color='orangered' />
                                 <View style={{ marginLeft: 10 }}>
                                     <Text style={{ fontSize: 15, }}>{store.address}</Text>
@@ -150,11 +309,11 @@ const ProductsScreen = ({ navigation }) => {
                     <View horizontal style={styles.pProdsContainer}>
                         <View><Text style={styles.textTitle}>Món phổ biến</Text></View>
                         <ScrollView horizontal style={styles.pProds}>
-                            {popularProducts && popularProducts.map((item) => (<Pressable key={item.id} style={styles.pProdContent}>
+                            {popularProducts && popularProducts.map((item) => (<Pressable onPress={() => navigation.navigate('ProductDetail', { product_id: item.id })} key={item.id} style={styles.pProdContent}>
                                 <View style={styles.pProdImage}>
                                     <Image style={styles.pProdPic} source={{ uri: item.image }} />
                                     <View style={styles.soldCountContainer}>
-                                        <Text style={styles.soldCountText}>40 đã bán</Text>
+                                        <Text style={styles.soldCountText}>{totalQuantity[item.id]} đã bán</Text>
                                     </View>
                                 </View>
                                 <View style={styles.pProdTextCont}>
@@ -165,9 +324,13 @@ const ProductsScreen = ({ navigation }) => {
                                             <CurrencyFormatter style={styles.pProdPrice} amount={item.current_price} />
                                         </View>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Pressable><FontAwesome name="minus-square-o" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
-                                            <TextInput style={{ paddingHorizontal: 6, textAlign: "center" }}>1</TextInput>
-                                            <Pressable><FontAwesome name="plus-square" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
+                                            {cartItems.map((cartItem) => (<>{cartItem.product.id == item.id && cartItem.quantity > 0 ? (<>
+                                                <Pressable key={cartItem.id} onPress={() => handleDecrement(cartItem)}><FontAwesome name="minus-square-o" size={26} color={'#F95030'}></FontAwesome></Pressable>
+                                                <TextInput style={{ paddingHorizontal: 6, textAlign: "center" }}
+                                                    keyboardType="numeric"
+                                                    value={cartItem.quantity.toString()}
+                                                /></>) : null}</>))}
+                                            <Pressable onPress={() => handleIncrement(item)}><FontAwesome name="plus-square" size={26} color={'#F95030'}></FontAwesome></Pressable>
                                         </View>
                                     </View>
                                 </View>
@@ -179,11 +342,11 @@ const ProductsScreen = ({ navigation }) => {
                 <View style={styles.horizontalDivider1} />
                 {/* <ProductTopTab/> */}
                 <View style={{ marginTop: 15 }}>
-                    {storeCategory ? <ProductTopTab categories={storeCategory} /> : null}
+                    {storeCategory ? <ProductTopTab categories={storeCategory} items={cartItems} increment={handleIncrement} descrement={handleDecrement} /> : null}
                 </View>
 
             </ScrollView>
-            {cartItems.length > 0 ? (< BottomCartView data={cartItems} />) : null}
+            {cartItems.length > 0 ? (< BottomCartView store_id={id} data={cartItems} handleInc={handleIncrement} handleDesc={handleDecrement} />) : null}
             {isModalVisible && (<Modal isVisible={isModalVisible} transparent animationIn="fadeIn" animationOut="fadeOut">
                 <View style={styles.modalLikeContainer}>
                     <Text style={styles.modalText}>Đã thích!</Text>

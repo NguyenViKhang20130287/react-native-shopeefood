@@ -24,6 +24,7 @@ import ShoppingCartScreen from "./src/components/BottomCartView";
 import BottomCartView from "./src/components/BottomCartView";
 import SearchResultScreen from "./src/navigation/screens/Search/SearchResultScreen";
 import MainCategoryScreen from "./src/navigation/screens/Home/MainCategoryScreen";
+import ProductDetail from "./src/navigation/screens/Product/ProductDetail";
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -158,7 +159,7 @@ export default function App() {
           name="UserDetail"
           component={UserDetail}
           options={{
-            headerTitle: "Xác nhận đăng ký",
+            headerTitle: "Sửa hồ sơ",
             headerTintColor: "orangered",
             headerTitleStyle: {
               color: "black",
@@ -169,7 +170,7 @@ export default function App() {
           name="PickAddress"
           component={PickAddress}
           options={{
-            headerTitle: "Sửa hồ sơ",
+            headerTitle: "Địa chỉ giao hàng",
             headerTintColor: "orangered",
             headerTitleStyle: {
               color: "black",
@@ -187,11 +188,21 @@ export default function App() {
               color: "black",
             },
           }} />
-          <Stack.Screen name="SearchResult" component={SearchResultScreen}
+        <Stack.Screen name="SearchResult" component={SearchResultScreen}
           options={{
             headerShown: false,
           }} />
-          <Stack.Screen name="Store" component={ProductsScreen}
+        <Stack.Screen name="Store" component={ProductsScreen}
+          options={{
+            headerTitle: () => null,
+            headerTransparent: true,
+            headerTintColor: "orangered",
+            headerTitleStyle: {
+              color: "black",
+            },
+          }}
+        />
+        <Stack.Screen name="ProductDetail" component={ProductDetail}
           options={{
             headerTitle: () => null,
             headerTransparent: true,
@@ -211,7 +222,7 @@ export default function App() {
               color: "black",
             },
           }} />
-          <Stack.Screen name="MainCategory" component={MainCategoryScreen}
+        <Stack.Screen name="MainCategory" component={MainCategoryScreen}
           options={{
             headerTitle: 'Cửa hàng',
             headerTintColor: 'orangered',

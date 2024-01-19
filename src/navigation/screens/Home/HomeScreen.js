@@ -17,13 +17,21 @@ export default function HomeScreen({ route, navigation }) {
     const [refresh, setRefresh] = useState(false);
     const [storeBySubCategory, setStoreBySubCategory] = useState([])
     const [flashSale, setFlashSale] = useState([])
-    const subIdArray = [1, 2, 3, 4, 5, 6, 7, 8]
+    const subIdArray = [1, 2, 3, 4, 5, 6, 7]
     const pullToRefresh = () => {
         setRefresh(true);
         setTimeout(() => {
             setRefresh(false);
-        }, 1000)
+        }, 500)
     }
+    const CurrencyFormatter = ({ style, amount }) => {
+        const formattedAmount = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+        }).format(amount);
+
+        return <Text style={style}>{formattedAmount}</Text>;
+    };
     const getStoresBySubCategory = async () => {
         try {
             const responses = await Promise.all(
@@ -32,6 +40,7 @@ export default function HomeScreen({ route, navigation }) {
                     return response.data.slice(0, 8)
                 })
             )
+            console.log(responses);
             setStoreBySubCategory(responses)
         } catch (error) {
             console.log('Error:', error)
@@ -64,9 +73,9 @@ export default function HomeScreen({ route, navigation }) {
                 console.error('Error fetching data:', error);
             }
         }
-        // fetchData();
+        fetchData();
+        getFlashSale();
         getStoresBySubCategory()
-        getFlashSale()
     }, [route.params?.refresh, refresh]);
 
     return (
@@ -108,25 +117,25 @@ export default function HomeScreen({ route, navigation }) {
                 {/* category */}
                 <View style={styles.categoryContainer}>
                     <View style={styles.cateIcon}>
-                        <TouchableWithoutFeedback onPress={()=> navigation.navigate('MainCategory', {id: 1})}>
+                        <TouchableWithoutFeedback onPress={() => navigation.navigate('MainCategory', { id: 1 })}>
                             <View style={styles.iconContainer}>
                                 <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-rice-50.png')} />
                                 <Text style={styles.iconText}>Đồ ăn</Text>
                             </View>
                         </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={()=> navigation.navigate('MainCategory', {id: 2})}>
+                        <TouchableWithoutFeedback onPress={() => navigation.navigate('MainCategory', { id: 2 })}>
                             <View style={styles.iconContainer}>
                                 <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-guacamole-50.png')} />
                                 <Text style={styles.iconText}>Thực phẩm</Text>
                             </View>
                         </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={()=> navigation.navigate('MainCategory', {id: 3})}>
+                        <TouchableWithoutFeedback onPress={() => navigation.navigate('MainCategory', { id: 3 })}>
                             <View style={styles.iconContainer}>
                                 <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-beer-50.png')} />
                                 <Text style={styles.iconText}>Bia</Text>
                             </View>
                         </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={()=> navigation.navigate('MainCategory', {id: 4})}>
+                        <TouchableWithoutFeedback onPress={() => navigation.navigate('MainCategory', { id: 4 })}>
                             <View style={styles.iconContainer}>
                                 <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-flower-64.png')} />
                                 <Text style={styles.iconText}>Hoa</Text>
@@ -134,28 +143,28 @@ export default function HomeScreen({ route, navigation }) {
                         </TouchableWithoutFeedback>
                     </View>
                     <View style={styles.cateIcon}>
-                        <TouchableWithoutFeedback onPress={()=> navigation.navigate('MainCategory', {id: 5})}>
+                        <TouchableWithoutFeedback onPress={() => navigation.navigate('MainCategory', { id: 5 })}>
                             <View style={styles.iconContainer}>
                                 <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-cart-64.png')} />
                                 <Text style={styles.iconText}>Siêu thị</Text>
                             </View>
                         </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={()=> navigation.navigate('MainCategory', {id: 6})}>
+                        <TouchableWithoutFeedback onPress={() => navigation.navigate('MainCategory', { id: 6 })}>
                             <View style={styles.iconContainer}>
                                 <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-medicine-50.png')} />
                                 <Text style={styles.iconText}>Thuốc</Text>
                             </View>
                         </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={()=> navigation.navigate('MainCategory', {id: 7})}>
+                        <TouchableWithoutFeedback onPress={() => navigation.navigate('MainCategory', { id: 7 })}>
                             <View style={styles.iconContainer}>
                                 <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-pet-50.png')} />
                                 <Text style={styles.iconText}>Thú cưng</Text>
                             </View>
                         </TouchableWithoutFeedback>
-                        {/* <View style={styles.iconContainer}>
+                        <View style={styles.iconContainer}>
                             <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-boba-96.png')} />
-                            <Text style={styles.iconText}>Tất cả</Text>
-                        </View> */}
+                            <Text style={styles.iconText}>Trà sữa</Text>
+                        </View>
                     </View>
                 </View>
 
@@ -178,15 +187,15 @@ export default function HomeScreen({ route, navigation }) {
                         {/* product */}
                         {flashSale.map((item, index) =>
                             <View key={index} style={styles.flashSale_product}>
-                                <TouchableWithoutFeedback onPress={() => navigation.navigate('Store', {id: item.storeCategory.id})}>
-                                <View style={styles.flashSale_imageContainer} >
-                                    <Image style={styles.flashSale_image}
-                                        source={{uri: item.image}} />
-                                </View>
+                                <TouchableWithoutFeedback onPress={() => navigation.navigate('Store', { id: item.storeCategory.id })}>
+                                    <View style={styles.flashSale_imageContainer} >
+                                        <Image style={styles.flashSale_image}
+                                            source={{ uri: item.image }} />
+                                    </View>
                                 </TouchableWithoutFeedback>
                                 <View style={styles.flashSale_contentContainer}>
                                     <Text numberOfLines={1} ellipsizeMode="tail" style={styles.flashSale_name}>{item.title}</Text>
-                                    <Text style={styles.flashSale_price}>{item.current_price}đ</Text>
+                                    <CurrencyFormatter style={styles.flashSale_price} amount={item.current_price} />
                                     <View style={styles.flashSale_wrapperTitle}>
                                         <Text style={styles.flashSale_title}>Đang bán chạy</Text>
                                     </View>
@@ -196,13 +205,13 @@ export default function HomeScreen({ route, navigation }) {
                     </ScrollView>
 
                 </View>
-                {storeBySubCategory.map((item, index) => 
+                {storeBySubCategory.map((item, index) =>
                     <View key={index} style={styles.flashSaleContainer}>
                         <View style={styles.flashSale_header}>
-                            <View style={styles.flashSale_header_left}>
-                                {/* <Text style={styles.flashSale_textBold}>
-                                    {item[0].subCategory.name}</Text> */}
-                            </View>
+                            {/* <View style={styles.flashSale_header_left}>
+                                <Text style={styles.flashSale_textBold}>
+                                    {item[0].subCategory.name}</Text>
+                            </View> */}
                             <View style={styles.flashSale_header_right}>
                                 <Text style={{ fontSize: 13, color: '#757575' }}>Xem tất cả</Text>
                                 <MaterialIcons name='navigate-next' size={25} color={'#757575'} />
@@ -214,8 +223,8 @@ export default function HomeScreen({ route, navigation }) {
 
                         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.flashSale_content}>
                             {/* product */}
-                            {item.map((item, index)=>
-                                <TouchableWithoutFeedback key={index} onPress={() => navigation.navigate('Store', {id: item.id})}>
+                            {item.map((item, index) =>
+                                <TouchableWithoutFeedback key={index} onPress={() => navigation.navigate('Store', { id: item.id })}>
                                     <View style={styles.flashSale_product}>
                                         <View style={styles.flashSale_imageContainer}>
                                             <Image style={styles.flashSale_image}

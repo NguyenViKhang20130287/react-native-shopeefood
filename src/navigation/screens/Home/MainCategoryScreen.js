@@ -1,7 +1,7 @@
 import React from 'react';
-import { useState, useRef,useEffect} from "react";
+import { useState, useRef, useEffect } from "react";
 
-import {Text, View, ScrollView, Image, TouchableOpacity, TextInput,Modal } from 'react-native';
+import { Text, View, ScrollView, Image, TouchableOpacity, TextInput, Modal } from 'react-native';
 
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import { Ionicons } from "@expo/vector-icons";
@@ -10,7 +10,7 @@ import { useRoute } from '@react-navigation/native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import axios from 'axios';
 
-export default MainCategory = ({navigation}) => {
+export default MainCategory = ({ navigation }) => {
     const route = useRoute()
     const id = route?.params.id
     const [listStore, setListStore] = useState([])
@@ -22,7 +22,7 @@ export default MainCategory = ({navigation}) => {
             console.log('Error:', error);
         }
     }
-    useEffect(()=> {
+    useEffect(() => {
         api()
     }, [])
     return (
@@ -31,7 +31,7 @@ export default MainCategory = ({navigation}) => {
                 {/* search result content */}
                 {listStore.map((item, index) =>
                     <TouchableWithoutFeedback key={index} onPress={() => navigation.navigate('Store', { id: item.id })}>
-                        <View  style={styles.food}>
+                        <View style={styles.food}>
                             <View style={styles.image}>
                                 <Image
                                     style={styles.foods_image}
@@ -42,6 +42,7 @@ export default MainCategory = ({navigation}) => {
                                 <View style={styles.food_name}>
                                     <Text style={styles.food_tilte}>
                                         <Ionicons
+                                            size={16}
                                             style={styles.icons}
                                             name="shield-checkmark"
                                             color={"orange"}
@@ -51,14 +52,14 @@ export default MainCategory = ({navigation}) => {
                                 </View>
                                 <View style={styles.info}>
                                     <View style={styles.distance}>
-                                        <Text style={styles.distance_text} numberOfLines={null}>{item.address}</Text>
+                                        <Text style={styles.distance_text}>{item.address}</Text>
                                     </View>
                                 </View>
                             </View>
                         </View>
                     </TouchableWithoutFeedback>
                 )}
-        
+
             </ScrollView>
         </View>
     )

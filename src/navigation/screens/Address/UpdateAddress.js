@@ -108,7 +108,6 @@ export default function UpdateAddress({ route, navigation }) {
         console.log(provinces);
         console.log(addressInfo.province_city);
         const provinceToSelect = provinces.find((province) => province.label === addressInfo.province_city);
-        console.log("Trùng trùng trùng", provinceToSelect);
         const provinceValue = provinceToSelect ? provinceToSelect.value : '';
         setSelectedProvince(provinceValue);
 
@@ -119,10 +118,8 @@ export default function UpdateAddress({ route, navigation }) {
         console.log(districts);
         console.log(addressInfo.county_district);
         const districtToSelect = districts.find((district) => district.label === addressInfo.county_district);
-        console.log("Trung district", districtToSelect);
         const districtValue = districtToSelect ? districtToSelect.value : '';
         setSelectedDistrict(districtValue);
-        console.log("select", selectedDistrict);
 
     };
 

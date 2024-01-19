@@ -1,7 +1,7 @@
 import React from 'react';
-import { useState, useRef,useEffect} from "react";
+import { useState, useRef, useEffect } from "react";
 
-import {Text, View, ScrollView, Image, TouchableOpacity, TextInput,Modal } from 'react-native';
+import { Text, View, ScrollView, Image, TouchableOpacity, TextInput, Modal } from 'react-native';
 
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import { Ionicons } from "@expo/vector-icons";
@@ -18,29 +18,29 @@ const SearchFilter = ({ hideSearchFilter }) => {
     hideSearchFilter(false);
   };
 
-  return(
+  return (
     <View style={styles.filterOrderBy}>
-        <TouchableOpacity style={styles.orderSelected} onPress={hideFilter}>
-          <Text style={styles.orderTextSelect}> Đúng nhất</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.orderSelection} onPress={hideFilter}>
-          <Text style={styles.orderTextSelect}> Gần tôi</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.orderSelection} onPress={hideFilter}>
-          <Text style={styles.orderTextSelect}> Đánh gía</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.orderSelection} onPress={hideFilter}>
-          <Text style={styles.orderTextSelect}> Bán chạy</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={styles.orderSelected} onPress={hideFilter}>
+        <Text style={styles.orderTextSelect}> Đúng nhất</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.orderSelection} onPress={hideFilter}>
+        <Text style={styles.orderTextSelect}> Gần tôi</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.orderSelection} onPress={hideFilter}>
+        <Text style={styles.orderTextSelect}> Đánh gía</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.orderSelection} onPress={hideFilter}>
+        <Text style={styles.orderTextSelect}> Bán chạy</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
-const SearchResultScreen = ({navigation}) => {
+const SearchResultScreen = ({ navigation }) => {
   const [searchFilter, setSearchFilter] = useState(false);
   const route = useRoute()
   const [searchResult, setSearchResult] = useState(route?.params.search)
-  const [listSearch, setListSearch]= useState([])
+  const [listSearch, setListSearch] = useState([])
   const [text, setText] = useState('')
 
   const toggleShowFilter = () => {
@@ -57,70 +57,70 @@ const SearchResultScreen = ({navigation}) => {
         keyword: searchResult
       }
     })
-    .then(response=> {
-      setListSearch(response.data)
-    })
-    .catch(error=> {
-      console.log('Error:', error);
-    })
+      .then(response => {
+        setListSearch(response.data)
+      })
+      .catch(error => {
+        console.log('Error:', error);
+      })
   }
   const search = () => {
     setSearchResult(text)
   }
-  useEffect(()=> {
+  useEffect(() => {
     searchAPI()
   }, [searchResult])
   return (
     <ScrollView style={styles.searchRContainer}>
-        {/* Top */}
-        <View style={styles.topzone}>
-            <View style={styles.searchContainer}>
-                <TouchableWithoutFeedback onPress={()=>navigation.navigate('Home')}>
-                    <MaterialIcons  style={styles.arrowBack} name="arrow-back" size={25} color="black" />
-                </TouchableWithoutFeedback>
-                <View style={styles.search}>
-                    {/* <EvilIcon name='search' size={25} color={'#757587'} /> */}
-                    <TextInput onSubmitEditing={search} onChangeText={(text)=> setText(text)}
-                      style={styles.searchInput} placeholder='Ăn vặt thoả thích, Freeship 0Đ'/>
-                    <TouchableWithoutFeedback onPress={()=>navigation.navigate('Search')}>
-                      <Ionicons name='close' size={20}/>
-                    </TouchableWithoutFeedback>
-                </View> 
-            </View>
+      {/* Top */}
+      <View style={styles.topzone}>
+        <View style={styles.searchContainer}>
+          <TouchableWithoutFeedback onPress={() => navigation.navigate('Home')}>
+            <MaterialIcons style={styles.arrowBack} name="arrow-back" size={25} color="black" />
+          </TouchableWithoutFeedback>
+          <View style={styles.search}>
+            {/* <EvilIcon name='search' size={25} color={'#757587'} /> */}
+            <TextInput onSubmitEditing={search} onChangeText={(text) => setText(text)}
+              style={styles.searchInput} placeholder='Ăn vặt thoả thích, Freeship 0Đ' />
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('Search')}>
+              <Ionicons name='close' size={20} />
+            </TouchableWithoutFeedback>
+          </View>
         </View>
+      </View>
       <View >
       </View>
       {/* Filter */}
       <ScrollView horizontal>
         <View style={styles.searchFilterContainer}>
           <TouchableOpacity style={styles.orderBy} onPress={(toggleShowFilter)} >
-            <Text  style= {styles.filterText}>Sắp xếp theo</Text>
-            <FontAwesome  name="chevron-down" size={15} color={'black'} style={{display:'flex',marginTop: 10,paddingRight:5}}/>
+            <Text style={styles.filterText}>Sắp xếp theo</Text>
+            <FontAwesome name="chevron-down" size={15} color={'black'} style={{ display: 'flex', marginTop: 10, paddingRight: 5 }} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.filterSearch }>
-            <Text style= {styles.filterText}>Yêu thích </Text>
+          <TouchableOpacity style={styles.filterSearch}>
+            <Text style={styles.filterText}>Yêu thích </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.filterSearch }>
-            <Text style= {styles.filterText}>FreeShip Extra</Text>
+          <TouchableOpacity style={styles.filterSearch}>
+            <Text style={styles.filterText}>FreeShip Extra</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.filterSearch }>
-            <Text style= {styles.filterText}>Đối tác </Text>
+          <TouchableOpacity style={styles.filterSearch}>
+            <Text style={styles.filterText}>Đối tác </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
       <Modal
-      visible={searchFilter}
-      animationType="none"
-      transparent={true}
-      onRequestClose={() => setSearchFilter(false)}>
+        visible={searchFilter}
+        animationType="none"
+        transparent={true}
+        onRequestClose={() => setSearchFilter(false)}>
         <SearchFilter hideSearchFilter={setSearchFilter} />
       </Modal>
-      
+
       {/* search result  */}
       <ScrollView style={styles.food_container}>
         {/* search result content */}
         {listSearch.map((item, index) =>
-          <TouchableWithoutFeedback onPress={() => navigation.navigate('Store', {id: item.id})}>
+          <TouchableWithoutFeedback key={index} onPress={() => navigation.navigate('Store', { id: item.id })}>
             <View key={index} style={styles.food}>
               <View style={styles.image}>
                 <Image
@@ -132,6 +132,7 @@ const SearchResultScreen = ({navigation}) => {
                 <View style={styles.food_name}>
                   <Text style={styles.food_tilte}>
                     <Ionicons
+                      size={16}
                       style={styles.icons}
                       name="shield-checkmark"
                       color={"orange"}
@@ -141,14 +142,14 @@ const SearchResultScreen = ({navigation}) => {
                 </View>
                 <View style={styles.info}>
                   <View style={styles.distance}>
-                    <Text style={styles.distance_text} numberOfLines={null}>{item.address}</Text>
+                    <Text style={styles.distance_text}>{item.address}</Text>
                   </View>
                 </View>
               </View>
             </View>
           </TouchableWithoutFeedback>
         )}
-        
+
         {/* <View style={styles.food}>
             <View style={styles.image}>
               <Image

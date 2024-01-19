@@ -11,7 +11,7 @@ export default function OrderConfirmation({ route, navigation }) {
     const [cartItems, setCartItems] = useState([]);
     const [firstItem, setFirstItem] = useState(null);
     const [isModalVisible, setModalVisible] = useState(false);
-    const store_id = 8;
+    const store_id = route.params?.store_id;
     const CurrencyFormatter = ({ style, amount }) => {
         const formattedAmount = new Intl.NumberFormat('vi-VN', {
             style: 'currency',

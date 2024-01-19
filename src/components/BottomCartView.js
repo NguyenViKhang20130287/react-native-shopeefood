@@ -1,12 +1,17 @@
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
-import React, { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Pressable, ScrollView, Image, TextInput } from 'react-native';
 
-const BottomCartView = ({ data }) => {
+const BottomCartView = ({ store_id, data, handleInc, handleDesc }) => {
+    const navigation = useNavigation()
     const [cartVisible, setCartVisible] = useState(false);
+    // const [cartData, setCartData] = useState(data)
 
     const handleCartPress = () => {
-        setCartVisible(!cartVisible)
+        setCartVisible(!cartVisible);
     };
 
     const CurrencyFormatter = ({ style, amount }) => {
@@ -25,6 +30,23 @@ const BottomCartView = ({ data }) => {
     };
     const subTotal = calculateTotal();
     const totalQuantity = calculateTotalQuantity();
+
+    const handleDeleteAll = async (store_id) => {
+        try {
+            const userStorage = JSON.parse(await AsyncStorage.getItem('user'));
+            if (userStorage) {
+                const user_id = userStorage.id;
+                const response = await axios.delete(`http://localhost:8080/api/cart/remove_all?user_id=${user_id}&&store_id=${store_id}`);
+                console.log('Đã xóa tất cả các sản phẩm trong giỏ hàng:', response.data);
+                setCartVisible(false);
+                // setCartData([]);
+                navigation.navigate('Store', { id: store_id, refresh: new Date().getTime() })
+            }
+
+        } catch (error) {
+            console.error('Lỗi khi xóa tất cả:', error);
+        }
+    }
     return (
         <>
             {cartVisible ? (<TouchableOpacity
@@ -35,12 +57,12 @@ const BottomCartView = ({ data }) => {
             </TouchableOpacity>) : null}
             {cartVisible ? (<View style={{ backgroundColor: 'white', zIndex: 4, position: 'absolute', bottom: 0, top: 150, right: 0, left: 0, }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: "white", borderBottomWidth: 0.55, borderBottomColor: '#E8E8E8', padding: 10 }}>
-                    <Text style={{ color: '#ED4D2D', fontSize: 12 }}>Xóa tất cả</Text>
+                    <Pressable onPress={() => handleDeleteAll(store_id)}><Text style={{ color: '#ED4D2D', fontSize: 13 }}>Xóa tất cả</Text></Pressable>
                     <Text style={{ textAlign: 'center', fontWeight: "500", fontSize: 17 }}>Giỏ hàng</Text>
                     <Ionicons onPress={() => setCartVisible(false)} name='close' color={'#757575'} size={30} />
                 </View>
-                <ScrollView style={{ padding: 13 }}>
-                    {data && data.map((item) => (<View key={item.id} style={styles.productContent}>
+                <ScrollView style={{ paddingHorizontal: 13 }}>
+                    {data && data.map((item, index) => (<View key={index} style={styles.productContent}>
                         <Image style={styles.productImage} source={{ uri: item.product.image }} />
                         <View style={styles.producContentContainer}>
                             <Text numberOfLines={1} ellipsizeMode="tail" style={styles.producName}>{item.product.title}</Text>
@@ -51,16 +73,19 @@ const BottomCartView = ({ data }) => {
                                     <CurrencyFormatter style={styles.pProdPrice} amount={item.product.current_price} />
                                 </View>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                    <Pressable><FontAwesome name="minus-square-o" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
-                                    <TextInput keyboardType="numeric" style={{ paddingHorizontal: 6, textAlign: "center" }}>{item.quantity}</TextInput>
-                                    <Pressable><FontAwesome name="plus-square" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
+                                    <Pressable onPress={() => handleDesc(item)}><FontAwesome name="minus-square-o" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
+                                    <TextInput style={{ paddingHorizontal: 6, textAlign: "center" }}
+                                        keyboardType="numeric"
+                                        value={item.quantity.toString()}
+                                    />
+                                    <Pressable onPress={() => handleInc(item.product)}><FontAwesome name="plus-square" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
                                 </View>
                             </View>
                         </View>
                     </View>))}
                 </ScrollView>
             </View>) : null}
-            <View style={{
+            {data && data.length > 0 ? (<View style={{
                 backgroundColor: 'white', position: 'absolute',
                 bottom: 0,
                 left: 0,
@@ -83,14 +108,14 @@ const BottomCartView = ({ data }) => {
                         <CurrencyFormatter style={styles.pProdPrice} amount={subTotal} />
                     </View>
                     <View style={{ width: 150, backgroundColor: "#ED4D2D", alignItems: 'center', justifyContent: 'center' }}>
-                        <Pressable>
+                        <Pressable onPress={() => navigation.navigate('OrderConfirmation', { store_id: store_id })}>
                             <Text style={{ fontSize: 16, textAlign: 'center', color: "white" }}>Giao hàng</Text>
                         </Pressable>
                     </View>
 
                 </View>
 
-            </View>
+            </View>) : null}
 
         </>
     );
@@ -103,7 +128,7 @@ const styles = StyleSheet.create({
         color: "#ED4D2D"
     },
     productContent: {
-        paddingBottom: 10,
+        paddingVertical: 13,
         flex: 1,
         flexDirection: 'row',
         borderBottomWidth: 0.55,
@@ -142,15 +167,16 @@ const styles = StyleSheet.create({
         right: -15,
         backgroundColor: '#EF4C2D',
         borderRadius: 10,
-        width: 15,
-        height: 15,
+        width: 16,
+        height: 16,
         alignItems: 'center',
         justifyContent: 'center',
     },
     countText: {
         color: 'white',
-        textAlign: 'center',
-        fontSize: 11
+        alignSelf: 'center',
+        textAlignVertical: 'center',
+        fontSize: 11,
     },
 });
 

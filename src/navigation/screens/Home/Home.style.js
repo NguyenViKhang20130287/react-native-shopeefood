@@ -217,11 +217,12 @@ const styles = StyleSheet.create({
     },
 
     details: {
+        flex: 1
         // marginLeft: 10,
     },
 
     food_name: {
-        // marginLeft: 10,
+        marginLeft: 5,
         // justifyContent: "center",
         // fontSize: 50,
         // fontWeight: "600",
@@ -261,6 +262,7 @@ const styles = StyleSheet.create({
     },
 
     distance: {
+        flex: 1,
         borderLeftWidth: 0.5,
         borderLeftColor: "gray",
     },

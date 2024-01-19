@@ -7,6 +7,7 @@ import {
   Image,
   Button,
   SafeAreaView,
+  RefreshControl,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./OrderScreen.style";
@@ -18,6 +19,13 @@ import axios from "axios";
 
 const History = () => {
   const [orders, setOrders] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+  const pullToRefresh = () => {
+    setRefresh(true);
+    setTimeout(() => {
+      setRefresh(false);
+    }, 500)
+  }
   const CurrencyFormatter = ({ style, amount }) => {
     const formattedAmount = new Intl.NumberFormat('vi-VN', {
       style: 'currency',
@@ -42,11 +50,11 @@ const History = () => {
       }
     }
     fetchData();
-  }, [])
+  }, [refresh])
   return (
     <View style={styles.container}>
       {orders.length > 0 && orders ? (
-        <ScrollView>
+        <ScrollView refreshControl={<RefreshControl refreshing={refresh} onRefresh={() => pullToRefresh()} />}>
           <View style={styles.order}>
             <View style={styles.rate_noti}>
               <View style={styles.rate_title_container}>
