@@ -88,8 +88,8 @@ export default function FavoriteItem({ id, storeName, imageURL, address }) {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        paddingHorizontal: 15,
-        paddingTop: 15,
+        paddingHorizontal: 12,
+        paddingTop: 12,
     },
     topContainer: {
         flexDirection: 'row',

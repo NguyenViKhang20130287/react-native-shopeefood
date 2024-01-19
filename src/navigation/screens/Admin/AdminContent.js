@@ -8,6 +8,7 @@ import {
   Image,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import { useState } from "react";
 import { Text } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -16,8 +17,10 @@ import UserMangement from "./UserManagament";
 import ShopMangement from "./ShopManagement";
 import styles from "./Admin.style";
 import { Ionicons } from "@expo/vector-icons";
+import UserEdit from "./UserEdit";
 
 const Tab = createMaterialTopTabNavigator();
+const Stack = createStackNavigator();
 import { FontAwesome } from "@expo/vector-icons";
 
 const Action = ({ icon, title, color, screen }) => {
@@ -42,21 +45,6 @@ const Action = ({ icon, title, color, screen }) => {
 const AdminContent = () => {
   return (
     <NavigationContainer independent={true}>
-      {/* <View>
-        <View style={styles.header}>
-          <Action
-            style={styles.icon_header}
-            icon={"user"}
-            color={"orange"}
-          ></Action>
-          <Text style={styles.header_text}>ADMIN</Text>
-          <Action
-            style={styles.icon_header}
-            icon={"key"}
-            color={"orange"}
-          ></Action>
-        </View>
-      </View> */}
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -78,6 +66,20 @@ const AdminContent = () => {
           name="Quản lý cửa hàng"
         />
       </Tab.Navigator>
+
+      {/* <Stack.Navigator>
+        <Stack.Screen
+          name="EditUserAdmin"
+          component={UserEdit}
+          options={{
+            headerTitle: "Sửa thông tin người dùng",
+            headerTintColor: "orangered",
+            headerTitleStyle: {
+              color: "black",
+            },
+          }}
+        />
+      </Stack.Navigator> */}
     </NavigationContainer>
   );
 };

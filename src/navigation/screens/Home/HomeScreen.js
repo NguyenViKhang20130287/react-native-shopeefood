@@ -17,7 +17,7 @@ export default function HomeScreen({ route, navigation }) {
     const [refresh, setRefresh] = useState(false);
     const [storeBySubCategory, setStoreBySubCategory] = useState([])
     const [flashSale, setFlashSale] = useState([])
-    const subIdArray = [1,2,3,4,5,6,7,8]
+    const subIdArray = [1, 2, 3, 4, 5, 6, 7, 8]
     const pullToRefresh = () => {
         setRefresh(true);
         setTimeout(() => {
@@ -29,19 +29,19 @@ export default function HomeScreen({ route, navigation }) {
             const responses = await Promise.all(
                 subIdArray.map(async (item) => {
                     const response = await axios.get(`http://localhost:8080/api/stores/sub_category/${item}`)
-                    return response.data.slice(0,4)
+                    return response.data.slice(0, 8)
                 })
             )
             setStoreBySubCategory(responses)
         } catch (error) {
             console.log('Error:', error)
-        }   
+        }
     }
     const getFlashSale = async () => {
         try {
             const response = await axios.get('http://localhost:8080/api/products/random')
             setFlashSale(response.data)
-            
+
         } catch (error) {
             console.log('Error:', error)
         }
@@ -200,8 +200,8 @@ export default function HomeScreen({ route, navigation }) {
                     <View key={index} style={styles.flashSaleContainer}>
                         <View style={styles.flashSale_header}>
                             <View style={styles.flashSale_header_left}>
-                                <Text style={styles.flashSale_textBold}>
-                                    {item[0].subCategory.name}</Text>
+                                {/* <Text style={styles.flashSale_textBold}>
+                                    {item[0].subCategory.name}</Text> */}
                             </View>
                             <View style={styles.flashSale_header_right}>
                                 <Text style={{ fontSize: 13, color: '#757575' }}>Xem tất cả</Text>
@@ -211,7 +211,7 @@ export default function HomeScreen({ route, navigation }) {
                         <View style={{ marginTop: 10 }}>
                             <Text style={{ color: '#757575', fontSize: 12 }}>Gợi ý quán được tín đồ ẩm thực đánh giá 5*</Text>
                         </View>
-                        
+
                         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.flashSale_content}>
                             {/* product */}
                             {item.map((item, index)=>
@@ -230,7 +230,7 @@ export default function HomeScreen({ route, navigation }) {
                                     </View>
                                 </TouchableWithoutFeedback>
                             )}
-                            
+
 
                         </ScrollView>
 
