@@ -1,12 +1,12 @@
 import { StyleSheet } from "react-native";
 
 const colors = {
-    primaryColor: '#F95030'
+  primaryColor: '#F95030'
 }
 
 const styles = StyleSheet.create({
-    //Product Details
-  prodDContainer:{
+  //Product Details
+  prodDContainer: {
     flex: 1,
     borderColor: '#000',
     backgroundColor: 'white'
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  detailsContainer:{
+  detailsContainer: {
     width: '100%',
     marginTop: 10,
     backgroundColor: 'white',
@@ -45,9 +45,9 @@ const styles = StyleSheet.create({
     alignItems: 'left'
   },
   flashSale_header_left_icon: {
-      width: 25,
-      height: 25,
-      // marginRight: 10
+    width: 25,
+    height: 25,
+    // marginRight: 10
   },
   flashSale_header_right: {
     flexDirection: "row",
@@ -66,19 +66,19 @@ const styles = StyleSheet.create({
     // marginRight: 20
   },
   flashSale_textBold: {
-      fontSize: 15,
-      fontWeight: 'bold',
-      color: 'white',
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'white',
   },
   imageContainer: {
     alignSelf: 'center',
-    width: '100%',
-    height: 300,
+    flex: 1,
+    backgroundColor: "pink"
   },
   productDImage: {
     alignSelf: 'center',
-    minWidth:420,
-    minHeight: 300,
+    minWidth: 400,
+    minHeight: 400,
   },
   producDSale: {
     textAlign: 'center',
@@ -91,35 +91,48 @@ const styles = StyleSheet.create({
   },
   productDName: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: '500',
     marginBottom: 8,
   },
-  detailTextWrapper:{
+  detailTextWrapper: {
     flexDirection: "row",
 
   },
   productDSold: {
     fontSize: 14,
-    fontWeight: '450',
+    fontWeight: '400',
+    color: "#989898"
   },
   productDLikes: {
     fontSize: 14,
-    fontWeight: '450',
+    fontWeight: '400',
   },
   productDQuantity: {
     fontSize: 14,
-    fontWeight: '450',
+    fontWeight: '400',
     color: 'red'
   },
-  productDPrice:{
+  productDPrice: {
     fontSize: 16,
     fontWeight: '500',
-    color:'white'
+    color: 'white'
   },
   productDDescription: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '400',
-    marginBottom: 5,
+    color: "#989898",
+    marginTop: 10,
+    marginBottom: 15
+  },
+  pProdPrice: {
+    fontSize: 22,
+    fontWeight: '500',
+    color: colors.primaryColor
+  },
+  oldPrice: {
+    textDecorationLine: 'line-through',
+    fontSize: 14,
+    color: "#737373"
   },
   //flash timer
   timerContainer: {
@@ -132,7 +145,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 3,
     borderWidth: 1,
-    borderColor :'#fff',
+    borderColor: '#fff',
   },
   timerText: {
     color: '#fff',
@@ -146,8 +159,8 @@ const styles = StyleSheet.create({
   },
   // divider
   horizontalDivider: {
-    width: '94%', 
-    alignSelf:'center',
+    width: '94%',
+    alignSelf: 'center',
     height: 1,
     backgroundColor: '#fff',
     marginVertical: 6,
@@ -184,55 +197,88 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   // Review Detail
-  reviewContainer:{
-    paddingBottom: 15,
+  reviewContainer: {
+    padding: 10,
     width: '100%',
     backgroundColor: 'white'
   },
-  reviewTitle:{
-    fontSize: 18,
-    fontWeight: '600',
-    padding: 8,
-  }, 
-  reviewContent:{
+  reviewTitle: {
+    fontSize: 17,
+    fontWeight: '500',
+    color: "#757575"
+  },
+  reviewContent: {
     marginTop: 3,
     width: '100%',
-    padding:4,
     flexDirection: 'column',
     backgroundColor: 'white',
   },
-  userInfo:{
+  userInfo: {
     width: '100%',
-    flexDirection:'row'
+    flexDirection: 'row'
   },
-  reviewAvatar:{
+  reviewAvatar: {
     marginHorizontal: 4,
     width: 25,
     height: 25,
-    borderRadius : 99
-  }, 
-  reviewUser:{
+    borderRadius: 99
+  },
+  reviewUser: {
     marginHorizontal: 4,
     fontSize: 16,
     fontWeight: '500',
-  }, 
-  reviewTextWrapper:{
+  },
+  reviewTextWrapper: {
     width: "100%",
     flexDirection: 'column',
     paddingLeft: 38
   },
-  reviewText:{
+  reviewText: {
     fontSize: 14,
     fontWeight: '500',
   },
-  reviewTime:{
+  reviewTime: {
     marginTop: 4,
     fontSize: 12,
     fontWeight: '400',
   },
-  reviewStar:{
+  reviewStar: {
     paddingLeft: 8,
-    
+
   },
+  history_blank: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 50
+
+  },
+  noOrderImage: {
+    height: 100,
+    width: 100,
+    tintColor: 'orange'
+  },
+  blank_heading: {
+    marginTop: 10,
+    fontSize: 17,
+    marginHorizontal: 40,
+    color: '#595959',
+    fontWeight: "500",
+    textAlign: "center"
+  },
+  blank_info: {
+    marginTop: 10,
+    marginHorizontal: 40,
+    textAlign: 'center',
+    color: '#757575'
+  },
+  orderButton: {
+    borderColor: "#BCBEBD", 
+    borderWidth: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 50,
+    marginTop: 20,
+    borderRadius: 3
+  }
 })
 export default styles;

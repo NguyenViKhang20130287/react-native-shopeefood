@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
 
   food: {
     marginTop: 15,
-    display: "flex",
+    // display: "flex",
     flexDirection: "row",
     borderBottomWidth: 0.5,
     borderBottomColor: '#E8E8E8'
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
 
   details: {
     marginLeft: 10,
+    flex: 1
   },
 
   food_name: {
@@ -181,7 +182,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
   },
-  id_title:{
+  id_title: {
     fontSize: 16,
     color: "#707070"
   },
@@ -303,7 +304,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF8E5",
     padding: 10
   },
-  rate_title_container:{
+  rate_title_container: {
     flexDirection: "row"
   },
   rate_title: {
@@ -415,27 +416,27 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "300",
   },
-  example_order:{
+  example_order: {
     flexDirection: "row",
-    
+
   },
   example_content: {
     marginTop: 10,
     backgroundColor: "white",
     padding: 15
   },
-  example_content_price:{
+  example_content_price: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center"
   },
-  example_address:{
+  example_address: {
     color: "#989898",
     paddingVertical: 15
   },
-  example_details:{
+  example_details: {
     flexDirection: "column",
-    flex:1,
+    flex: 1,
     marginLeft: 10
   },
 });

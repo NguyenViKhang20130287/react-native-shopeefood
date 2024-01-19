@@ -20,6 +20,8 @@ import UserDetail from './src/navigation/screens/user/UserDetail';
 import PickAddress from './src/navigation/screens/Address/PickAddress';
 import SearchScreen from './src/navigation/screens/Search/SearchScreen';
 import ProductsScreen from './src/navigation/screens/Product/ProductsScreen';
+import ShoppingCartScreen from './src/components/BottomCartView';
+import BottomCartView from './src/components/BottomCartView';
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -123,7 +125,7 @@ export default function App() {
               color: 'black',
             },
           }} />
-          <Stack.Screen name="UserDetail" component={UserDetail}
+        <Stack.Screen name="UserDetail" component={UserDetail}
           options={{
             headerTitle: 'Sửa hồ sơ',
             headerTintColor: 'orangered',
@@ -131,7 +133,7 @@ export default function App() {
               color: 'black',
             },
           }} />
-          <Stack.Screen name="PickAddress" component={PickAddress}
+        <Stack.Screen name="PickAddress" component={PickAddress}
           options={{
             headerTitle: 'Địa chỉ giao hàng',
             headerTintColor: 'orangered',
@@ -139,7 +141,7 @@ export default function App() {
               color: 'black',
             },
           }} />
-          <Stack.Screen name="Search" component={SearchScreen}
+        <Stack.Screen name="Search" component={SearchScreen}
           options={{
             headerTitle: 'Tìm kiếm',
             headerTintColor: 'orangered',
@@ -147,6 +149,13 @@ export default function App() {
               color: 'black',
             },
           }} />
+        <Stack.Screen name="Store" component={ProductsScreen}
+          options={{
+            headerShown: false,
+          }} />
+          <Stack.Screen name="BottomCartView" component={BottomCartView}
+          options={{
+            headerShown: false,
           <Stack.Screen name="Store" component={ProductsScreen}
           options={{
             headerTitle: ()=> null,
