@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f0f0f0",
     overflow: "hidden",
-    paddingHorizontal:5,
+    paddingHorizontal: 5,
   },
   account_list: {
     marginTop: 15,
@@ -35,9 +35,9 @@ const styles = StyleSheet.create({
     // borderColor: colors.primaryColor,
     marginBottom: 10,
     backgroundColor: "#fff",
-    borderRadius:6,
+    borderRadius: 6,
     height: 400,
-    overflow:"hidden",
+    overflow: "hidden",
   },
   title_text: {
     fontSize: 16,
@@ -138,6 +138,24 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     fontSize: 12,
     marginTop: 3,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 10,
+    backgroundColor: "rgba(0,0,0,0.9)",
+    borderRadius: 20,
+    padding: 20,
+    alignItems: "center",
+  },
+  modalText: {
+    color: "white",
+    textAlign: "center",
+    marginTop: 10,
   },
 });
 
