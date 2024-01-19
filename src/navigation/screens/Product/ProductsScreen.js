@@ -23,7 +23,7 @@ const ProductsScreen = ({ navigation }) => {
     const [cartItems, setCartItems] = useState([]);
     const [popularProducts, setPopularProducts] = useState([]);
     const [isModalVisible, setModalVisible] = useState(false);
-    const [quantity, setQuantity] = useState('');
+    const [totalQuantity, setTotalQuantity] = useState({})
     const [updateData, setUpdatData] = useState(null);
     const [productOfStoreCategory, setProductOfStoreCategory] = useState([])
     const [favoriteStore, setFavoriteStore] = useState([])
@@ -99,6 +99,23 @@ const ProductsScreen = ({ navigation }) => {
     useEffect(() => {
         storeAPI()
     }, [store.id])
+    const quantitySold = async (product_id) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/api/products/${product_id}/total_sold`)
+            setTotalQuantity((prevTotalSold) => ({
+                ...prevTotalSold,
+                [product_id]: response.data,
+            }));
+            console.log(totalQuantity);
+        } catch (error) {
+            console.log('Error:', error)
+        }
+    }
+    useEffect(() => {
+        popularProducts.forEach((product) => {
+            quantitySold(product.id);
+        });
+    }, [popularProducts]);
     useEffect(() => {
         setIsLike(favoriteStore.some((favorite) => favorite.id === id));
     }, [favoriteStore.length > 0, store])
@@ -238,7 +255,6 @@ const ProductsScreen = ({ navigation }) => {
         const index = updatedCartItems.findIndex((item) => item.id === cartItem.id);
 
         if (index !== -1) {
-            // Giảm số lượng xuống 1
             const updatedCartItem = { ...cartItem, quantity: cartItem.quantity - 1 };
             updatedCartItems[index] = updatedCartItem;
 
@@ -280,7 +296,7 @@ const ProductsScreen = ({ navigation }) => {
                             ></Ionicons>{' '}{store.name}</Text>
                         </View>
                         <View style={styles.sBotContent}>
-                            <View style={{ flexDirection: 'row', flex: 1, marginRight: 20 }}>
+                            <View style={{ flexDirection: 'row', flex: 1, marginRight: 20, alignItems: 'center' }}>
                                 <FontAwesome name='map-marker' size={22} color='orangered' />
                                 <View style={{ marginLeft: 10 }}>
                                     <Text style={{ fontSize: 15, }}>{store.address}</Text>
@@ -293,11 +309,11 @@ const ProductsScreen = ({ navigation }) => {
                     <View horizontal style={styles.pProdsContainer}>
                         <View><Text style={styles.textTitle}>Món phổ biến</Text></View>
                         <ScrollView horizontal style={styles.pProds}>
-                            {popularProducts && popularProducts.map((item) => (<Pressable key={item.id} style={styles.pProdContent}>
+                            {popularProducts && popularProducts.map((item) => (<Pressable onPress={() => navigation.navigate('ProductDetail', { product_id: item.id })} key={item.id} style={styles.pProdContent}>
                                 <View style={styles.pProdImage}>
                                     <Image style={styles.pProdPic} source={{ uri: item.image }} />
                                     <View style={styles.soldCountContainer}>
-                                        <Text style={styles.soldCountText}>40 đã bán</Text>
+                                        <Text style={styles.soldCountText}>{totalQuantity[item.id]} đã bán</Text>
                                     </View>
                                 </View>
                                 <View style={styles.pProdTextCont}>

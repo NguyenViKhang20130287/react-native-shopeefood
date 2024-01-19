@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   ScrollView,
   ActivityIndicator,
+  Pressable,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./OrderScreen.style";
@@ -17,7 +18,7 @@ import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
-const Example = () => {
+const Example = ({ navigation }) => {
   const [cartItems, setCartItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const CurrencyFormatter = ({ style, amount }) => {
@@ -90,47 +91,49 @@ const Example = () => {
       {cartItems.length > 0 && cartItems ? (
         <ScrollView>
           {Object.values(groupProductsByStore()).map((item, index) => (
-            <View style={styles.example_content} key={index}>
-              <View style={styles.content_title}>
-                <View style={styles.title_order}>
-                  <Text style={styles.cate_title}>{item.subCate}</Text>
-                </View>
-                <View>
-                  <Ionicons onPress={() => handleDeleteDraftOrder(item.storeId)} name="trash-outline" size={21} color={'orangered'} />
-                </View>
-              </View>
-              <View style={styles.example_order}>
-                <View>
-                  <Image
-                    style={styles.foods_image}
-                    source={{ uri: item.storeImage }}
-                  />
-                </View>
-                <View style={styles.example_details}>
-                  <View style={styles.food_name}>
-                    <Text numberOfLines={1} ellipsizeMode="tail" style={styles.food_tilte}>
-                      <Ionicons
-                        style={styles.icons}
-                        name="shield-checkmark"
-                        color={"orange"}
-                      ></Ionicons>{" "}
-                      {item.storeName}
-                    </Text>
+            <Pressable key={index} onPress={() => navigation.navigate('Store', { id: item.storeId })}>
+              <View style={styles.example_content}>
+                <View style={styles.content_title}>
+                  <View style={styles.title_order}>
+                    <Text style={styles.cate_title}>{item.subCate}</Text>
                   </View>
                   <View>
-                    <Text numberOfLines={1} style={styles.example_address}>{item.storeAddress}</Text>
+                    <Ionicons onPress={() => handleDeleteDraftOrder(item.storeId)} name="trash-outline" size={21} color={'orangered'} />
                   </View>
-                  <View style={styles.example_content_price}>
-                    <View style={styles.price}>
-                      <CurrencyFormatter style={styles.price_text} amount={item.totalAmount} />
+                </View>
+                <View style={styles.example_order}>
+                  <View>
+                    <Image
+                      style={styles.foods_image}
+                      source={{ uri: item.storeImage }}
+                    />
+                  </View>
+                  <View style={styles.example_details}>
+                    <View style={styles.food_name}>
+                      <Text numberOfLines={1} ellipsizeMode="tail" style={styles.food_tilte}>
+                        <Ionicons
+                          style={styles.icons}
+                          name="shield-checkmark"
+                          color={"orange"}
+                        ></Ionicons>{" "}
+                        {item.storeName}
+                      </Text>
                     </View>
-                    <View style={styles.quantity}>
-                      <Text style={styles.quantity_text}> ({item.totalQuantity} món)</Text>
+                    <View>
+                      <Text numberOfLines={1} style={styles.example_address}>{item.storeAddress}</Text>
+                    </View>
+                    <View style={styles.example_content_price}>
+                      <View style={styles.price}>
+                        <CurrencyFormatter style={styles.price_text} amount={item.totalAmount} />
+                      </View>
+                      <View style={styles.quantity}>
+                        <Text style={styles.quantity_text}> ({item.totalQuantity} món)</Text>
+                      </View>
                     </View>
                   </View>
                 </View>
               </View>
-            </View>))}
+            </Pressable>))}
         </ScrollView>
       )
         :

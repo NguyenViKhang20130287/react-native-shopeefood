@@ -6,10 +6,13 @@ import IconEntypo from 'react-native-vector-icons/Entypo';
 import styles from './Product.style'
 import { useCallback } from "react";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/core";
 
-const ViewProductOfStoreCategory = ({ idStore, idStoreCate, handleInc, handleDesc, cartItems }) => {
+const ViewProductOfStoreCategory = ({ idStore, idStoreCate, handleInc, handleDesc, cartItems, }) => {
+  const navigation = useNavigation();
   console.log(idStoreCate);
   const [products, setProducts] = useState([])
+  const [totalQuantity, setTotalQuantity] = useState({})
   const CurrencyFormatter = ({ style, amount }) => {
     const formattedAmount = new Intl.NumberFormat('vi-VN', {
       style: 'currency',
@@ -18,6 +21,23 @@ const ViewProductOfStoreCategory = ({ idStore, idStoreCate, handleInc, handleDes
 
     return <Text style={style}>{formattedAmount}</Text>;
   };
+  const quantitySold = async (product_id) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/products/${product_id}/total_sold`)
+      setTotalQuantity((prevTotalSold) => ({
+        ...prevTotalSold,
+        [product_id]: response.data,
+      }));
+      console.log(totalQuantity);
+    } catch (error) {
+      console.log('Error:', error)
+    }
+  }
+  useEffect(() => {
+    products.forEach((product) => {
+      quantitySold(product.id);
+    });
+  }, [products]);
   const api = async () => {
     const response = await axios.get(`http://localhost:8080/api/stores/${idStore}/categories/${idStoreCate}/products`)
     setProducts(response.data)
@@ -29,31 +49,33 @@ const ViewProductOfStoreCategory = ({ idStore, idStoreCate, handleInc, handleDes
   return (
     <View>
       {products.map((item) =>
-        <View key={item.id} style={styles.productContent}>
-          <View style={styles.imageContainer}>
-            <Image style={styles.productImage} source={{ uri: item.image }} />
-          </View>
-          <View style={styles.producContentContainer}>
-            <Text numberOfLines={1} ellipsizeMode="tail" style={styles.producName}>{item.title}</Text>
-            {item.description != "" ? (<Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >{item.description}</Text>) : null}
-            <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >40 đã bán</Text>
-            <View style={styles.contentWrapper}>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                {item.old_price > 0 ? (<CurrencyFormatter style={styles.oldPrice} amount={item.old_price} />) : null}
-                <CurrencyFormatter style={styles.pProdPrice} amount={item.current_price} />
-              </View>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                {cartItems.map((cartItem) => (<>{cartItem.product.id == item.id && cartItem.quantity > 0 ? (<>
-                  <Pressable key={cartItem.id} onPress={() => handleDesc(cartItem)}><FontAwesome name="minus-square-o" size={26} color={'#F95030'}></FontAwesome></Pressable>
-                  <TextInput style={{ paddingHorizontal: 6, textAlign: "center" }}
-                    keyboardType="numeric"
-                    value={cartItem.quantity.toString()}
-                  /></>) : null}</>))}
-                <Pressable onPress={() => handleInc(item)}><FontAwesome name="plus-square" size={26} color={'#F95030'}></FontAwesome></Pressable>
+        <TouchableWithoutFeedback key={item.id} onPress={() => navigation.navigate('ProductDetail', { product_id: item.id })}>
+          <View style={styles.productContent}>
+            <View style={styles.imageContainer}>
+              <Image style={styles.productImage} source={{ uri: item.image }} />
+            </View>
+            <View style={styles.producContentContainer}>
+              <Text numberOfLines={1} ellipsizeMode="tail" style={styles.producName}>{item.title}</Text>
+              {item.description != "" ? (<Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >{item.description}</Text>) : null}
+              <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >{totalQuantity[item.id]} đã bán</Text>
+              <View style={styles.contentWrapper}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  {item.old_price > 0 ? (<CurrencyFormatter style={styles.oldPrice} amount={item.old_price} />) : null}
+                  <CurrencyFormatter style={styles.pProdPrice} amount={item.current_price} />
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  {cartItems.map((cartItem) => (<React.Fragment key={cartItem.id}>{cartItem.product.id == item.id && cartItem.quantity > 0 ? (<>
+                    <Pressable onPress={() => handleDesc(cartItem)}><FontAwesome name="minus-square-o" size={26} color={'#F95030'}></FontAwesome></Pressable>
+                    <TextInput style={{ paddingHorizontal: 6, textAlign: "center" }}
+                      keyboardType="numeric"
+                      value={cartItem.quantity.toString()} />
+                  </>) : null}</React.Fragment>))}
+                  <Pressable onPress={() => handleInc(item)}><FontAwesome name="plus-square" size={26} color={'#F95030'}></FontAwesome></Pressable>
+                </View>
               </View>
             </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       )}
     </View>
   )
@@ -101,7 +123,7 @@ const ProductTopTab = ({ categories, items, increment, descrement }) => {
 
   return (
     <View style={{ flex: 1, }}>
-      <View style={{ flexDirection: 'row', backgroundColor: "lightgray" }}>
+      <View style={{ flexDirection: 'row', backgroundColor: "white", borderBottomWidth: 1.3, borderBottomColor: '#E8E8E8' }}>
         <FlatList
           data={categories}
           renderItem={renderCategoryTab}

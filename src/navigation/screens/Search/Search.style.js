@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     searchCancelText: {
         color: '#F95030',
         fontWeight: '500',
-        
+
     },
     //
     historyInputContainer: {
@@ -71,8 +71,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal:10,
-        paddingVertical:10
+        paddingHorizontal: 10,
+        paddingVertical: 10
     },
     popularItemName: {
     },
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         height: 60
     },
     //Search Result
-    searchRContainer:{
+    searchRContainer: {
         backgroundColor: 'white',
     },
     topzone: {
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     search: {
-        width:330,
+        width: 330,
         flexDirection: 'row',
         paddingHorizontal: 5,
         paddingVertical: 4,
@@ -110,91 +110,92 @@ const styles = StyleSheet.create({
         borderRadius: 3,
         alignItems: 'center',
     },
-    arrowBack:{
+    arrowBack: {
         // paddingTop : 6,
-        paddingRight : 5 
+        paddingRight: 5
     },
     //search filter 
-    searchFilterContainer:{
-        flexDirection :'row',
+    searchFilterContainer: {
+        flexDirection: 'row',
     },
-    orderBy:{
-        flexDirection :'row',
-        margin:5,
+    orderBy: {
+        flexDirection: 'row',
+        margin: 5,
         borderColor: 'white',
         borderRadius: 3,
-        borderWidth :1,
+        borderWidth: 1,
         backgroundColor: '#f2f2f2'
     },
-    filterSearch:{
-        margin:5,
+    filterSearch: {
+        margin: 5,
         borderColor: 'white',
         borderRadius: 3,
-        borderWidth :1,
+        borderWidth: 1,
         backgroundColor: '#f2f2f2'
     },
-    filterText:{
+    filterText: {
         padding: 5,
         fontSize: 16
     },
     //OrderByFilter
-    filterOrderBy:{
+    filterOrderBy: {
         width: "100%",
-        display:'flex',
+        display: 'flex',
         flexDirection: "column",
         borderColor: 'red',
         borderWidth: 1,
         backgroundColor: 'white',
         marginTop: 90
     },
-    orderSelection:{
+    orderSelection: {
         borderBottomColor: 'lightgray',
         borderBottomWidth: 1
     },
-    orderSelected:{
+    orderSelected: {
         borderBottomColor: 'lightgray',
         borderBottomWidth: 1,
         backgroundColor: '#f2f2f2'
     },
-    orderTextSelect:{
+    orderTextSelect: {
         padding: 5,
         fontSize: 16
     },
     // 
-    food_container:{
+    food_container: {
         paddingHorizontal: 10,
         fontWeight: "500",
         backgroundColor: 'white'
     },
     food: {
-    marginTop: 15,
-    display: "flex",
-    flexDirection: "row",
-    borderBottomWidth: 0.5,
-    borderBottomColor: '#E8E8E8'
+        marginTop: 15,
+        display: "flex",
+        flexDirection: "row",
+        borderBottomWidth: 0.5,
+        borderBottomColor: '#E8E8E8'
     },
 
     image: {
-    marginBottom: 15,
+        marginBottom: 15,
     },
 
     foods_image: {
-    width: 100,
-    height: 100,
+        width: 100,
+        height: 100,
     },
 
     details: {
-    // marginLeft: 10,
+        flex: 1
+        // marginLeft: 10,
     },
 
     food_name: {
-    // marginLeft: 10,
-    // justifyContent: "center",
-    // fontSize: 50,
-    // fontWeight: "600",
+        marginLeft: 5,
+        // justifyContent: "center",
+        // fontSize: 50,
+        // fontWeight: "600",
     },
     food_tilte: {
-        paddingLeft : 5,
+        paddingLeft: 5,
         fontSize: 16,
         fontWeight: "500",
     },
@@ -214,27 +215,28 @@ const styles = StyleSheet.create({
         color: "gray",
     },
 
-  times_text: {
-    paddingVertical: 3,
-    marginLeft: 8,
-    fontWeight: "400",
-    color: "gray",
+    times_text: {
+        paddingVertical: 3,
+        marginLeft: 8,
+        fontWeight: "400",
+        color: "gray",
     },
     info: {
-    display: "flex",
-    flexDirection: "row",
-    padding: 5,
-    marginLeft: 5,
+        display: "flex",
+        flexDirection: "row",
+        padding: 5,
+        marginLeft: 5,
     },
 
     distance: {
-    borderLeftWidth: 0.5,
-    borderLeftColor: "gray",
+        flex: 1,
+        borderLeftWidth: 0.5,
+        borderLeftColor: "gray",
     },
 
     times: {
-    borderLeftWidth: 0.5,
-    borderLeftColor: "gray",
+        borderLeftWidth: 0.5,
+        borderLeftColor: "gray",
     },
 })
 

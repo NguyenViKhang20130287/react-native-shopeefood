@@ -62,7 +62,7 @@ const BottomCartView = ({ store_id, data, handleInc, handleDesc }) => {
                     <Ionicons onPress={() => setCartVisible(false)} name='close' color={'#757575'} size={30} />
                 </View>
                 <ScrollView style={{ paddingHorizontal: 13 }}>
-                    {data && data.map((item) => (<View key={item.id} style={styles.productContent}>
+                    {data && data.map((item, index) => (<View key={index} style={styles.productContent}>
                         <Image style={styles.productImage} source={{ uri: item.product.image }} />
                         <View style={styles.producContentContainer}>
                             <Text numberOfLines={1} ellipsizeMode="tail" style={styles.producName}>{item.product.title}</Text>
