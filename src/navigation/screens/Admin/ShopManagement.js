@@ -71,7 +71,7 @@ const ShopMangement = () => {
     try {
       const res = await axios.get(url);
       // console.log(res.data);
-      setStoreNoLock(res.data.slice(813, 816));
+      setStoreNoLock(res.data);
     } catch (err) {
       console.log(err);
     }

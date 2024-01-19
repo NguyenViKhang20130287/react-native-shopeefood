@@ -16,15 +16,19 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 5,
         paddingHorizontal: 10,
-        backgroundColor: '#f0f0f0'
+        backgroundColor: '#f0f0f0',
+        width: '90%',
+        fontSize: 16,
+        marginRight: 10,
 
     },
     searchCancel: {
-        padding: 10
+        padding: 10,
     },
     searchCancelText: {
         color: '#F95030',
-        fontWeight: '500'
+        fontWeight: '500',
+        
     },
     //
     historyInputContainer: {
@@ -95,6 +99,7 @@ const styles = StyleSheet.create({
     searchContainer: {
         paddingHorizontal: 5,
         flexDirection: 'row',
+        alignItems: 'center'
     },
     search: {
         width:330,
@@ -103,15 +108,11 @@ const styles = StyleSheet.create({
         paddingVertical: 4,
         backgroundColor: '#ffffff',
         borderRadius: 3,
+        alignItems: 'center',
     },
     arrowBack:{
-        paddingTop : 6,
+        // paddingTop : 6,
         paddingRight : 5 
-    },
-    searchInput: {
-        width: '95%',
-        paddingHorizontal: 5,
-        fontSize: 16
     },
     //search filter 
     searchFilterContainer:{
