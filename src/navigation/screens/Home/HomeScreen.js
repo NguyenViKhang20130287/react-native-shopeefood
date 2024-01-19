@@ -17,7 +17,7 @@ export default function HomeScreen({ route, navigation }) {
     const [refresh, setRefresh] = useState(false);
     const [storeBySubCategory, setStoreBySubCategory] = useState([])
     const [flashSale, setFlashSale] = useState([])
-    const subIdArray = [1,2,3,4,5,6,7,8]
+    const subIdArray = [1, 2, 3, 4, 5, 6, 7, 8]
     const pullToRefresh = () => {
         setRefresh(true);
         setTimeout(() => {
@@ -29,19 +29,19 @@ export default function HomeScreen({ route, navigation }) {
             const responses = await Promise.all(
                 subIdArray.map(async (item) => {
                     const response = await axios.get(`http://localhost:8080/api/stores/sub_category/${item}`)
-                    return response.data.slice(0,4)
+                    return response.data.slice(0, 4)
                 })
             )
             setStoreBySubCategory(responses)
         } catch (error) {
             console.log('Error:', error)
-        }   
+        }
     }
     const getFlashSale = async () => {
         try {
             const response = await axios.get('http://localhost:8080/api/products/random')
             setFlashSale(response.data)
-            
+
         } catch (error) {
             console.log('Error:', error)
         }
@@ -109,7 +109,7 @@ export default function HomeScreen({ route, navigation }) {
                 <View style={styles.categoryContainer}>
                     <View style={styles.cateIcon}>
                         <View style={styles.iconContainer}>
-                            <Pressable onPress={() => navigation.navigate('Store')}><Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-rice-50.png')} /></Pressable>
+                            <Image style={styles.cateImg} source={require('../../../../assets/category-icon/icons8-rice-50.png')} />
                             <Text style={styles.iconText}>Đồ ăn</Text>
                         </View>
                         <View style={styles.iconContainer}>
@@ -164,11 +164,11 @@ export default function HomeScreen({ route, navigation }) {
                         {/* product */}
                         {flashSale.map((item) =>
                             <View style={styles.flashSale_product}>
-                                <TouchableWithoutFeedback onPress={() => navigation.navigate('Store', {id: item.storeCategory.id})}>
-                                <View style={styles.flashSale_imageContainer} >
-                                    <Image style={styles.flashSale_image}
-                                        source={{uri: item.image}} />
-                                </View>
+                                <TouchableWithoutFeedback onPress={() => navigation.navigate('Store', { id: item.storeCategory.id })}>
+                                    <View style={styles.flashSale_imageContainer} >
+                                        <Image style={styles.flashSale_image}
+                                            source={{ uri: item.image }} />
+                                    </View>
                                 </TouchableWithoutFeedback>
                                 <View style={styles.flashSale_contentContainer}>
                                     <Text numberOfLines={1} ellipsizeMode="tail" style={styles.flashSale_name}>{item.title}</Text>
@@ -182,7 +182,7 @@ export default function HomeScreen({ route, navigation }) {
                     </ScrollView>
 
                 </View>
-                {storeBySubCategory.map((item) => 
+                {storeBySubCategory.map((item) =>
                     <View style={styles.flashSaleContainer}>
                         <View style={styles.flashSale_header}>
                             <View style={styles.flashSale_header_left}>
@@ -197,11 +197,11 @@ export default function HomeScreen({ route, navigation }) {
                         <View style={{ marginTop: 10 }}>
                             <Text style={{ color: '#757575', fontSize: 12 }}>Gợi ý quán được tín đồ ẩm thực đánh giá 5*</Text>
                         </View>
-                        
+
                         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.flashSale_content}>
                             {/* product */}
-                            {item.map((item)=>
-                                <TouchableWithoutFeedback onPress={() => navigation.navigate('Store', {id: item.id})}>
+                            {item.map((item) =>
+                                <TouchableWithoutFeedback onPress={() => navigation.navigate('Store', { id: item.id })}>
                                     <View style={styles.flashSale_product}>
                                         <View style={styles.flashSale_imageContainer}>
                                             <Image style={styles.flashSale_image}
@@ -216,7 +216,7 @@ export default function HomeScreen({ route, navigation }) {
                                     </View>
                                 </TouchableWithoutFeedback>
                             )}
-                            
+
 
                         </ScrollView>
 

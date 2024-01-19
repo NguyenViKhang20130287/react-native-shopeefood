@@ -66,7 +66,8 @@ const styles = StyleSheet.create({
   sBotContent: {
     marginTop: 15,
     flexDirection: 'row',
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   // delivery expected
   deliveryContent: {
