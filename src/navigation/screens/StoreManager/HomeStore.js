@@ -1,12 +1,15 @@
 import { Text, View } from "react-native";
 import styles from "./HomeStore.style";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
-import FoodManagerScreen from "./foodManagerScreen/foodManagerScreen";
+import FoodManagerScreen from "./FoodManagerScreen/FoodManagerScreen";
 import OrderManagerScreen from "./OrderManagerScreen/OrderManagerScreen";
 import StoreInfo from "./StoreInfo/StoreInfoScreen";
+const Tab = createMaterialTopTabNavigator();
 
-const Tab = createBottomTabNavigator();
+const foodManager = "Quản lý sản phẩm";
+const orderManager = 'Quản lý đơn hàng';
+const storeInfo = "Quản lý cửa hàng";
 
 export default function HomeStore({ }) {
     return (
@@ -15,9 +18,9 @@ export default function HomeStore({ }) {
                 <Text style={styles.headerText}>StoreManager - vikang</Text>
             </View>
             <Tab.Navigator>
-                <Tab.Screen name="foodManager" component={FoodManagerScreen}/>
-                <Tab.Screen name="orderManager" component={OrderManagerScreen}/>
-                <Tab.Screen name="storeInfo" component={StoreInfo}/>
+                <Tab.Screen name={storeInfo} component={StoreInfo}/>
+                <Tab.Screen name={foodManager} component={FoodManagerScreen}/>
+                <Tab.Screen name={orderManager} component={OrderManagerScreen}/>
             </Tab.Navigator>
         </View>
     )
