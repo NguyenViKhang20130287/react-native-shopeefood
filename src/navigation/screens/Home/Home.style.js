@@ -189,7 +189,88 @@ const styles = StyleSheet.create({
         borderColor: colors.primaryColor,
         paddingHorizontal: 5,
         paddingVertical: 3
-    }
+    },
+
+
+
+
+    food_container: {
+        paddingHorizontal: 10,
+        fontWeight: "500",
+        backgroundColor: 'white'
+    },
+    food: {
+        marginTop: 15,
+        display: "flex",
+        flexDirection: "row",
+        borderBottomWidth: 0.5,
+        borderBottomColor: '#E8E8E8'
+    },
+
+    image: {
+        marginBottom: 15,
+    },
+
+    foods_image: {
+        width: 100,
+        height: 100,
+    },
+
+    details: {
+        flex: 1
+        // marginLeft: 10,
+    },
+
+    food_name: {
+        marginLeft: 5,
+        // justifyContent: "center",
+        // fontSize: 50,
+        // fontWeight: "600",
+    },
+    food_tilte: {
+        paddingLeft: 5,
+        fontSize: 16,
+        fontWeight: "500",
+    },
+
+    rating_text: {
+        paddingVertical: 3,
+        fontWeight: "400",
+        color: "gray",
+        marginRight: 8,
+    },
+
+    distance_text: {
+        paddingVertical: 3,
+        marginLeft: 8,
+        marginRight: 8,
+        fontWeight: "400",
+        color: "gray",
+    },
+
+    times_text: {
+        paddingVertical: 3,
+        marginLeft: 8,
+        fontWeight: "400",
+        color: "gray",
+    },
+    info: {
+        display: "flex",
+        flexDirection: "row",
+        padding: 5,
+        marginLeft: 5,
+    },
+
+    distance: {
+        flex: 1,
+        borderLeftWidth: 0.5,
+        borderLeftColor: "gray",
+    },
+
+    times: {
+        borderLeftWidth: 0.5,
+        borderLeftColor: "gray",
+    },
 
 });
 export default styles;

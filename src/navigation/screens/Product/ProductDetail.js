@@ -1,8 +1,12 @@
 import React from 'react';
-import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, Pressable, TextInput } from 'react-native';
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import styles from './ProductDetail.style'
+import { useRoute } from '@react-navigation/core';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 const FlashSaleTimer = () => {
   return (
@@ -23,105 +27,75 @@ const FlashSaleTimer = () => {
 };
 
 const ProductDetail = () => {
+  const route = useRoute();
+  const id = route.params?.product_id;
+  const [product, setProduct] = useState(null);
+  const CurrencyFormatter = ({ style, amount }) => {
+    const formattedAmount = new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+    }).format(amount);
+
+    return <Text style={style}>{formattedAmount}</Text>;
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/products/${id}`);
+        const data = response.data;
+        setProduct(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    fetchData();
+  }, [id]);
   return (
     <ScrollView style={styles.prodDContainer}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity>
-          <MaterialIcons name="arrow-back" size={24} color="black" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Cơm Ba Ghiên - Nguyễn Văn Trỗi</Text>
-        <View />
-      </View>
-      <View style={styles.detailsContainer}>
+      {product && (<View style={styles.detailsContainer}>
         {/* Product Images */}
-        <ScrollView horizontal style={styles.imageContainer}>
-            <Image style={styles.productDImage} source={require('../../../../assets/product/prod_1.jpeg')} />
-        </ScrollView>
-        {/* Product Details */}
-        <View style={styles.productDWrapperTitle}>
-            <View style={styles.flashSale_header}>
-                <View style={styles.flashSale_header_left}>
-                    <Text style={styles.flashSale_textBold}>
-                        <MaterialCommunityIcons name='lightning-bolt' size={15} color={'white'} />
-                    FLASH SALE</Text>
-                </View>
-                <View style={styles.flashSale_header_right}>
-                  <Text style={styles.flashSale_text}>Đã bán : 8</Text>
-                </View>
-            </View>
-            <View style={styles.flashSale_header}>
-                <View style={styles.flashSale_header_left}>
-                  <Text style={styles.productDPrice}>100.000đ</Text>
-                </View>
-                <View style={styles.flashSale_header_right}>
-                  <Text style={styles.flashSale_text1}>KẾT THÚC TRONG
-                  <FlashSaleTimer/>
-                  </Text>
-                </View>
-            </View>
+        <View style={styles.imageContainer}>
+          <Image style={styles.productDImage} source={{ uri: product.image }} />
         </View>
         <View style={styles.productDetails}>
-            <Text style={styles.productDName}>Cơm Ba Ghiên - Nguyễn Văn Trỗi</Text>
-            <Text style={styles.productDDescription}>Mô tả Mô tả Mô tả Mô tả Mô tả Mô tả Mô tả Mô tả Mô tả
-         Mô tảMô tảMô tảMô tảMô tảMô tảMô tảMô tảMô tảMô tảMô tảMô tảMô tảMô tảMô tảMô tảMô tảMô tảMô tả Mô tả
-         Mô tảMô tảMô tảMô tảMô tảMô tảvv Mô tả Mô tả Mô tả Mô tả Mô tảvMô tả v Mô tả Mô tảMô tảMô tả Mô tảMô tảMô tả
-         Mô tảMô tảv Mô tả
-            </Text> 
-            <View style={styles.detailTextWrapper}>
-              <Text style={styles.productDSold}>100 đã bán</Text>
-              <View style={styles.verticalDivider} />
-              <Text style={styles.productDLikes}>106 lượt thích</Text>
-              <View style={styles.verticalDivider} />
-              <Text style={styles.productDQuantity}>Còn 1 phần</Text>
+          <Text style={styles.productDName}>{product.title}</Text>
+          {product.description !== "" ? (<Text style={styles.productDDescription}>{product.description} </Text>) : null}
+          <View style={styles.detailTextWrapper}>
+            <Text style={styles.productDSold}>100 đã bán</Text>
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 20, paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: "#EBEBEB" }}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              {product.old_price > 0 ? (<CurrencyFormatter style={styles.oldPrice} amount={product.old_price} />) : null}
+              <CurrencyFormatter style={styles.pProdPrice} amount={product.current_price} />
             </View>
-            {/* Thêm giỏ hàng */}
-            <View style={styles.buttonDContainer}></View>
-              <TouchableOpacity style={styles.addToCartButton}>
-                <Text style={styles.addToCartButtonText}>Thêm vào giỏ hàng</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.buyButton}>
-                <Text style={styles.addToCartButtonText}>Mua Ngay</Text>
-              </TouchableOpacity>
+            {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Pressable><FontAwesome name="minus-square-o" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
+              <TextInput keyboardType='numeric' style={{ paddingHorizontal: 6, textAlign: "center" }}>1</TextInput>
+              <Pressable><FontAwesome name="plus-square" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
+            </View> */}
+          </View>
+        </View>
+
+      </View>)}
+      < View style={styles.reviewContainer}>
+        <Text style={styles.reviewTitle}>Bình luận</Text>
+        {/* Reviews content*/}
+        <View style={styles.history_blank}>
+          <View style={styles.blank_image}>
+            <Image style={styles.noOrderImage} source={require('../../../../assets/dinner.png')}></Image>
+          </View>
+          <View>
+            <Text style={styles.blank_info}>Chưa có đánh giá</Text>
+          </View>
+          <View>
+            <Text style={styles.blank_info}>Cùng chia sẻ trải nghiệm đặt hàng của bạn với mọi người nhé!</Text>
+          </View>
+          <Pressable style={styles.orderButton}>
+            <Text style={{ color: "#999999", fontWeight: '500', fontSize: 17 }}>Đặt món ngay</Text>
+          </Pressable>
         </View>
       </View>
-      <View style={styles.horizontalDivider}/>
-      {/* Reviews*/}
-      <View style={styles.reviewContainer}>
-         <Text style={styles.reviewTitle}>Đánh giá</Text>
-           {/* Reviews content*/}
-         <View style={styles.reviewContent}>
-          <View style={styles.userInfo}>
-            <Image style={styles.reviewAvatar} source={require('../../../../assets/product/prod_1.jpeg')} />
-            <Text style={styles.reviewUser} >User 69</Text>
-          </View>
-          <View style={styles.reviewTextWrapper}>
-              <Text style={styles.reviewText} >Cơm khá ngon nhưng phần canh hơi ngấy, còn lại thì thịt và cơm rất ngon</Text>
-              <Text style={styles.reviewTime} >12:30 24/12</Text>
-          </View>
-         </View>
-         <View style={styles.reviewContent}>
-          <View style={styles.userInfo}>
-            <Image style={styles.reviewAvatar} source={require('../../../../assets/product/prod_1.jpeg')} />
-            <Text style={styles.reviewUser} >User 69</Text>
-          </View>
-          <View style={styles.reviewTextWrapper}>
-              <Text style={styles.reviewText} >Cơm khá ngon nhưng phần canh hơi ngấy, còn lại thì thịt và cơm rất ngon</Text>
-              <Text style={styles.reviewTime} >12:30 24/12</Text>
-          </View>
-         </View>
-         <View style={styles.reviewContent}>
-          <View style={styles.userInfo}>
-            <Image style={styles.reviewAvatar} source={require('../../../../assets/product/prod_1.jpeg')} />
-            <Text style={styles.reviewUser} >User 69</Text>
-          </View>
-          <View style={styles.reviewTextWrapper}>
-              <Text style={styles.reviewText} >Cơm khá ngon nhưng phần canh hơi ngấy, còn lại thì thịt và cơm rất ngon</Text>
-              <Text style={styles.reviewTime} >12:30 24/12</Text>
-          </View>
-         </View>
-      </View>
-    </ScrollView>
+    </ScrollView >
   );
 };
 

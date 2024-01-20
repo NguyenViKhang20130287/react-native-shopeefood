@@ -5,7 +5,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
-export default function FavoriteItem({ id, storeName, imageURL, address }) {
+export default function FavoriteItem({ id, storeName, imageURL, address, }) {
     const [isClose, setIsClose] = useState(false);
     const [isLike, setIsLike] = useState(true);
     const handleToggleFavorite = async (item_id) => {
@@ -88,8 +88,8 @@ export default function FavoriteItem({ id, storeName, imageURL, address }) {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        paddingHorizontal: 15,
-        paddingTop: 15,
+        paddingHorizontal: 12,
+        paddingTop: 12,
     },
     topContainer: {
         flexDirection: 'row',

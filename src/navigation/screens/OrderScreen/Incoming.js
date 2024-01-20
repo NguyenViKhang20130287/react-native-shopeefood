@@ -7,6 +7,8 @@ import {
   SafeAreaView,
   Image,
   ScrollView,
+  Pressable,
+  RefreshControl,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -16,9 +18,17 @@ import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
-const Incoming = () => {
+const Incoming = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [orders, setOrders] = useState([]);
+  const [recommend, setRecommend] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+  const pullToRefresh = () => {
+    setRefresh(true);
+    setTimeout(() => {
+      setRefresh(false);
+    }, 500)
+  }
   const CurrencyFormatter = ({ style, amount }) => {
     const formattedAmount = new Intl.NumberFormat('vi-VN', {
       style: 'currency',
@@ -43,9 +53,21 @@ const Incoming = () => {
       }
     }
     fetchData();
-  }, [])
+  }, [refresh])
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/stores/random`);
+        const data = response.data;
+        setRecommend(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    fetchData();
+  }, []);
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView refreshControl={<RefreshControl refreshing={refresh} onRefresh={() => pullToRefresh()} />} style={styles.container}>
       {orders.length > 0 && orders ?
         (
           <>{orders && orders.map((item) => (<View key={item.id} style={styles.content}>
@@ -132,52 +154,31 @@ const Incoming = () => {
         <View style={styles.title_top}>
           <Text style={styles.title_suggestion}>Có thể bạn cũng thích</Text>
         </View>
-        <View style={styles.food}>
-          <View style={styles.image}>
-            <Image
-              style={styles.foods_image}
-              source={require("../../../../assets/product/prod_1.jpeg")}
-            />
-          </View>
-          <View style={styles.details}>
-            <View style={styles.food_name}>
-              <Text numberOfLines={1} ellipsizeMode="tail" style={styles.food_tilte}>
-                <Ionicons
-                  style={styles.icons}
-                  name="shield-checkmark"
-                  color={"orange"}
-                ></Ionicons>{" "}
-                Cơm Gà Xối Mỡ 142 - Ba Đình
-              </Text>
+        {recommend && recommend.map((item) => (<Pressable onPress={() => navigation.navigate('Store', { id: item.id })} key={item.id}>
+          <View style={styles.food}>
+            <View style={styles.image}>
+              <Image
+                style={styles.foods_image}
+                source={{ uri: item.image }}
+              />
             </View>
-            <View>
-              <Text numberOfLines={1} style={styles.example_address}>142 Ba Đình, P. 10, Quận 8, TP. HCM</Text>
-            </View>
-          </View>
-        </View>
-        <View style={styles.food}>
-          <View style={styles.image}>
-            <Image
-              style={styles.foods_image}
-              source={require("../../../../assets/product/prod_1.jpeg")}
-            />
-          </View>
-          <View style={styles.details}>
-            <View style={styles.food_name}>
-              <Text numberOfLines={1} ellipsizeMode="tail" style={styles.food_tilte}>
-                <Ionicons
-                  style={styles.icons}
-                  name="shield-checkmark"
-                  color={"orange"}
-                ></Ionicons>{" "}
-                Cơm Gà Xối Mỡ 142 - Ba Đình
-              </Text>
-            </View>
-            <View>
-              <Text numberOfLines={1} style={styles.example_address}>142 Ba Đình, P. 10, Quận 8, TP. HCM</Text>
+            <View style={styles.details}>
+              <View style={styles.food_name}>
+                <Text style={styles.food_tilte}>
+                  <Ionicons
+                    style={styles.icons}
+                    name="shield-checkmark"
+                    color={"orange"}
+                  ></Ionicons>{" "}
+                  {item.name}
+                </Text>
+              </View>
+              <View>
+                <Text numberOfLines={1} style={styles.example_address}>{item.address}</Text>
+              </View>
             </View>
           </View>
-        </View>
+        </Pressable>))}
       </View>)}
     </ScrollView>
   );

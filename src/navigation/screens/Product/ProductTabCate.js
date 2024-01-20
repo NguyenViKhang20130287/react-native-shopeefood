@@ -5,28 +5,85 @@ import { FontAwesome } from "@expo/vector-icons";
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import styles from './Product.style'
 import { useCallback } from "react";
+import axios from "axios";
+import { useNavigation } from "@react-navigation/core";
 
-//Test Data
-const categories = [
-  {
-    name: 'Đồ Ăn',
-    subcategories: ['Cơm', 'Canh', 'Cá'],
-  }, {
-    name: 'Nước Uống',
-    subcategories: ['Bia', 'Coca', 'Nước Lọc'],
-  }, {
-    name: 'Tráng Miệng',
-    subcategories: ['Bia', 'Bánh Kem', 'Kẹo'],
-  }, {
-    name: 'Trà Sữa',
-    subcategories: ['Bia', 'Bánh Kem', 'Kẹo'],
-  }, {
-    name: 'Bánh Kem',
-    subcategories: ['Bia', 'Bánh Kem', 'Kẹo'],
+const ViewProductOfStoreCategory = ({ idStore, idStoreCate, handleInc, handleDesc, cartItems, }) => {
+  const navigation = useNavigation();
+  console.log(idStoreCate);
+  const [products, setProducts] = useState([])
+  const [totalQuantity, setTotalQuantity] = useState({})
+  const CurrencyFormatter = ({ style, amount }) => {
+    const formattedAmount = new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+    }).format(amount);
+
+    return <Text style={style}>{formattedAmount}</Text>;
+  };
+  const quantitySold = async (product_id) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/products/${product_id}/total_sold`)
+      setTotalQuantity((prevTotalSold) => ({
+        ...prevTotalSold,
+        [product_id]: response.data,
+      }));
+      console.log(totalQuantity);
+    } catch (error) {
+      console.log('Error:', error)
+    }
   }
-];
+  useEffect(() => {
+    products.forEach((product) => {
+      quantitySold(product.id);
+    });
+  }, [products]);
+  const api = async () => {
+    const response = await axios.get(`http://localhost:8080/api/stores/${idStore}/categories/${idStoreCate}/products`)
+    setProducts(response.data)
+  }
+  useEffect(() => {
+    api()
+  }, [products.id])
 
-const ProductTopTab = () => {
+  return (
+    <View>
+      {products.map((item) =>
+        <TouchableWithoutFeedback key={item.id} onPress={() => navigation.navigate('ProductDetail', { product_id: item.id })}>
+          <View style={styles.productContent}>
+            <View style={styles.imageContainer}>
+              <Image style={styles.productImage} source={{ uri: item.image }} />
+            </View>
+            <View style={styles.producContentContainer}>
+              <Text numberOfLines={1} ellipsizeMode="tail" style={styles.producName}>{item.title}</Text>
+              {item.description != "" ? (<Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >{item.description}</Text>) : null}
+              <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >{totalQuantity[item.id]} đã bán</Text>
+              <View style={styles.contentWrapper}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  {item.old_price > 0 ? (<CurrencyFormatter style={styles.oldPrice} amount={item.old_price} />) : null}
+                  <CurrencyFormatter style={styles.pProdPrice} amount={item.current_price} />
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  {cartItems.map((cartItem) => (<React.Fragment key={cartItem.id}>{cartItem.product.id == item.id && cartItem.quantity > 0 ? (<>
+                    <Pressable onPress={() => handleDesc(cartItem)}><FontAwesome name="minus-square-o" size={26} color={'#F95030'}></FontAwesome></Pressable>
+                    <TextInput style={{ paddingHorizontal: 6, textAlign: "center" }}
+                      keyboardType="numeric"
+                      value={cartItem.quantity.toString()} />
+                  </>) : null}</React.Fragment>))}
+                  <Pressable onPress={() => handleInc(item)}><FontAwesome name="plus-square" size={26} color={'#F95030'}></FontAwesome></Pressable>
+                </View>
+              </View>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      )}
+    </View>
+  )
+}
+
+const ProductTopTab = ({ categories, items, increment, descrement }) => {
+  console.log("Cart items", items);
+  console.log(categories)
   const scrollViewRef = useRef(null);
   const [showCateList, setShowCateList] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -66,7 +123,7 @@ const ProductTopTab = () => {
 
   return (
     <View style={{ flex: 1, }}>
-      <View style={{ flexDirection: 'row', backgroundColor: "lightgray" }}>
+      <View style={{ flexDirection: 'row', backgroundColor: "white", borderBottomWidth: 1.3, borderBottomColor: '#E8E8E8' }}>
         <FlatList
           data={categories}
           renderItem={renderCategoryTab}
@@ -101,29 +158,9 @@ const ProductTopTab = () => {
             <View style={styles.productContainer}>
               <View style={styles.prodsContainer}>
                 <View style={{ backgroundColor: "#ffffff", paddingBottom: 5 }}>
-                  <Text style={styles.cateTitle}>{category.name} (5)</Text>
+                  <Text style={styles.cateTitle}>{category.name}</Text>
                 </View>
-                <View style={styles.productContent}>
-                  <View style={styles.imageContainer}>
-                    <Image style={styles.productImage} source={require('../../../../assets/product/prod_1.jpeg')} />
-                  </View>
-                  <View style={styles.producContentContainer}>
-                    <Text numberOfLines={1} ellipsizeMode="tail" style={styles.producName}>Cơm Ba Ghiên - Nguyễn Văn Trỗi s sdsd</Text>
-                    <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >Mô tả sản phẩm nếu có</Text>
-                    <Text style={styles.productDesc} numberOfLines={1} ellipsizeMode="tail" >40 đã bán</Text>
-                    <View style={styles.contentWrapper}>
-                      <View style={{ flexDirection: "row", alignItems: "center" }}>
-                        <Text style={styles.oldPrice}>20.000đ</Text>
-                        <Text style={styles.pProdPrice}> 36.000đ</Text>
-                      </View>
-                      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Pressable><FontAwesome name="minus-square-o" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
-                        <TextInput keyboardType="numeric" style={{ paddingHorizontal: 6, textAlign: "center" }}>1</TextInput>
-                        <Pressable><FontAwesome name="plus-square" size={26} color={'#F95030'} style={{}}></FontAwesome></Pressable>
-                      </View>
-                    </View>
-                  </View>
-                </View>
+                <ViewProductOfStoreCategory idStore={category.store.id} idStoreCate={category.id} handleInc={increment} handleDesc={descrement} cartItems={items} />
               </View>
             </View>
           </View>

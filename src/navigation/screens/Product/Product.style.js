@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
   container: {
     borderColor: '#000',
     backgroundColor: '#f0f0f0',
+    marginBottom: 50
   },
   topzone: {
     paddingHorizontal: 5,
@@ -66,7 +67,8 @@ const styles = StyleSheet.create({
   sBotContent: {
     marginTop: 15,
     flexDirection: 'row',
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   // delivery expected
   deliveryContent: {
@@ -160,7 +162,19 @@ const styles = StyleSheet.create({
   pProdPic: {
     padding: 5,
     width: 95,
-    height: 95
+    height: 95,
+    position: "relative"
+  },
+  soldCountContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    backgroundColor: '#FFBB00',
+    padding: 5,
+  },
+  soldCountText: {
+    color: 'white',
+    fontSize: 11
   },
   pProdTextCont: {
     // padding: 15,
@@ -174,14 +188,15 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   pProdPrice: {
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '500',
     color: colors.primaryColor
   },
   oldPrice: {
     textDecorationLine: 'line-through',
     fontSize: 13,
-    color: "#737373"
+    color: "#737373",
+    marginRight: 5
   },
   //divider
   verticalDivider: {
@@ -279,7 +294,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '300',
     color: "#757575",
-    paddingVertical:5
+    paddingVertical: 5
   },
   productPrice: {
     fontSize: 16,
@@ -359,6 +374,24 @@ const styles = StyleSheet.create({
   selectedSubCateOptionText: {
     color: 'white',
     fontWeight: 'bold'
-  }
+  },
+  modalLikeContainer: {
+    position: "absolute",
+    top: 330,
+    bottom: 300,
+    right: 100,
+    left: 140,
+    width: 120,
+    height: 60,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    // padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: "center"
+  },
+  modalText: {
+    color: 'white',
+    fontSize: 17,
+  },
 });
 export default styles;
