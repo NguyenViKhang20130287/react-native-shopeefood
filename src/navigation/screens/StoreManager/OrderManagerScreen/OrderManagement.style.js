@@ -189,5 +189,71 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         color:"#e5e500",
     },
+    // order pop up
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      modalContent: {
+        width: '90%',
+        backgroundColor: 'white',
+        borderColor:'#e1e1e1',
+        borderWidth:1,
+        padding: 20,
+        borderRadius: 10,
+        elevation: 5,
+      },
+      modalTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+      },
+      inputLabel:{
+        paddingLeft: 4,
+        paddingBottom: 5,
+        fontSize: 15,
+        fontWeight: '500'
+      },
+      rowContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 10,
+      },
+      separator: {
+        borderBottomWidth: 1,
+        borderBottomColor: 'gray',
+        marginBottom: 10,
+      },
+      label: {
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
+      value: {
+        fontSize: 16,
+      },
+      confirmButton: {
+        backgroundColor: '#3030ff',
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+        marginTop: 10,
+      },
+      deleteButton: {
+        backgroundColor:'#e50000',
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+        marginTop: 10,
+      },
+      cancelButton: {
+        borderColor:'#e1e1e1',
+        borderWidth:1,
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+        marginTop: 10,
+      },
 });
 export default styles;

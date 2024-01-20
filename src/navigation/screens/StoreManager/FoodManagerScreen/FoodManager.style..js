@@ -46,65 +46,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         fontSize: 16
     },
-    //popular food 
-    // food_container:{
-    //     width:'100%',
-    //     marginTop :5,
-    //     backgroundColor: 'white',
-    // },
-    // food: {
-    //     alignSelf:'center',
-    //     marginTop: 10,
-    //     flexDirection: "column",
-    //     borderRadius: 5,
-    //     borderColor:'#e1e1e1',
-    //     borderWidth: 1,
-    //     backgroundColor: 'white'
-    // },
-
-    // image: {
-    //     // marginBottom: 15,
-    // },
-
-    // foods_image: {
-    //     width: 105 ,
-    //     height: 90,
-    //     borderRadius: 5,
-    // },
-
-    // details: {
-    //     maxWidth: 105
-    // },
-
-    // food_name: {
-
-    // },
-    // food_tilte: {
-    //     paddingLeft :4,
-    //     fontSize: 12,
-    //     fontWeight: "500",
-    //     paddingBottom: 4
-    // },
-    // info: {
-    //     display: "none",
-    //     flexDirection: "row",
-    //     padding: 3,
-    //     marginLeft: 5,
-    // },
-    // rating_text: {
-    //     paddingVertical: 2,
-    //     fontSize: 14,
-    //     marginRight: 2,
-    //     fontWeight: "bold",
-    // },
-    // order_text: {
-    //     paddingVertical: 2,
-    //     fontSize: 14,
-    //     marginRight: 2,
-    //     fontWeight: "bold",
-    //     color: colors.primaryColor
-    // },
-
     // food container
     food_container:{
         width:'100%',
@@ -210,5 +151,79 @@ const styles = StyleSheet.create({
         paddingVertical: 1,
         fontWeight:'bold'
     },
+    //add produc
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+      },
+      modalContent: {
+        width: '98%',
+        padding: 20,
+        backgroundColor: 'white',
+        borderColor:'#e1e1e1',
+        borderWidth:1,
+        borderRadius: 10,
+      },
+      modalTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+      },
+      inputLabel:{
+        paddingLeft: 4,
+        paddingBottom: 5,
+        fontSize: 15,
+        fontWeight: '500'
+      },
+      imagePickerButton: {
+        alignItems: 'center',
+        marginBottom: 10,
+      },
+      imagePreview: {
+        width: 200,
+        height: 200,
+        borderRadius: 5,
+      },
+      imagePickerText: {
+        fontSize: 16,
+        color: 'blue',
+      },
+      input: {
+        marginBottom: 10,
+        padding: 10,
+        borderColor: 'gray',
+        borderWidth: 1,
+        borderRadius: 5,
+      },
+      switchContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 10,
+      },
+      switchLabel: {
+        fontSize: 16,
+      },
+      addButton: {
+        marginTop: 10,
+        padding: 10,
+        backgroundColor: '#3030ff',
+        alignItems: 'center',
+        borderRadius: 5,
+      },
+      deleteButton: {
+        marginTop: 10,
+        padding: 10,
+        backgroundColor: '#e50000',
+        alignItems: 'center',
+        borderRadius: 5,
+      },
+      cancelButton: {
+        marginTop: 10,
+        padding: 10,
+        backgroundColor: '#DDDDDD',
+        alignItems: 'center',
+        borderRadius: 5,
+      },
 });
 export default styles;

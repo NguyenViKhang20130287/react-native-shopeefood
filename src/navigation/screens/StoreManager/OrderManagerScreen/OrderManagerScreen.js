@@ -1,9 +1,15 @@
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput, Image, ScrollView, Pressable } from 'react-native';
 import EvilIcon from 'react-native-vector-icons/EvilIcons'
-
+import EditOrderPopup from './EditOrderPopup';
 import styles from "./OrderManagement.style";
 
 export default function OrderManagerScreen({}){
+    const [isEditVisible, setIsEditVisible] = useState(false);
+
+    const handleEditnPopup = () => {
+        setIsEditVisible(!isEditVisible);
+    };
     return(
     <ScrollView>
         <View style={styles.storeStatus}>
@@ -38,7 +44,7 @@ export default function OrderManagerScreen({}){
             </View>
         </Pressable>
         <View style={styles.food_container}>
-            <TouchableOpacity style={styles.prodStatusContainer}>
+            <TouchableOpacity style={styles.prodStatusContainer} onPress={handleEditnPopup}>
                 <View style={styles.prodImg}>
                     <Image  style={styles.storeImage} source={require("../../../../../assets/product/prod_1.jpeg")}/>
                 </View>
@@ -60,8 +66,12 @@ export default function OrderManagerScreen({}){
                         <Text style={styles.prodIsDeliver}>Đã giao</Text>
                     </View>
                 </View>
+                <EditOrderPopup
+                    isVisible={isEditVisible}
+                    onClose={handleEditnPopup}
+                />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.prodStatusContainer}>
+            <TouchableOpacity style={styles.prodStatusContainer} onPress={handleEditnPopup}>
                 <View style={styles.prodImg}>
                     <Image  style={styles.storeImage} source={require("../../../../../assets/product/prod_1.jpeg")}/>
                 </View>
@@ -83,8 +93,12 @@ export default function OrderManagerScreen({}){
                         <Text style={styles.prodIsCancel}>Đã Hủy</Text>
                     </View>
                 </View>
+                <EditOrderPopup
+                    isVisible={isEditVisible}
+                    onClose={handleEditnPopup}
+                />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.prodStatusContainer}>
+            <TouchableOpacity style={styles.prodStatusContainer} onPress={handleEditnPopup}>
                 <View style={styles.prodImg}>
                     <Image  style={styles.storeImage} source={require("../../../../../assets/product/prod_1.jpeg")}/>
                 </View>
@@ -106,7 +120,12 @@ export default function OrderManagerScreen({}){
                         <Text style={styles.prodIsDelivering}>Đang giao</Text>
                     </View>
                 </View>
+                <EditOrderPopup
+                    isVisible={isEditVisible}
+                    onClose={handleEditnPopup}
+                />
             </TouchableOpacity>
+           
         </View>
     </ScrollView>
     )
