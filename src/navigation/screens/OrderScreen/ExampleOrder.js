@@ -10,6 +10,7 @@ import {
   ScrollView,
   ActivityIndicator,
   Pressable,
+  RefreshControl,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./OrderScreen.style";
@@ -21,6 +22,13 @@ import axios from "axios";
 const Example = ({ navigation }) => {
   const [cartItems, setCartItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [refresh, setRefresh] = useState(false);
+  const pullToRefresh = () => {
+    setRefresh(true);
+    setTimeout(() => {
+      setRefresh(false);
+    }, 500)
+  }
   const CurrencyFormatter = ({ style, amount }) => {
     const formattedAmount = new Intl.NumberFormat('vi-VN', {
       style: 'currency',
@@ -45,7 +53,7 @@ const Example = ({ navigation }) => {
       }
     }
     fetchData();
-  }, [isLoading]);
+  }, [isLoading, refresh]);
 
   const handleDeleteDraftOrder = async (store_id) => {
     try {
@@ -87,7 +95,7 @@ const Example = ({ navigation }) => {
     return Object.values(groupedProducts);
   };
   return (
-    <View style={styles.container}>
+    <ScrollView refreshControl={<RefreshControl refreshing={refresh} onRefresh={() => pullToRefresh()} />} style={styles.container}>
       {cartItems.length > 0 && cartItems ? (
         <ScrollView>
           {Object.values(groupProductsByStore()).map((item, index) => (
@@ -151,7 +159,7 @@ const Example = ({ navigation }) => {
           </View>
         )}
 
-    </View>
+    </ScrollView>
   );
 };
 

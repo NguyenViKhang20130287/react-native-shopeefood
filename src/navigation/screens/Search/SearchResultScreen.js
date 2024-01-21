@@ -108,13 +108,13 @@ const SearchResultScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <Modal
+      {/* <Modal
         visible={searchFilter}
         animationType="none"
         transparent={true}
         onRequestClose={() => setSearchFilter(false)}>
         <SearchFilter hideSearchFilter={setSearchFilter} />
-      </Modal>
+      </Modal> */}
 
       {/* search result  */}
       <ScrollView style={styles.food_container}>

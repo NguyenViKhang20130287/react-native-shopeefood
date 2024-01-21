@@ -187,7 +187,7 @@ export default function HomeScreen({ route, navigation }) {
                         {/* product */}
                         {flashSale.map((item, index) =>
                             <View key={index} style={styles.flashSale_product}>
-                                <TouchableWithoutFeedback onPress={() => navigation.navigate('Store', { id: item.storeCategory.id })}>
+                                <TouchableWithoutFeedback onPress={() => navigation.navigate('Store', { id: item.storeCategory.store.id })}>
                                     <View style={styles.flashSale_imageContainer} >
                                         <Image style={styles.flashSale_image}
                                             source={{ uri: item.image }} />
@@ -208,10 +208,10 @@ export default function HomeScreen({ route, navigation }) {
                 {storeBySubCategory.map((item, index) =>
                     <View key={index} style={styles.flashSaleContainer}>
                         <View style={styles.flashSale_header}>
-                            {/* <View style={styles.flashSale_header_left}>
+                            <View style={styles.flashSale_header_left}>
                                 <Text style={styles.flashSale_textBold}>
                                     {item[0].subCategory.name}</Text>
-                            </View> */}
+                            </View>
                             <View style={styles.flashSale_header_right}>
                                 <Text style={{ fontSize: 13, color: '#757575' }}>Xem tất cả</Text>
                                 <MaterialIcons name='navigate-next' size={25} color={'#757575'} />

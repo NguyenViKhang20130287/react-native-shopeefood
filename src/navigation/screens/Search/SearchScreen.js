@@ -15,14 +15,14 @@ export default function SearchScreen({ navigation }) {
     const getListSearch = async () => {
         try {
             const list = await AsyncStorage.getItem('listSearched')
-            if(list){
+            if (list) {
                 setListSearched(JSON.parse(list))
             }
         } catch (error) {
             console.log('Error', error);
         }
     }
-    const search = async ()=> {
+    const search = async () => {
         console.log(text)
         if (text === '') {
             return;
@@ -31,26 +31,26 @@ export default function SearchScreen({ navigation }) {
                 const updateListSearched = [...listSearched, text]
                 setListSearched(updateListSearched)
                 await AsyncStorage.setItem('listSearched', JSON.stringify(updateListSearched))
-                navigation.navigate('SearchResult', {search: text})
+                navigation.navigate('SearchResult', { search: text })
             } catch (error) {
                 console.log('Error:', error);
             }
         }
-        
+
     }
-    const deleleteHistorySearch = async()=> {
+    const deleleteHistorySearch = async () => {
         await AsyncStorage.removeItem('listSearched')
         setListSearched([])
     }
-    useEffect(()=> {
+    useEffect(() => {
         getListSearch()
     }, [focus, listSearched, text])
     return (
         <ScrollView style={styles.container}>
             <View style={styles.searchInputContainer}>
                 <TextInput style={styles.searchInput} placeholder='Tìm kiếm...' onSubmitEditing={search}
-                    onChangeText={(text)=> setText(text)}/>
-                <TouchableOpacity style={styles.searchCancel} onPress={()=> navigation.pop()}>
+                    onChangeText={(text) => setText(text)} />
+                <TouchableOpacity style={styles.searchCancel} onPress={() => navigation.pop()}>
                     <Text style={styles.searchCancelText}>Huỷ</Text>
                 </TouchableOpacity>
             </View>
@@ -58,13 +58,13 @@ export default function SearchScreen({ navigation }) {
             {/*  */}
             <View style={styles.historyInputContainer}>
                 {listSearched.map((item, index) =>
-                    <TouchableWithoutFeedback onPress={()=> {setText(item); search()}}>
-                        <View key={index} style={styles.historyInput}>
+                    <TouchableWithoutFeedback key={index} onPress={() => { setText(item); search() }}>
+                        <View style={styles.historyInput}>
                             <Text style={styles.historyInputText}>{item}</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 )}
-                {(listSearched.length > 0)?
+                {(listSearched.length > 0) ?
                     <TouchableWithoutFeedback onPress={deleleteHistorySearch}>
                         <View style={styles.historyInput}>
                             <Text style={[styles.historyInputText, { textAlign: 'center' }]}>Xóa lịch sử tìm kiếm</Text>

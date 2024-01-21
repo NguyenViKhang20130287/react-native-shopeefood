@@ -52,9 +52,9 @@ const History = () => {
     fetchData();
   }, [refresh])
   return (
-    <View style={styles.container}>
+    <ScrollView refreshControl={<RefreshControl refreshing={refresh} onRefresh={() => pullToRefresh()} />} style={styles.container}>
       {orders.length > 0 && orders ? (
-        <ScrollView refreshControl={<RefreshControl refreshing={refresh} onRefresh={() => pullToRefresh()} />}>
+        <ScrollView>
           <View style={styles.order}>
             <View style={styles.rate_noti}>
               <View style={styles.rate_title_container}>
@@ -135,7 +135,7 @@ const History = () => {
           </View>
         )}
 
-    </View>
+    </ScrollView>
   );
 };
 
