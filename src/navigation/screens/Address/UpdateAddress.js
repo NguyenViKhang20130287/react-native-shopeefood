@@ -13,22 +13,29 @@ export default function UpdateAddress({ route, navigation }) {
     const addressInfo = route.params.addressInfo;
     const source = route.params.source;
     const refresh = route.params.refresh;
+    const [name, setName] = useState(addressInfo.user_name);
+    const [phone, setPhone] = useState(addressInfo.user_phone);
     const [input1, setInput1] = useState(addressInfo.building_flnum);
     const [input2, setInput2] = useState(addressInfo.hnum_sname);
     const [provinces, setProvinces] = useState([]);
     const [selectedProvince, setSelectedProvince] = useState('');
-    const [labelProvince, setLabelProvince] = useState('');
+    const [labelProvince, setLabelProvince] = useState(addressInfo.province_city);
     const [districts, setDistricts] = useState([]);
     const [selectedDistrict, setSelectedDistrict] = useState('');
-    const [labelDistrict, setLabelDistrict] = useState('');
+    const [labelDistrict, setLabelDistrict] = useState(addressInfo.county_district);
     const [wards, setWards] = useState([]);
     const [selectedWard, setSelectedWard] = useState('');
-    const [labelWard, setLabelWard] = useState('');
+    const [labelWard, setLabelWard] = useState(addressInfo.ward_commune);
     const [isProvinceOpen, setIsProvinceOpen] = useState(false);
     const [isDistrictOpen, setIsDistrictOpen] = useState(false);
     const [isWardOpen, setIsWardOpen] = useState(false);
     const [saveButtonEnabled, setSaveButtonEnabled] = useState(false);
     const isFocused = useIsFocused();
+    console.log(name);
+    console.log(phone);
+    console.log(labelProvince);
+    console.log(labelDistrict);
+    console.log(labelWard);
 
     const handleDeletePress = () => {
         Alert.alert(
@@ -144,7 +151,8 @@ export default function UpdateAddress({ route, navigation }) {
     }, [selectedDistrict, wards.length > 0])
 
     const checkSaveButton = () => {
-        setSaveButtonEnabled(input2 !== '');
+        setSaveButtonEnabled(input2 !== '' && name !== '' && phone !== '' && labelProvince !== '' &&
+            labelDistrict !== '' && labelWard !== '');
     };
 
     // Sử dụng useEffect để theo dõi sự thay đổi của input2, input3, input4, input5
@@ -165,6 +173,8 @@ export default function UpdateAddress({ route, navigation }) {
                     user: {
                         id: user_id
                     },
+                    user_name: name,
+                    user_phone: phone,
                     building_flnum: input1,
                     hnum_sname: input2,
                     ward_commune: labelWard ? labelWard : addressInfo.ward_commune,
@@ -205,10 +215,24 @@ export default function UpdateAddress({ route, navigation }) {
             }}>
                 <View style={{ backgroundColor: 'white', marginTop: 3, marginBottom: 10 }}>
                     <View style={styles.action}>
-                        <Text>{addressInfo.user.full_name}</Text>
+                        <TextInput
+                            placeholder='Tên người dùng'
+                            placeholderTextColor='#BCBCBC'
+                            value={name}
+                            onChangeText={(text) => {
+                                setName(text);
+                                checkSaveButton();
+                            }} />
                     </View>
                     <View style={styles.action}>
-                        <Text>{addressInfo.user.phone_number}</Text>
+                        <TextInput
+                            placeholder='Số điện thoại'
+                            placeholderTextColor='#BCBCBC'
+                            value={phone}
+                            onChangeText={(text) => {
+                                setPhone(text);
+                                checkSaveButton();
+                            }} />
                     </View>
                 </View>
                 <DropDownPicker

@@ -66,12 +66,13 @@ export default function PickAddress({ route, navigation }) {
         }
     }
     return (
-        <View style={{ flex: 1, position: 'relative' }}>
+        <View style={{ flex: 1, position: 'relative'}}>
             <ScrollView refreshControl={<RefreshControl refreshing={refresh} onRefresh={() => pullToRefresh()} />} style={{
                 position: 'absolute',
                 top: 0,
                 left: 0,
-                right: 0
+                right: 0,
+                bottom: 70
             }}>
                 {defaultAddress && (<View style={{ paddingHorizontal: 10, backgroundColor: 'white', paddingTop: 10, marginTop: 5 }} key={defaultAddress.id}>
                     <View style={styles.action}>
@@ -103,8 +104,8 @@ export default function PickAddress({ route, navigation }) {
                             <Text style={{ fontWeight: 'bold' }}>Nhà</Text>
                             <Text style={{ color: '#999999', marginVertical: 15, paddingRight: 20, textAlign: 'justify' }}>{item.building_flnum ? `[${item.building_flnum}] ` : ""}{item.hnum_sname}, {item.ward_commune}, {item.county_district}, {item.province_city}</Text>
                             <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ color: '#595959', marginRight: 10 }}>{item.user.full_name}</Text>
-                                <Text style={{ color: '#595959' }}>{item.user.phone_number}</Text>
+                                <Text style={{ color: '#595959', marginRight: 10 }}>{item.user_name}</Text>
+                                <Text style={{ color: '#595959' }}>{item.user_phone}</Text>
                             </View>
                         </View>
                         <View style={{ width: 100 }}>
