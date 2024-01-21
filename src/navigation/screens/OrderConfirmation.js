@@ -11,7 +11,8 @@ export default function OrderConfirmation({ route, navigation }) {
     const [cartItems, setCartItems] = useState([]);
     const [firstItem, setFirstItem] = useState(null);
     const [isModalVisible, setModalVisible] = useState(false);
-    const store_id = route.params?.store_id;
+    const [isModalSuccess, setModalSuccess] = useState(false);
+    const [storeId, setStoreId] = useState(route.params?.store_id)
     const CurrencyFormatter = ({ style, amount }) => {
         const formattedAmount = new Intl.NumberFormat('vi-VN', {
             style: 'currency',
@@ -53,7 +54,7 @@ export default function OrderConfirmation({ route, navigation }) {
                 const userStorage = JSON.parse(await AsyncStorage.getItem('user'));
                 if (userStorage) {
                     const user_id = userStorage.id;
-                    const response = await axios.get(`http://localhost:8080/api/cart/cart_items?user_id=${user_id}&&store_id=${store_id}`);
+                    const response = await axios.get(`http://localhost:8080/api/cart/cart_items?user_id=${user_id}&&store_id=${storeId}`);
                     const data = response.data;
                     setCartItems(data);
                     setFirstItem(data[0])
@@ -80,7 +81,7 @@ export default function OrderConfirmation({ route, navigation }) {
                             id: defaultAddress.id
                         },
                         store: {
-                            id: store_id
+                            id: storeId
                         },
                         orderStatus: {
                             id: 1
@@ -98,7 +99,11 @@ export default function OrderConfirmation({ route, navigation }) {
                         }
                     );
                     console.log('Đơn hàng đã đặt thành công', response.data);
-                    navigation.navigate('Home', { refresh: new Date().getTime() });
+                    setModalSuccess(true);
+                    setTimeout(() => {
+                        setModalSuccess(false);
+                        navigation.navigate('Home', { refresh: new Date().getTime() });
+                    }, 500);
                 }
             } else {
                 setModalVisible(true);
@@ -113,7 +118,7 @@ export default function OrderConfirmation({ route, navigation }) {
     return (
         <View style={{ flex: 1, position: 'relative' }}>
             <ScrollView style={{ marginBottom: 65 }}>
-                {defaultAddress ? (<View style={{ paddingHorizontal: 10, backgroundColor: 'white', paddingTop: 10, marginBottom: 10 }}>
+                {defaultAddress ? (<Pressable onPress={() => navigation.navigate('PickAddress', { source: 'OrderConfirmation' })}><View style={{ paddingHorizontal: 10, backgroundColor: 'white', paddingTop: 10, marginBottom: 10 }}>
                     <View style={styles.action}>
                         <View style={styles.iconContainer}>
                             <FontAwesome name='map-marker' size={18} color='orangered' />
@@ -122,15 +127,15 @@ export default function OrderConfirmation({ route, navigation }) {
                             <Text>Địa chỉ giao hàng</Text>
                             <Text style={{ color: '#999999', marginVertical: 15, paddingRight: 20, textAlign: 'justify' }}>{defaultAddress.building_flnum ? `[${defaultAddress.building_flnum}] ` : ""}{defaultAddress.hnum_sname}, {defaultAddress.ward_commune}, {defaultAddress.county_district}, {defaultAddress.province_city}</Text>
                             <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ color: '#595959', marginRight: 10 }}>{defaultAddress.user ? defaultAddress.user.full_name : "N/A"}</Text>
-                                <Text style={{ color: '#595959' }}>{defaultAddress.user ? defaultAddress.user.phone_number : 'N/A'}</Text>
+                                <Text style={{ color: '#595959', marginRight: 10 }}>{defaultAddress ? defaultAddress.user_name : "N/A"}</Text>
+                                <Text style={{ color: '#595959' }}>{defaultAddress ? defaultAddress.user_phone : 'N/A'}</Text>
                             </View>
                         </View>
                         <View style={{ width: 100, justifyContent: 'center' }}>
-                            <Pressable onPress={() => navigation.navigate('PickAddress', { source: 'OrderConfirmation' })}><Ionicons size={20} name={'chevron-forward'} color={'gray'} /></Pressable>
+                            <Ionicons size={20} name={'chevron-forward'} color={'gray'} />
                         </View>
                     </View>
-                </View>) : (
+                </View></Pressable>) : (
                     <View style={{ backgroundColor: 'white', padding: 10, marginVertical: 10 }}>
                         <Pressable onPress={() => navigation.navigate('PickAddress', { source: 'OrderConfirmation' })}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -208,6 +213,11 @@ export default function OrderConfirmation({ route, navigation }) {
                         </View>
                     </View>
                 </Modal>
+                {isModalSuccess && (<Modal isVisible={isModalVisible} transparent animationIn="fadeIn" animationOut="fadeOut">
+                    <View style={styles.modalLikeContainer}>
+                        <Text style={styles.modalText}>Đặt đơn thành công</Text>
+                    </View>
+                </Modal>)}
             </View >
         </View >
 
@@ -236,5 +246,23 @@ const styles = StyleSheet.create({
     textMoney: {
         fontSize: 12,
         color: '#666666'
-    }
+    },
+    modalLikeContainer: {
+        position: "absolute",
+        top: 330,
+        bottom: 300,
+        right: 100,
+        left: 100,
+        width: 200,
+        height: 60,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        // padding: 20,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: "center"
+    },
+    modalText: {
+        color: 'white',
+        fontSize: 17,
+    },
 });

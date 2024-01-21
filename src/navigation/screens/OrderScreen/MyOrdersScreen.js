@@ -14,7 +14,9 @@ import DropDownPicker from "react-native-dropdown-picker";
 
 import TopTabMenu from "./TopTabMenu";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import withAuthCheck from "../../../components/withAuthCheck";
 
-export default function MyOrdersScreen({ navigation }) {
+const MyOrdersScreen = ({ navigation }) => {
   return <TopTabMenu />;
 }
+export default withAuthCheck(MyOrdersScreen);
