@@ -56,8 +56,8 @@ export default function Address({ route, navigation }) {
                             <Text style={{ fontWeight: 'bold' }}>Nhà</Text>
                             <Text style={{ color: '#999999', marginVertical: 15, paddingRight: 20, textAlign: 'justify' }}>{item.building_flnum ? `[${item.building_flnum}] ` : ""}{item.hnum_sname}, {item.ward_commune}, {item.county_district}, {item.province_city}</Text>
                             <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ color: '#595959', marginRight: 10 }}>{item.user.full_name}</Text>
-                                <Text style={{ color: '#595959' }}>{item.user.phone_number}</Text>
+                                <Text style={{ color: '#595959', marginRight: 10 }}>{item.user_name}</Text>
+                                <Text style={{ color: '#595959' }}>{item.user_phone}</Text>
                             </View>
                         </View>
                         <View style={{ width: 100 }}>

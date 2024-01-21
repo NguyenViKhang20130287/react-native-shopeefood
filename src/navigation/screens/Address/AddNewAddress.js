@@ -10,6 +10,8 @@ import DropDownPicker from 'react-native-dropdown-picker';
 
 export default function AddNewAddress({ route, navigation }) {
     const source = route.params.source;
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
     const [input1, setInput1] = useState('');
     const [input2, setInput2] = useState('');
     const [provinces, setProvinces] = useState([]);
@@ -81,12 +83,16 @@ export default function AddNewAddress({ route, navigation }) {
     const [saveButtonEnabled, setSaveButtonEnabled] = useState(false);
     const [user, setUser] = useState({});
     const checkSaveButton = () => {
-        setSaveButtonEnabled(input2 !== '');
+        setSaveButtonEnabled(input2 !== '' && name !== '' && phone !== '' && labelProvince !== '' &&
+            labelDistrict !== '' && labelWard !== '');
     };
 
     const getUser = async () => {
         const userStorage = JSON.parse(await AsyncStorage.getItem('user'));
         setUser(userStorage);
+        setName(userStorage.full_name)
+        setPhone(userStorage.phone_number);
+
     }
 
     useEffect(() => {
@@ -107,6 +113,8 @@ export default function AddNewAddress({ route, navigation }) {
                     user: {
                         id: user_id
                     },
+                    user_name: name,
+                    user_phone: phone,
                     building_flnum: input1,
                     hnum_sname: input2,
                     ward_commune: labelWard,
@@ -138,10 +146,24 @@ export default function AddNewAddress({ route, navigation }) {
             }}>
                 <View style={{ backgroundColor: 'white', marginTop: 3, marginBottom: 10 }}>
                     <View style={styles.action}>
-                        <Text>{user ? user.full_name : "N/A"}</Text>
+                        <TextInput
+                            placeholder='Tên người dùng'
+                            placeholderTextColor='#BCBCBC'
+                            value={name}
+                            onChangeText={(text) => {
+                                setName(text);
+                                checkSaveButton();
+                            }} />
                     </View>
                     <View style={styles.action}>
-                        <Text>{user ? user.phone_number : "N/A"}</Text>
+                        <TextInput
+                            placeholder='Số điện thoại'
+                            placeholderTextColor='#BCBCBC'
+                            value={phone}
+                            onChangeText={(text) => {
+                                setPhone(text);
+                                checkSaveButton();
+                            }} />
                     </View>
                 </View>
                 <DropDownPicker
@@ -154,6 +176,7 @@ export default function AddNewAddress({ route, navigation }) {
                         setIsProvinceOpen(!isProvinceOpen);
                         setIsDistrictOpen(false);
                         setIsWardOpen(false);
+                        checkSaveButton();
                     }}
                     placeholder="Tỉnh, Thành phố"
                     defaultValue={selectedProvince}
@@ -162,6 +185,7 @@ export default function AddNewAddress({ route, navigation }) {
                         setSelectedProvince(item.value);
                         fetchDistricts(item.value);
                         setLabelProvince(item.label);
+                        checkSaveButton();
                     }}
                     maxHeight={300}
                     selectedItemLabelStyle={{ color: 'orangered', fontWeight: 500 }}
@@ -186,6 +210,7 @@ export default function AddNewAddress({ route, navigation }) {
                         setSelectedDistrict(item.value);
                         fetchWards(item.value);
                         setLabelDistrict(item.label);
+                        checkSaveButton();
                     }}
                     maxHeight={300}
                     selectedItemLabelStyle={{ color: 'orangered', fontWeight: 500 }}
@@ -209,6 +234,7 @@ export default function AddNewAddress({ route, navigation }) {
                     onSelectItem={(item) => {
                         setSelectedWard(item.value);
                         setLabelWard(item.label);
+                        checkSaveButton();
                     }}
                     maxHeight={300}
                     selectedItemLabelStyle={{ color: 'orangered', fontWeight: 500 }}
