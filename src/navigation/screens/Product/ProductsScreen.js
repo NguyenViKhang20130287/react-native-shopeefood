@@ -279,7 +279,7 @@ const ProductsScreen = ({ navigation }) => {
     };
     return (
         <View style={{ position: 'relative' }}>
-            <ScrollView style={styles.container}>
+            <ScrollView style={[styles.container, { marginBottom: cartItems.length > 0 ? 50 : 0 }]}>
                 {/* Top */}
                 <View style={styles.shopContainer}>
                     <ScrollView horizontal style={styles.sImageContainer}
