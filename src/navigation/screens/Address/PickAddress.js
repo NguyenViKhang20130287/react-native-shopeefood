@@ -8,8 +8,7 @@ import axios from 'axios';
 import { ScrollView } from 'react-native';
 
 export default function PickAddress({ route, navigation }) {
-    const source = route.params.source;
-    console.log(source);
+    const [source, setSource] = useState(route.params.source);
     const [defaultAddress, setDefaultAddress] = useState({});
     const [nonDefaultAddress, setNonDefaultAddress] = useState([]);
     const [refresh, setRefresh] = useState(false);
@@ -66,7 +65,7 @@ export default function PickAddress({ route, navigation }) {
         }
     }
     return (
-        <View style={{ flex: 1, position: 'relative'}}>
+        <View style={{ flex: 1, position: 'relative' }}>
             <ScrollView refreshControl={<RefreshControl refreshing={refresh} onRefresh={() => pullToRefresh()} />} style={{
                 position: 'absolute',
                 top: 0,
@@ -83,8 +82,8 @@ export default function PickAddress({ route, navigation }) {
                             <Text style={{ fontWeight: 'bold' }}>Nhà</Text>
                             <Text style={{ color: '#999999', marginVertical: 15, paddingRight: 20, textAlign: 'justify' }}>{defaultAddress.building_flnum ? `[${defaultAddress.building_flnum}] ` : ""}{defaultAddress.hnum_sname}, {defaultAddress.ward_commune}, {defaultAddress.county_district}, {defaultAddress.province_city}</Text>
                             <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ color: '#595959', marginRight: 10 }}>{defaultAddress.user ? defaultAddress.user.full_name : "N/A"}</Text>
-                                <Text style={{ color: '#595959' }}>{defaultAddress.user ? defaultAddress.user.phone_number : 'N/A'}</Text>
+                                <Text style={{ color: '#595959', marginRight: 10 }}>{defaultAddress.user ? defaultAddress.user_name : "N/A"}</Text>
+                                <Text style={{ color: '#595959' }}>{defaultAddress.user ? defaultAddress.user_phone : 'N/A'}</Text>
                             </View>
                         </View>
                         <View style={{ width: 100 }}>

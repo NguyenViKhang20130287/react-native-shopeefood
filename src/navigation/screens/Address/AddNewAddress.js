@@ -7,8 +7,9 @@ import { TextInput } from 'react-native';
 import { Pressable, StyleSheet } from 'react-native';
 import { Text, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
+import withAuthCheck from '../../../components/withAuthCheck';
 
-export default function AddNewAddress({ route, navigation }) {
+const AddNewAddress = ({ route, navigation }) => {
     const source = route.params.source;
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
@@ -89,10 +90,11 @@ export default function AddNewAddress({ route, navigation }) {
 
     const getUser = async () => {
         const userStorage = JSON.parse(await AsyncStorage.getItem('user'));
-        setUser(userStorage);
-        setName(userStorage.full_name)
-        setPhone(userStorage.phone_number);
-
+        if (userStorage) {
+            setUser(userStorage);
+            setName(userStorage.full_name)
+            setPhone(userStorage.phone_number);
+        }
     }
 
     useEffect(() => {
@@ -130,6 +132,8 @@ export default function AddNewAddress({ route, navigation }) {
                     }
                 );
                 console.log('Địa chỉ mới đã được thêm:', response.data);
+                // navigation.setParams({ refresh: new Date().getTime() });
+                // navigation.goBack();
                 navigation.navigate(source, { refresh: new Date().getTime() });
             }
         } catch (error) {
@@ -159,6 +163,8 @@ export default function AddNewAddress({ route, navigation }) {
                         <TextInput
                             placeholder='Số điện thoại'
                             placeholderTextColor='#BCBCBC'
+                            keyboardType='numeric'
+                            maxLength={10}
                             value={phone}
                             onChangeText={(text) => {
                                 setPhone(text);
@@ -303,3 +309,4 @@ const styles = StyleSheet.create({
         paddingRight: 15
     },
 });
+export default withAuthCheck(AddNewAddress);

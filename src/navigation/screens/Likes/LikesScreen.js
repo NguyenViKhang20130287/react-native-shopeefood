@@ -11,8 +11,9 @@ import styles from './LikesScreen.style';
 import { useEffect } from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import withAuthCheck from '../../../components/withAuthCheck';
 
-export default function LikesScreen({ navigation }) {
+const LikesScreen = ({ navigation }) => {
 
     const layout = useWindowDimensions();
     const [index, setIndex] = useState(0);
@@ -204,3 +205,4 @@ export default function LikesScreen({ navigation }) {
         </View>
     );
 }
+export default withAuthCheck(LikesScreen);

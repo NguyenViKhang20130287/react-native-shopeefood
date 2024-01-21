@@ -228,6 +228,8 @@ export default function UpdateAddress({ route, navigation }) {
                         <TextInput
                             placeholder='Số điện thoại'
                             placeholderTextColor='#BCBCBC'
+                            keyboardType='numeric'
+                            maxLength={10}
                             value={phone}
                             onChangeText={(text) => {
                                 setPhone(text);
